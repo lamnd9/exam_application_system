@@ -1,262 +1,966 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>入力内容確認 | 人間環境大学</title>
-  <meta name="description" content="人間環境大学 インターネット出願 入力内容確認">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登録内容確認 | 人間環境大学</title>
+    <meta name="description" content="人間環境大学 インターネット出願 登録内容確認">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .confirm-wrap {
+            max-width: 62rem;
+            margin: 0 auto;
+            padding: 2rem 1.25rem 4rem;
+        }
+
+        .btn-back-section {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            min-width: 4.4rem;
+            background: linear-gradient(180deg, #fff8f2 0%, #ffeedd 100%);
+            color: hsl(25 85% 42%);
+            border: 1px solid hsl(30 70% 78%);
+            border-radius: 0.45rem;
+            padding: 0.42rem 0.85rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background .15s, border-color .15s, color .15s, transform .15s, box-shadow .15s;
+            box-shadow: 0 1px 2px rgba(180, 80, 10, 0.07);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-back-section:hover {
+            background: linear-gradient(180deg, #fff3e8 0%, #ffdfc4 100%);
+            border-color: hsl(30 70% 68%);
+            color: hsl(25 88% 36%);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(220, 100, 20, 0.12);
+        }
+
+        .exam-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0;
+        }
+
+        .exam-table tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .exam-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .exam-table td {
+            padding: 0.65rem 0.875rem;
+            font-size: 0.875rem;
+            vertical-align: middle;
+        }
+
+        .exam-table td.lbl {
+            width: 150px;
+            font-weight: 600;
+            color: var(--muted-foreground);
+            background: var(--secondary);
+            border-right: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .exam-table td.val {
+            color: var(--foreground);
+        }
+
+        .exam-table tr.row-pink td {
+            background: hsl(0 80% 96%);
+            text-align: center;
+            font-weight: 600;
+            color: hsl(0 60% 40%);
+        }
+
+        .exam-table tr.row-pink td.lbl {
+            background: hsl(0 80% 93%);
+            color: hsl(0 60% 35%);
+            border-right-color: hsl(0 60% 80%);
+        }
+
+        .exam-table tr.row-teal td {
+            background: hsl(178 60% 95%);
+        }
+
+        .exam-table tr.row-teal td.lbl {
+            background: hsl(178 60% 90%);
+            color: hsl(178 63% 28%);
+            border-right-color: hsl(178 50% 75%);
+        }
+
+        .amount-val {
+            font-weight: 700;
+            color: hsl(178 63% 25%);
+        }
+
+        .amount-note {
+            font-size: 0.78rem;
+            color: hsl(178 50% 40%);
+            margin-top: 1px;
+        }
+
+        .subject-nested {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .subject-nested tr {
+            border-bottom: 1px solid hsl(210 20% 94%);
+        }
+
+        .subject-nested tr:last-child {
+            border-bottom: none;
+        }
+
+        .subject-nested td {
+            padding: 3px 0;
+            font-size: 0.85rem;
+            color: var(--foreground);
+        }
+
+        .subject-nested td:first-child {
+            width: 160px;
+            color: var(--muted-foreground);
+            font-weight: 500;
+        }
+
+        .cdt {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cdt tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cdt tr:last-child {
+            border-bottom: none;
+        }
+
+        .cdt td {
+            padding: 0.65rem 0.875rem;
+            font-size: 0.875rem;
+            vertical-align: top;
+        }
+
+        .cdt td.lbl {
+            width: 150px;
+            font-weight: 600;
+            color: var(--muted-foreground);
+            background: var(--secondary);
+            border-right: 1px solid var(--border);
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .cdt td.val {
+            color: var(--foreground);
+        }
+
+        .cdt td.val.two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .teal-val {
+            color: hsl(178 63% 28%);
+            font-weight: 500;
+        }
+
+        .gray-val {
+            color: var(--muted-foreground);
+        }
+
+        .section-header-orange {
+            padding: 0.8rem 1.25rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .section-header-orange h2 {
+            margin: 0;
+            font-size: 1.05rem;
+            line-height: 1.35;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: hsl(222 47% 18%);
+        }
+
+        .section-header-orange h2::before {
+            content: "";
+            display: inline-block;
+            width: 1.05rem;
+            height: 1.05rem;
+            border-radius: 0.28rem;
+            flex-shrink: 0;
+            box-shadow: 0 1px 3px rgba(200, 90, 15, 0.22);
+            background-position: center, center;
+            background-size: 0.65rem, 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .section-header-orange h2.icon-exam::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/%3E%3Crect x='8' y='2' width='8' height='4' rx='1' ry='1'/%3E%3C/svg%3E"), linear-gradient(180deg, hsl(25 90% 68%) 0%, hsl(22 82% 55%) 100%);
+        }
+
+        .section-header-orange h2.icon-user::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E"), linear-gradient(180deg, hsl(25 90% 68%) 0%, hsl(22 82% 55%) 100%);
+        }
+
+        .section-header-orange h2.icon-map::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E"), linear-gradient(180deg, hsl(25 90% 68%) 0%, hsl(22 82% 55%) 100%);
+        }
+
+        .section-header-orange h2.icon-mail::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'/%3E%3Cpolyline points='22,6 12,13 2,6'/%3E%3C/svg%3E"), linear-gradient(180deg, hsl(25 90% 68%) 0%, hsl(22 82% 55%) 100%);
+        }
+
+        .section-header-orange h2.icon-lock::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='11' width='18' height='11' rx='2' ry='2'/%3E%3Cpath d='M7 11V7a5 5 0 0 1 10 0v4'/%3E%3C/svg%3E"), linear-gradient(180deg, hsl(25 90% 68%) 0%, hsl(22 82% 55%) 100%);
+        }
+
+        .section-header-orange h2.icon-photo::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2' ry='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpolyline points='21 15 16 10 5 21'/%3E%3C/svg%3E"), linear-gradient(180deg, hsl(25 90% 68%) 0%, hsl(22 82% 55%) 100%);
+        }
+
+        .section-header-orange h2.icon-users::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E"), linear-gradient(180deg, hsl(25 90% 68%) 0%, hsl(22 82% 55%) 100%);
+        }
+
+        .section-header-orange h2.icon-file::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3Cpolyline points='10 9 9 9 8 9'/%3E%3C/svg%3E"), linear-gradient(180deg, hsl(25 90% 68%) 0%, hsl(22 82% 55%) 100%);
+        }
+
+        .section-header-orange h2.icon-book::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/%3E%3C/svg%3E"), linear-gradient(180deg, hsl(25 90% 68%) 0%, hsl(22 82% 55%) 100%);
+        }
+
+        .photo-display {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-height: 96px;
+        }
+
+        .photo-preview-row td.lbl {
+            width: 96px;
+        }
+
+        .photo-preview-row td.val {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .photo-thumb {
+            width: 82px;
+            height: 104px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .photo-thumb svg {
+            width: 42px;
+            height: 50px;
+        }
+
+        .photo-ok {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.82rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .photo-ok svg {
+            width: 13px;
+            height: 13px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .kibou-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 0.875rem;
+        }
+
+        .kibou-row .k-label {
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+        }
+
+        .kibou-row .k-val {
+            color: var(--foreground);
+        }
+
+        .school-combo {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .school-combo .code {
+            font-size: 0.78rem;
+            color: var(--muted-foreground);
+        }
+
+        .school-combo .name {
+            font-weight: 600;
+            color: var(--foreground);
+        }
+
+        .warning-submit {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .confirm-submit-panel {
+            margin-top: 1.25rem;
+            padding: 1rem 1.1rem 1.1rem;
+            border: 1px solid hsl(30 100% 90%);
+            border-radius: calc(var(--radius) + 2px);
+            background: linear-gradient(180deg, #fff 0%, hsl(30 100% 98%) 100%);
+        }
+
+        .confirm-submit-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-edit-confirm {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 12.25rem;
+            padding: 0.88rem 1.45rem;
+            border: 1px solid hsl(220 16% 84%);
+            border-radius: var(--radius);
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            color: hsl(220 26% 28%);
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            transition: border-color .15s, background .15s, transform .15s, color .15s;
+        }
+
+        .btn-edit-confirm:hover {
+            border-color: hsl(220 16% 74%);
+            background: linear-gradient(180deg, #ffffff 0%, #eef2f7 100%);
+            color: hsl(220 28% 24%);
+            transform: translateY(-1px);
+        }
+
+        .btn-submit-confirm {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 11.5rem;
+            background: linear-gradient(135deg, #fb923c, #f97316);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 0.92rem 1.8rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: transform .15s, box-shadow .15s, background .15s;
+            white-space: nowrap;
+            box-shadow: 0 10px 18px rgba(249, 115, 22, 0.18);
+        }
+
+        .btn-submit-confirm:hover {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            transform: translateY(-1px);
+            box-shadow: 0 12px 22px rgba(249, 115, 22, 0.22);
+        }
+
+        .warning-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            margin-top: 1.25rem;
+            padding: 0.85rem 1rem;
+            background-color: hsl(0 100% 97%);
+            border: 1px solid hsl(0 84% 88%);
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            color: hsl(0 75% 45%);
+            font-weight: 700;
+        }
+
+        .warning-text::before {
+            content: "";
+            display: inline-block;
+            width: 1.15rem;
+            height: 1.15rem;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e11d48' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'/%3E%3C/svg%3E") center/contain no-repeat;
+            flex-shrink: 0;
+        }
+
+        .confirm-section {
+            margin-bottom: 1.75rem;
+        }
+
+        .confirm-intro {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .confirm-intro-copy {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .confirm-intro-copy h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--foreground);
+            margin-bottom: 0.25rem;
+        }
+
+        .confirm-intro-copy p {
+            font-size: 0.8rem;
+            color: var(--muted-foreground);
+            margin-bottom: 0;
+        }
+
+        .section-header-with-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.85rem;
+            margin-bottom: 0.85rem;
+            padding: 0.8rem 1.25rem;
+            background: hsl(30 100% 96%);
+            border-radius: var(--radius);
+            border: 1px solid hsl(30 80% 90%);
+        }
+
+        .section-header-with-action .section-header-orange {
+            flex: 1;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            background: transparent;
+            padding: 0;
+            border: none;
+            border-radius: 0;
+        }
+
+        .section-header-with-action .btn-back-section {
+            margin-bottom: 0;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        @media (max-width:639px) {
+            .confirm-intro {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .section-header-with-action {
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .section-header-with-action .btn-back-section {
+                margin-left: auto;
+            }
+
+            .confirm-submit-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-edit-confirm,
+            .btn-submit-confirm {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .section-header-orange {
+                padding: 0.72rem 1rem;
+            }
+
+            .section-header-orange h2 {
+                font-size: 0.95rem;
+            }
+
+            .photo-preview-row td.lbl {
+                width: 82px;
+            }
+
+            .photo-display {
+                min-height: 84px;
+            }
+
+            .photo-thumb {
+                width: 72px;
+                height: 92px;
+            }
+
+            .photo-thumb svg {
+                width: 36px;
+                height: 44px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <div class="page-wrapper bg-muted-light">
+    <div class="page-wrapper bg-muted-light">
 
-    <!-- Header -->
-    <header class="header">
-      <div class="container">
-        <div class="header-logo">
-          <a href="index.html"><img src="assets/university-logo.png" alt="人間環境大学"></a>
-        </div>
-        <nav class="header-nav">
-          <a href="index.html">ホーム</a>
-          <a href="#">ガイド</a>
-          <a href="#">よくある質問</a>
-        </nav>
-        <a href="login.html" class="btn btn-nav-outline">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          マイページ
-        </a>
-      </div>
-    </header>
-
-    <!-- Main -->
-    <main class="page-main py-8 px-4">
-      <div class="container max-w-3xl" style="margin: 0 auto;">
-
-        <!-- Breadcrumb -->
-        <nav class="breadcrumb">
-          <a href="dashboard.html">トップ</a>
-          <span class="separator">/</span>
-          <span class="current">入力内容確認</span>
-        </nav>
-
-        <!-- Step indicator -->
-        <div class="step-indicator">
-          <div class="step-indicator-header">
-            <span class="step-indicator-label">ステップ 3/3</span>
-            <span class="step-indicator-text">入力内容確認</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-bar-fill" style="width: 100%"></div>
-          </div>
-        </div>
-
-        <!-- Main card -->
-        <div class="card card-padded space-y-8">
-          <div class="text-center">
-            <h1 class="text-xl font-bold mb-2">入力内容確認</h1>
-            <p class="text-sm text-muted">以下の内容をご確認の上、「登録する」ボタンをクリックしてください。</p>
-          </div>
-
-          <!-- 志願者情報 -->
-          <div>
-            <div class="section-header">
-              <h2>志願者情報</h2>
+        <header class="header">
+            <div class="container">
+                <div class="header-logo"><a href="index.html"><img src="assets/university-logo.png" alt="人間環境大学"></a>
+                </div>
+                <nav class="header-nav">
+                    <a href="index.html">ホーム</a>
+                    <a href="#">ガイド</a>
+                    <a href="#">よくある質問</a>
+                </nav>
+                <a href="login.html" class="btn btn-nav-outline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    マイページ
+                </a>
             </div>
-            <div class="px-2">
-              <div class="confirm-row">
-                <span class="confirm-row-label">氏名</span>
-                <span class="confirm-row-value">山田 太郎</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">フリガナ</span>
-                <span class="confirm-row-value">ヤマダ タロウ</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">性別</span>
-                <span class="confirm-row-value">男性</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">生年月日</span>
-                <span class="confirm-row-value">2006年4月15日</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">郵便番号</span>
-                <span class="confirm-row-value">444-3505</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">都道府県</span>
-                <span class="confirm-row-value">愛知県</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">市区町村</span>
-                <span class="confirm-row-value">岡崎市</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">番地</span>
-                <span class="confirm-row-value">本宿町上三本松6-2</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">建物名・部屋番号</span>
-                <span class="confirm-row-value">—</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">電話番号</span>
-                <span class="confirm-row-value">0564-48-7811</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">携帯電話番号</span>
-                <span class="confirm-row-value">090-1234-5678</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">メールアドレス</span>
-                <span class="confirm-row-value">yamada@example.com</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">顔写真</span>
-                <span class="confirm-row-value">アップロード済み</span>
-              </div>
-            </div>
-          </div>
+        </header>
 
-          <!-- 保護者情報 -->
-          <div>
-            <div class="section-header-orange">
-              <h2>保護者情報</h2>
-            </div>
-            <div class="px-2">
-              <div class="confirm-row">
-                <span class="confirm-row-label">保護者氏名</span>
-                <span class="confirm-row-value">山田 花子</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">フリガナ</span>
-                <span class="confirm-row-value">ヤマダ ハナコ</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">郵便番号</span>
-                <span class="confirm-row-value">444-3505</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">都道府県</span>
-                <span class="confirm-row-value">愛知県</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">住所</span>
-                <span class="confirm-row-value">岡崎市本宿町上三本松6-2</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">電話番号</span>
-                <span class="confirm-row-value">0564-48-7811</span>
-              </div>
-            </div>
-          </div>
+        <main class="page-main">
+            <div class="confirm-wrap">
 
-          <!-- 志望校アンケート -->
-          <div>
-            <div class="section-header-orange">
-              <h2>志望校に関するアンケート</h2>
-            </div>
-            <div class="px-2">
-              <div class="confirm-row">
-                <span class="confirm-row-label">第1志望</span>
-                <span class="confirm-row-value">人間環境大学 / 心理学部・心理学科</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">第2志望</span>
-                <span class="confirm-row-value">—</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">第3志望</span>
-                <span class="confirm-row-value">—</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">第4志望</span>
-                <span class="confirm-row-value">—</span>
-              </div>
-            </div>
-          </div>
+                <!-- [FIX 1] Step 3/5 -->
+                <div class="step-indicator">
+                    <div class="step-indicator-header">
+                        <span class="step-indicator-label">ステップ 3/5</span>
+                        <span class="step-indicator-text">登録内容確認</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width:60%"></div>
+                    </div>
+                </div>
 
-          <!-- 出身高等学校情報 -->
-          <div>
-            <div class="section-header-orange">
-              <h2>出身高等学校情報</h2>
-            </div>
-            <div class="px-2">
-              <div class="confirm-row">
-                <span class="confirm-row-label">学校コード</span>
-                <span class="confirm-row-value">23643B</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">学校名</span>
-                <span class="confirm-row-value">人間環境大学附属岡崎高等学校</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">課程</span>
-                <span class="confirm-row-value">全日制</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">学科</span>
-                <span class="confirm-row-value">普通科</span>
-              </div>
-              <div class="confirm-row">
-                <span class="confirm-row-label">卒業年月</span>
-                <span class="confirm-row-value">2026年3月</span>
-              </div>
-            </div>
-          </div>
+                <div class="card card-padded">
+                    <div class="confirm-intro">
+                        <div class="confirm-intro-copy">
+                            <h1>個人情報登録</h1>
+                            <p>以下の内容を入力して、「次へ」ボタンをクリックしてください。<br>[必須]欄については、必ず入力してください。</p>
+                        </div>
+                    </div>
 
-          <!-- Buttons -->
-          <div class="grid grid-cols-2 gap-4" style="padding-top: 1rem;">
-            <a href="register.html"><button type="button" class="btn btn-outline btn-full btn-lg">戻る（修正する）</button></a>
-            <a href="register-success.html"><button type="button" class="btn btn-primary btn-full btn-lg">登録する</button></a>
-          </div>
-        </div>
-      </div>
-    </main>
+                    <!-- [FIX 2] 試験選択 section -->
+                    <div class="confirm-section">
+                        <div class="section-header-with-action">
+                            <div class="section-header-orange">
+                                <h2 class="icon-exam">試験選択</h2>
+                            </div>
+                            <a href="exam-selection.html" class="btn-back-section" aria-label="試験選択を編集">編集</a>
+                        </div>
+                        <table class="exam-table">
+                            <tr>
+                                <td class="lbl">入試区分</td>
+                                <td class="val">一般入試／大学入学共通テスト利用入試</td>
+                            </tr>
+                            <tr class="row-pink">
+                                <td class="lbl" style="text-align:center;">一般入試Ⅱ期</td>
+                                <td class="val" style="text-align:center;font-weight:700;">一般入試Ⅱ期</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">学部・学科</td>
+                                <td class="val">心理学部　心理学科</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">併願する学部・学科</td>
+                                <td class="val">心理学部　犯罪心理学科<br>総合心理学部　総合心理学科<br>総合心理学部　総合犯罪心理学科</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">試験地</td>
+                                <td class="val">本学（岡崎）</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">教科・科目</td>
+                                <td class="val">
+                                    <table class="subject-nested">
+                                        <tr>
+                                            <td>1時限目 第1解答科目</td>
+                                            <td>外国語</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1時限目 第2解答科目</td>
+                                            <td>国語</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr class="row-teal">
+                                <td class="lbl">入学検定料</td>
+                                <td class="val">
+                                    <div class="amount-val">38000円</div>
+                                    <div class="amount-note">※別途事務手数料（1,500円）が必要です。</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div>
-            <div class="footer-logo">
-              <img src="assets/university-logo.png" alt="人間環境大学">
-            </div>
-            <p class="footer-description">
-              人間環境大学 (UNIVERSITY OF HUMAN ENVIRONMENTS)<br>
-              いのちをところ。環境と情報の未来を創造する高品質な教育環境を提供しています。
-            </p>
-          </div>
-          <div class="footer-contact">
-            <h4>お問い合わせ</h4>
-            <div class="footer-contact-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-              <span>岡崎キャンパス: 〒444-3505 愛知県岡崎市本宿町上三本松6-2</span>
-            </div>
-            <div class="footer-contact-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              <span>0564-48-7811</span>
-            </div>
-          </div>
-          <div class="footer-links">
-            <h4>クイックリンク</h4>
-            <ul>
-              <li><a href="#">入試情報</a></li>
-              <li><a href="#">学部・学科</a></li>
-              <li><a href="#">奨学金・学費</a></li>
-              <li><a href="#">プライバシーポリシー</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div class="container">
-          <p>© 2024 University of Human Environments. All Rights Reserved.</p>
-        </div>
-      </div>
-    </footer>
+                    <!-- [FIX 5] 志願者情報 — split into sub-sections -->
+                    <div class="confirm-section">
+                        <div class="section-header-with-action">
+                            <div class="section-header-orange">
+                                <h2 class="icon-user">志願者情報</h2>
+                            </div>
+                            <a href="register.html?step=0" class="btn-back-section" aria-label="志願者情報を編集">編集</a>
+                        </div>
+                        <table class="cdt">
+                            <tr>
+                                <td class="lbl">志願者氏名（漢字）</td>
+                                <td class="val two-col"><span>姓：キャプチャ</span><span>名：画面</span></td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">志願者氏名（カナ）</td>
+                                <td class="val two-col"><span>セイ：キャプチャ</span><span>メイ：がメン</span></td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">性別</td>
+                                <td class="val">男</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">生年月日</td>
+                                <td class="val">2009年 01月 01日</td>
+                            </tr>
+                        </table>
+                    </div>
 
-  </div>
-  <script src="app.js"></script>
+                    <div class="confirm-section">
+                        <div class="section-header-with-action">
+                            <div class="section-header-orange">
+                                <h2 class="icon-map">通知先情報</h2>
+                            </div>
+                            <a href="register.html?step=0" class="btn-back-section" aria-label="通知先情報を編集">編集</a>
+                        </div>
+                        <table class="cdt">
+                            <tr>
+                                <td class="lbl">郵便番号</td>
+                                <td class="val">444-3505</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">都道府県</td>
+                                <td class="val">愛知県</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">市区町村<br>番地</td>
+                                <td class="val">岡崎市本宿町上三本松6-2</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">建物名・<br>部屋番号</td>
+                                <td class="val">人間環境大学</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">電話番号</td>
+                                <td class="val">0564-48-7811</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">本人携帯電話</td>
+                                <td class="val gray-val">—</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="confirm-section">
+                        <div class="section-header-with-action">
+                            <div class="section-header-orange">
+                                <h2 class="icon-mail">メールアドレス</h2>
+                            </div>
+                            <a href="register.html?step=0" class="btn-back-section" aria-label="メールアドレスを編集">編集</a>
+                        </div>
+                        <table class="cdt">
+                            <tr>
+                                <td class="lbl">メールアドレス</td>
+                                <td class="val"><span class="teal-val">t-takeshita@uhe.ac.jp</span></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="confirm-section">
+                        <div class="section-header-with-action">
+                            <div class="section-header-orange">
+                                <h2 class="icon-lock">マイページ用パスワード　※ご自身で設定してください。</h2>
+                            </div>
+                            <a href="register.html?step=0" class="btn-back-section" aria-label="パスワードを編集">編集</a>
+                        </div>
+                        <table class="cdt">
+                            <tr>
+                                <td class="lbl">マイページ用<br>パスワード</td>
+                                <td class="val">1111</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="confirm-section">
+                        <div class="section-header-with-action">
+                            <div class="section-header-orange">
+                                <h2 class="icon-photo">顔写真</h2>
+                            </div>
+                            <a href="register.html?step=0" class="btn-back-section" aria-label="顔写真を編集">編集</a>
+                        </div>
+                        <table class="cdt">
+                            <tr class="photo-preview-row">
+                                <td class="lbl">写真</td>
+                                <td class="val">
+                                    <div class="photo-display">
+                                        <div class="photo-thumb" id="confirmPhotoThumb" style="display:none;">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- 保護者情報 -->
+                    <div class="confirm-section">
+                        <div class="section-header-with-action">
+                            <div class="section-header-orange">
+                                <h2 class="icon-users">保護者情報　※本人と同居の場合、入力不要</h2>
+                            </div>
+                            <a href="register.html?step=1" class="btn-back-section" aria-label="保護者情報を編集">編集</a>
+                        </div>
+                        <table class="cdt">
+                            <tr>
+                                <td class="lbl">保護者氏名（漢字）</td>
+                                <td class="val two-col"><span>姓：環境</span><span>名：父</span></td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">保護者氏名（カナ）</td>
+                                <td class="val two-col"><span>セイ：かんキョウ</span><span>メイ：チチ</span></td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">郵便番号</td>
+                                <td class="val">444-3505</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">都道府県</td>
+                                <td class="val">愛知県</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">住所</td>
+                                <td class="val">岡崎市本宿町上三本松6-2</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">電話番号</td>
+                                <td class="val">0564-48-7811</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- [FIX 6] 志望校アンケート — 第1〜5志望, 2-col -->
+                    <div class="confirm-section">
+                        <div class="section-header-with-action">
+                            <div class="section-header-orange">
+                                <h2 class="icon-file">志望校に関するアンケート</h2>
+                            </div>
+                            <a href="register.html?step=2" class="btn-back-section" aria-label="アンケートを編集">編集</a>
+                        </div>
+                        <table class="cdt">
+                            <tr>
+                                <td class="lbl">第1志望</td>
+                                <td class="val">
+                                    <div class="kibou-row">
+                                        <div>
+                                            <div class="k-label">学校名</div>
+                                            <div class="k-val">人間環境大学</div>
+                                        </div>
+                                        <div>
+                                            <div class="k-label">学部・学科</div>
+                                            <div class="k-val">心理学部 心理学科</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">第2志望</td>
+                                <td class="val">
+                                    <div class="kibou-row">
+                                        <div>
+                                            <div class="k-label">学校名</div>
+                                            <div class="k-val gray-val">—</div>
+                                        </div>
+                                        <div>
+                                            <div class="k-label">学部・学科</div>
+                                            <div class="k-val gray-val">—</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">第3志望</td>
+                                <td class="val">
+                                    <div class="kibou-row">
+                                        <div>
+                                            <div class="k-label">学校名</div>
+                                            <div class="k-val gray-val">—</div>
+                                        </div>
+                                        <div>
+                                            <div class="k-label">学部・学科</div>
+                                            <div class="k-val gray-val">—</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">第4志望</td>
+                                <td class="val">
+                                    <div class="kibou-row">
+                                        <div>
+                                            <div class="k-label">学校名</div>
+                                            <div class="k-val gray-val">—</div>
+                                        </div>
+                                        <div>
+                                            <div class="k-label">学部・学科</div>
+                                            <div class="k-val gray-val">—</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">第5志望</td>
+                                <td class="val">
+                                    <div class="kibou-row">
+                                        <div>
+                                            <div class="k-label">学校名</div>
+                                            <div class="k-val gray-val">—</div>
+                                        </div>
+                                        <div>
+                                            <div class="k-label">学部・学科</div>
+                                            <div class="k-val gray-val">—</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- 出身高等学校情報 -->
+                    <div class="confirm-section">
+                        <div class="section-header-with-action">
+                            <div class="section-header-orange">
+                                <h2 class="icon-book">出身高等学校情報</h2>
+                            </div>
+                            <a href="register.html?step=3" class="btn-back-section" aria-label="出身高等学校情報を編集">編集</a>
+                        </div>
+                        <table class="cdt">
+                            <tr>
+                                <td class="lbl">出身学校名</td>
+                                <td class="val">
+                                    <div class="school-combo">
+                                        <span class="code">コード：23543B</span>
+                                        <span class="name">名　称：人間環境大学附属岡崎</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">課程</td>
+                                <td class="val">全日制</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">学科</td>
+                                <td class="val">普通科</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl">卒業年</td>
+                                <td class="val">2026年 03月</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- [FIX 7] Submit + warning text -->
+                    <div class="confirm-submit-panel">
+                        <div class="confirm-submit-actions">
+                            <a href="register.html?step=3" class="btn-edit-confirm">戻る（修正する）</a>
+                            <button class="btn-submit-confirm" type="button"
+                                onclick="window.location.href='payment-select.html'">
+                                登録内容確定
+                            </button>
+                        </div>
+                        <div class="warning-text">登録内容確定後の変更はできません。</div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <div class="footer-logo"><img src="assets/university-logo.png" alt="人間環境大学"></div>
+                        <p class="footer-description">人間環境大学 (UNIVERSITY OF HUMAN ENVIRONMENTS)</p>
+                    </div>
+                    <div class="footer-contact">
+                        <h4>お問い合わせ</h4>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            <span>0564-48-7811（入試・広報部）</span>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h4>クイックリンク</h4>
+                        <ul>
+                            <li><a href="#">入試情報</a></li>
+                            <li><a href="#">学部・学科</a></li>
+                            <li><a href="#">プライバシーポリシー</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <p>© 2026 University of Human Environments. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <script src="app.js"></script>
 </body>
+
 </html>

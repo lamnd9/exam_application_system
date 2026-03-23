@@ -1,140 +1,166 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>個人情報の取り扱いについて | 人間環境大学</title>
-  <meta name="description" content="人間環境大学 インターネット出願 個人情報の取り扱い">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人情報の取り扱いについて | 人間環境大学</title>
+    <meta name="description" content="人間環境大学 インターネット出願 個人情報の取り扱い">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <div class="page-wrapper bg-muted-light">
+    <div class="page-wrapper bg-muted-light">
 
-    <!-- Header -->
-    <header class="header">
-      <div class="container">
-        <div class="header-logo">
-          <a href="index.html"><img src="assets/university-logo.png" alt="人間環境大学"></a>
-        </div>
-        <nav class="header-nav">
-          <a href="index.html">ホーム</a>
-          <a href="#">ガイド</a>
-          <a href="#">よくある質問</a>
-        </nav>
-        <a href="login.html" class="btn btn-nav-outline">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          マイページ
-        </a>
-      </div>
-    </header>
-
-    <!-- Main -->
-    <main class="page-main py-8 px-4">
-      <div class="container max-w-3xl" style="margin: 0 auto;">
-
-        <!-- Breadcrumb -->
-        <nav class="breadcrumb">
-          <a href="dashboard.html">トップ</a>
-          <span class="separator">/</span>
-          <span class="text-muted">個人情報の取り扱いについて</span>
-        </nav>
-
-        <!-- Main card -->
-        <div class="card card-padded">
-          <h1 class="text-xl font-bold text-center mb-8">個人情報の取り扱いについて</h1>
-
-          <!-- Policy content -->
-          <div style="background-color: hsl(210 20% 96% / 0.5); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2rem;">
-            <div class="space-y-6">
-              <div>
-                <h2 class="font-bold mb-2">個人情報保護方針</h2>
-                <p class="text-sm text-muted">
-                  人間環境大学（以下「本学」という）は、個人情報の保護に関する法律、その他の関連法令等を遵守し、以下のとおり個人情報保護方針を定め、これを実行いたします。
-                </p>
-              </div>
-
-              <div>
-                <h2 class="font-bold mb-2">1. 個人情報の収集について</h2>
-                <p class="text-sm text-muted">
-                  本学は、入学試験の出願・実施、合否通知、入学手続き等の業務を遂行するために必要な範囲において、個人情報を収集いたします。
-                </p>
-              </div>
-
-              <div>
-                <h2 class="font-bold mb-2">2. 個人情報の利用目的</h2>
-                <p class="text-sm text-muted mb-2">
-                  収集した個人情報は、以下の目的で利用いたします：
-                </p>
-                <ul style="list-style: disc; margin-left: 1.5rem;" class="text-sm text-muted space-y-1">
-                  <li>入学試験の出願受付および実施</li>
-                  <li>受験票の発行</li>
-                </ul>
-              </div>
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-logo">
+                    <a href="index.html" data-clear-registration><img src="assets/university-logo.png" alt="人間環境大学"></a>
+                </div>
+                <nav class="header-nav">
+                    <a href="index.html" data-clear-registration>ホーム</a>
+                    <a href="#">ガイド</a>
+                    <a href="#">よくある質問</a>
+                </nav>
+                <a href="login.html" class="btn btn-nav-outline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    マイページ
+                </a>
             </div>
-          </div>
+        </header>
 
-          <!-- Checkbox -->
-          <div class="checkbox-item mb-8">
-            <input type="checkbox" id="agree-checkbox">
-            <label for="agree-checkbox">個人情報の取り扱いについて同意します</label>
-          </div>
+        <!-- Main -->
+        <main class="page-main py-8 px-4">
+            <div class="container-form">
 
-          <!-- Buttons -->
-          <div class="grid grid-cols-2 gap-4">
-            <a href="dashboard.html">
-              <button type="button" class="btn btn-outline btn-full btn-lg">戻る</button>
-            </a>
-            <a href="exam-selection.html">
-              <button type="button" class="btn btn-primary btn-full btn-lg" id="agree-next-btn" disabled>同意して次へ進む</button>
-            </a>
-          </div>
-        </div>
-      </div>
-    </main>
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="dashboard.html">トップ</a>
+                    <span class="separator">/</span>
+                    <span class="text-muted">個人情報の取り扱いについて</span>
+                </nav>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div>
-            <div class="footer-logo">
-              <img src="assets/university-logo.png" alt="人間環境大学">
+                <!-- Main card -->
+                <div class="card card-padded">
+                    <h1 class="text-xl font-bold text-center mb-8">個人情報の取り扱いについて</h1>
+
+                    <!-- Policy content -->
+                    <div
+                        style="background-color: hsl(210 20% 96% / 0.5); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="space-y-6">
+                            <div>
+                                <h2 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;">個人情報保護方針</h2>
+                                <p class="text-sm text-muted">
+                                    人間環境大学（以下「本学」という）は、個人情報の保護に関する法律、その他の関連法令等を遵守し、以下のとおり個人情報保護方針を定め、これを実行いたします。
+                                </p>
+                            </div>
+
+                            <div>
+                                <h2 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;">1. 個人情報の収集について</h2>
+                                <p class="text-sm text-muted">
+                                    本学は、入学試験の出願・実施、合否通知、入学手続き等の業務を遂行するために必要な範囲において、個人情報を収集いたします。
+                                </p>
+                            </div>
+
+                            <div>
+                                <h2 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;">2. 個人情報の利用目的</h2>
+                                <p class="text-sm text-muted mb-2">
+                                    収集した個人情報は、以下の目的で利用いたします：
+                                </p>
+                                <ul style="list-style: disc; margin-left: 1.5rem;" class="text-sm text-muted space-y-1">
+                                    <li>入学試験の出願受付および実施</li>
+                                    <li>受験票の発行</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Checkbox -->
+                    <div class="checkbox-item mb-8">
+                        <input type="checkbox" id="agree-checkbox">
+                        <label for="agree-checkbox">個人情報の取り扱いについて同意します</label>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="dashboard.html">
+                            <button type="button" class="btn btn-outline btn-full btn-lg">戻る</button>
+                        </a>
+                        <a href="exam-selection.html">
+                            <button type="button" class="btn btn-primary btn-full btn-lg" id="agree-next-btn" disabled>
+                                同意して次へ進む
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M5 12h14"></path>
+                                    <path d="m12 5 7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <p class="footer-description">
-              人間環境大学 (UNIVERSITY OF HUMAN ENVIRONMENTS)<br>
-              いのちをところ。環境と情報の未来を創造する高品質な教育環境を提供しています。
-            </p>
-          </div>
-          <div class="footer-contact">
-            <h4>お問い合わせ</h4>
-            <div class="footer-contact-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-              <span>岡崎キャンパス: 〒444-3505 愛知県岡崎市本宿町上三本松6-2</span>
-            </div>
-            <div class="footer-contact-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              <span>0564-48-7811</span>
-            </div>
-          </div>
-          <div class="footer-links">
-            <h4>クイックリンク</h4>
-            <ul>
-              <li><a href="#">入試情報</a></li>
-              <li><a href="#">学部・学科</a></li>
-              <li><a href="#">奨学金・学費</a></li>
-              <li><a href="#">プライバシーポリシー</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div class="container">
-          <p>© 2024 University of Human Environments. All Rights Reserved.</p>
-        </div>
-      </div>
-    </footer>
+        </main>
 
-  </div>
-  <script src="app.js"></script>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <div class="footer-logo">
+                            <img src="assets/university-logo.png" alt="人間環境大学">
+                        </div>
+                        <p class="footer-description">
+                            人間環境大学 (UNIVERSITY OF HUMAN ENVIRONMENTS)<br>
+                            いのちをところ。環境と情報の未来を創造する高品質な教育環境を提供しています。
+                        </p>
+                    </div>
+                    <div class="footer-contact">
+                        <h4>お問い合わせ</h4>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                            <span>岡崎キャンパス: 〒444-3505 愛知県岡崎市本宿町上三本松6-2</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            <span>0564-48-7811</span>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h4>クイックリンク</h4>
+                        <ul>
+                            <li><a href="#">入試情報</a></li>
+                            <li><a href="#">学部・学科</a></li>
+                            <li><a href="#">奨学金・学費</a></li>
+                            <li><a href="#">プライバシーポリシー</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <p>© 2026 University of Human Environments. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <script src="app.js"></script>
 </body>
+
 </html>

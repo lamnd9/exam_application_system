@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クレジットカード決済 | 人間環境大学</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .credit-wrap {
+            max-width: 48rem;
+            margin: 0 auto;
+            padding: 1.75rem 1.6rem 1.25rem 4rem;
+        }
+
+        /* Card brands */
+        .card-brands {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .card-brand {
+            height: 28px;
+            padding: 3px 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .card-brand.visa {
+            color: #1A1F71;
+        }
+
+        .card-brand.master {
+            color: #EB001B;
+        }
+
+        .card-brand.jcb {
+            color: #003087;
+        }
+
+        .card-brand.amex {
+            color: #016FD0;
+        }
+
+        .card-brand.diners {
+            color: #004A97;
+        }
+
+        /* Form table */
+        .credit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        .credit-table tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .credit-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .credit-table td {
+            padding: 0.75rem 0.875rem;
+            vertical-align: middle;
+            font-size: 0.875rem;
+        }
+
+        .credit-table td:first-child {
+            width: 130px;
+            font-weight: 600;
+            color: var(--muted-foreground);
+            background: var(--secondary);
+            border-right: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .credit-table td:last-child {
+            background: white;
+        }
+
+        .input-hint {
+            font-size: 0.78rem;
+            color: var(--muted-foreground);
+            margin-left: 0.5rem;
+        }
+
+        .expiry-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--foreground);
+        }
+
+        .expiry-row select {
+            padding: 0.45rem 0.65rem;
+            border: 1px solid var(--input);
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            background: white;
+            color: var(--foreground);
+            outline: none;
+            cursor: pointer;
+            min-width: 72px;
+        }
+
+        .expiry-row select:focus {
+            border-color: var(--ring);
+            box-shadow: 0 0 0 2px rgba(34, 139, 34, 0.12);
+        }
+
+        /* Security code section */
+        .security-section {
+            background: hsl(210 20% 98%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .security-section h3 {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--foreground);
+            margin-bottom: 0.6rem;
+        }
+
+        .security-desc {
+            font-size: 0.8rem;
+            color: var(--muted-foreground);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .card-diagrams {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 0.875rem;
+        }
+
+        .card-diagram {
+            width: 100px;
+            height: 60px;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .card-diagram.back {
+            background: linear-gradient(135deg, #374151, #1f2937);
+        }
+
+        .card-diagram.front {
+            background: linear-gradient(135deg, #059669, #0D9488);
+        }
+
+        .card-stripe {
+            position: absolute;
+            top: 14px;
+            left: 0;
+            right: 0;
+            height: 14px;
+            background: #111;
+        }
+
+        .card-sig-area {
+            position: absolute;
+            top: 34px;
+            left: 8px;
+            right: 8px;
+            height: 12px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 4px;
+        }
+
+        .card-cvc-box {
+            font-size: 9px;
+            font-weight: 700;
+            color: #111;
+            background: white;
+            border: 1.5px solid #dc2626;
+            padding: 1px 4px;
+            border-radius: 2px;
+        }
+
+        .card-front-num {
+            position: absolute;
+            bottom: 10px;
+            left: 8px;
+            right: 8px;
+            font-size: 7px;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 0.12em;
+        }
+
+        .card-front-cvc {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1.5px solid #dc2626;
+            border-radius: 2px;
+            padding: 1px 5px;
+            font-size: 9px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .security-extra-note {
+            font-size: 0.78rem;
+            color: var(--muted-foreground);
+            line-height: 1.7;
+        }
+
+        /* Actions */
+        .credit-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-cancel-credit {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--foreground);
+            border-radius: var(--radius);
+            padding: 0.65rem 1.75rem;
+            font-size: 0.875rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.15s;
+        }
+
+        .btn-cancel-credit:hover {
+            background: var(--secondary);
+        }
+
+        .btn-next-credit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 0.65rem 2rem;
+            font-size: 0.875rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-next-credit:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-next-credit svg {
+            width: 14px;
+            height: 14px;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper bg-muted-light">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-logo">
+                    <a href="index.html"><img src="assets/university-logo.png" alt="人間環境大学"></a>
+                </div>
+                <nav class="header-nav">
+                    <a href="index.html">ホーム</a>
+                    <a href="#">ガイド</a>
+                    <a href="#">よくある質問</a>
+                </nav>
+                <a href="login.html" class="btn btn-nav-outline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    マイページ
+                </a>
+            </div>
+        </header>
+
+        <main class="page-main">
+            <div class="credit-wrap">
+
+                <!-- Step indicator -->
+                <div class="step-indicator">
+                    <div class="step-indicator-header">
+                        <span class="step-indicator-label">ステップ 4/5</span>
+                        <span class="step-indicator-text">クレジットカード決済</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 80%"></div>
+                    </div>
+                </div>
+
+                <div class="card card-padded">
+
+                    <!-- Title + card brands -->
+                    <div
+                        style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:1.25rem;">
+                        <h1 style="font-size:1.15rem;font-weight:700;color:var(--foreground);">クレジットでのお支払い</h1>
+                        <div class="card-brands">
+                            <div class="card-brand visa">VISA</div>
+                            <div class="card-brand master">Mastercard</div>
+                            <div class="card-brand jcb">JCB</div>
+                            <div class="card-brand amex">AMEX</div>
+                            <div class="card-brand diners">Diners</div>
+                        </div>
+                    </div>
+
+                    <!-- Card info form -->
+                    <table class="credit-table">
+                        <tr>
+                            <td>カード番号</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                                    <input type="text" class="form-input form-input-md" placeholder="1234567890123456"
+                                        maxlength="16" style="max-width:220px;letter-spacing:0.1em;"
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                                    <span class="input-hint">（ハイフンなし）</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>有効期限</td>
+                            <td>
+                                <div class="expiry-row">
+                                    <select>
+                                        <option value="">月</option>
+                                        <option>01</option>
+                                        <option>02</option>
+                                        <option>03</option>
+                                        <option>04</option>
+                                        <option>05</option>
+                                        <option>06</option>
+                                        <option>07</option>
+                                        <option>08</option>
+                                        <option>09</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                    </select>
+                                    <span>月</span>
+                                    <span style="color:var(--muted-foreground);">/</span>
+                                    <select>
+                                        <option value="">年</option>
+                                        <option>2024</option>
+                                        <option>2025</option>
+                                        <option>2026</option>
+                                        <option>2027</option>
+                                        <option>2028</option>
+                                        <option>2029</option>
+                                        <option>2030</option>
+                                        <option>2031</option>
+                                        <option>2032</option>
+                                    </select>
+                                    <span>年</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>セキュリティコード</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                                    <input type="text" class="form-input form-input-xs" placeholder="123" maxlength="4"
+                                        style="letter-spacing:0.15em;"
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                                    <span class="input-hint">セキュリティコードを入力してください</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Security code explanation -->
+                    <div class="security-section">
+                        <h3>セキュリティコードとは</h3>
+                        <p class="security-desc">
+                            クレジットカード裏面の署名部の上に記載されております数字の、右から3桁を指します。<br>
+                            （1234 567と記載されている場合は567がセキュリティコードになります）
+                        </p>
+
+                        <div class="card-diagrams">
+                            <!-- Card back 1 -->
+                            <div class="card-diagram back">
+                                <div class="card-stripe"></div>
+                                <div class="card-sig-area">
+                                    <span style="font-size:7px;color:#6b7280;margin-right:3px;">2345</span>
+                                    <span class="card-cvc-box">123</span>
+                                </div>
+                                <div
+                                    style="position:absolute;bottom:6px;left:8px;font-size:7px;color:rgba(255,255,255,0.5);">
+                                    ご署名</div>
+                            </div>
+                            <!-- Card back 2 -->
+                            <div class="card-diagram back">
+                                <div class="card-stripe"></div>
+                                <div class="card-sig-area">
+                                    <span style="font-size:6px;color:#6b7280;margin-right:2px;">2345 2345 2345
+                                        2345</span>
+                                    <span class="card-cvc-box">123</span>
+                                </div>
+                                <div
+                                    style="position:absolute;bottom:6px;left:8px;font-size:7px;color:rgba(255,255,255,0.5);">
+                                    ご署名</div>
+                            </div>
+                            <!-- Card front (AMEX style) -->
+                            <div class="card-diagram front">
+                                <div
+                                    style="position:absolute;top:8px;left:8px;font-size:7px;color:rgba(255,255,255,0.7);">
+                                    **** **** ****</div>
+                                <div class="card-front-cvc">1234</div>
+                                <div
+                                    style="position:absolute;top:20px;right:28px;width:20px;height:13px;background:rgba(255,255,255,0.15);border-radius:10px;">
+                                </div>
+                                <div class="card-front-num">〇〇 〇〇〇〇〇</div>
+                            </div>
+                        </div>
+
+                        <p class="security-extra-note">
+                            ほとんどのケースは上記に該当しますが、一部のクレジットカードにつきましてはクレジットカード表面のカード番号上部に記載されております4桁の数字を指すケースもあります。<br>
+                            ご不明な場合は、お持ちのクレジットカード会社にお問合せ下さい。
+                        </p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="credit-actions">
+                        <button class="btn-cancel-credit" type="button"
+                            onclick="window.location.href='payment-select.html'">
+                            キャンセル
+                        </button>
+                        <button class="btn-next-credit" type="button"
+                            onclick="window.location.href='payment-confirm.html'">
+                            次へ
+                            <svg viewBox="0 0 14 14">
+                                <path d="M3 7h8M7 3l4 4-4 4" />
+                            </svg>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <div class="footer-logo">
+                            <img src="assets/university-logo.png" alt="人間環境大学">
+                        </div>
+                        <p class="footer-description">人間環境大学 (UNIVERSITY OF HUMAN ENVIRONMENTS)</p>
+                    </div>
+                    <div class="footer-contact">
+                        <h4>お問い合わせ</h4>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.9 12.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            <span>0564-48-7811（入試・広報部）</span>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h4>クイックリンク</h4>
+                        <ul>
+                            <li><a href="#">入試情報</a></li>
+                            <li><a href="#">プライバシーポリシー</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <p>© 2026 University of Human Environments. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

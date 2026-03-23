@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出願登録完了 | 人間環境大学</title>
+    <meta name="description" content="人間環境大学 インターネット出願 出願登録完了">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .success-page-wrap {
+            max-width: 48rem;
+            margin: 0 auto;
+            padding: 1.75rem 1.6rem 1.25rem 4rem;
+        }
+
+        /* App number highlight */
+        .app-number-card {
+            background: hsl(145 63% 95%);
+            border: 1.5px solid hsl(145 63% 65%);
+            border-radius: var(--radius);
+            display: grid;
+            grid-template-columns: 10rem 1fr;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-number-label {
+            background: hsl(145 63% 88%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: hsl(145 63% 25%);
+            border-right: 1px solid hsl(145 63% 72%);
+            text-align: center;
+        }
+
+        .app-number-value {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .app-number-num {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: hsl(145 63% 25%);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.35rem;
+        }
+
+        .app-number-note {
+            font-size: 0.8rem;
+            color: hsl(145 63% 35%);
+            line-height: 1.65;
+        }
+
+        /* Section blocks */
+        .success-section {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-section-head {
+            background: var(--secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .success-section-head svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 1.8;
+            flex-shrink: 0;
+        }
+
+        .success-section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--foreground);
+        }
+
+        .success-section-body {
+            padding: 1.1rem 1.25rem;
+        }
+
+        /* Payment info table */
+        .pay-info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .pay-info-table tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pay-info-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .pay-info-table td {
+            padding: 0.65rem 0.75rem;
+            font-size: 0.875rem;
+            vertical-align: middle;
+        }
+
+        .pay-info-table td:first-child {
+            width: 130px;
+            font-weight: 600;
+            color: var(--muted-foreground);
+            background: var(--secondary);
+            border-right: 1px solid var(--border);
+        }
+
+        .pay-amount-highlight {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: hsl(145 63% 28%);
+        }
+
+        /* Download info */
+        .download-note {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Urgent notice */
+        .urgent-notice {
+            background: hsl(0 84% 97%);
+            border: 1px solid hsl(0 84% 80%);
+            border-left: 4px solid hsl(0 84% 55%);
+            border-radius: var(--radius);
+            padding: 0.875rem 1.1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: hsl(0 84% 30%);
+            font-weight: 600;
+            line-height: 1.65;
+        }
+
+        /* Next steps */
+        .next-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .next-step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            background: var(--secondary);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .next-step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .next-step-text {
+            font-size: 0.875rem;
+            color: var(--foreground);
+            line-height: 1.6;
+        }
+
+        .next-step-text strong {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .btn-mypage-access {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 0.75rem 2rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-mypage-access:hover {
+            background: #ea580c;
+        }
+
+        .btn-close {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 0.75rem 2rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+
+        .btn-close:hover {
+            background: var(--primary-light);
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper bg-muted-light">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-logo">
+                    <a href="index.html"><img src="assets/university-logo.png" alt="人間環境大学"></a>
+                </div>
+                <nav class="header-nav">
+                    <a href="index.html">ホーム</a>
+                    <a href="#">ガイド</a>
+                    <a href="#">よくある質問</a>
+                </nav>
+                <a href="mypage.html" class="btn btn-nav-outline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    マイページ
+                </a>
+            </div>
+        </header>
+
+        <main class="page-main">
+            <div class="success-page-wrap">
+
+                <!-- Step indicator -->
+                <div class="step-indicator">
+                    <div class="step-indicator-header">
+                        <span class="step-indicator-label">ステップ 5/5</span>
+                        <span class="step-indicator-text">登録完了</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <div class="card card-padded">
+
+                    <!-- SUCCESS HEADER -->
+                    <div style="text-align:center;margin-bottom:1.75rem;">
+                        <div class="success-icon-wrapper" style="margin-bottom:1rem;">
+                            <div class="success-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                            </div>
+                        </div>
+                        <h1 style="font-size:1.35rem;font-weight:700;color:var(--foreground);margin-bottom:0.4rem;">
+                            出願登録が完了しました</h1>
+                        <p style="font-size:0.875rem;color:var(--muted-foreground);">出願登録は完了しました。</p>
+                    </div>
+
+                    <!-- URGENT: 書類郵送 -->
+                    <div class="urgent-notice">
+                        引き続き、出願書類の郵送を行ってください。<br>
+                        ※出願期間内に出願書類を郵送しないと出願完了とはなりません。
+                    </div>
+
+                    <!-- 出願番号 -->
+                    <div class="app-number-card">
+                        <div class="app-number-label">出願番号</div>
+                        <div class="app-number-value">
+                            <div class="app-number-num">7195189906</div>
+                            <div class="app-number-note">
+                                この番号は受験番号ではありません。<br>
+                                ご登録内容の確認の際に必要となりますので、大事に保管しておいてください。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 入学検定料 -->
+                    <div class="success-section">
+                        <div class="success-section-head">
+                            <svg viewBox="0 0 16 16">
+                                <rect x="1" y="3" width="14" height="10" rx="1.5" />
+                                <path d="M1 7h14" />
+                                <path d="M4 11h2" />
+                            </svg>
+                            <span class="success-section-title">入学検定料のお支払い</span>
+                        </div>
+                        <div class="success-section-body">
+                            <table class="pay-info-table">
+                                <tr>
+                                    <td>お支払い金額</td>
+                                    <td>
+                                        入学検定料：38,000円 + 事務手数料：1,500円 =
+                                        <span class="pay-amount-highlight">39,500円</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>お支払い期限</td>
+                                    <td style="color:var(--muted-foreground);">（クレジットカードにてお支払い済）</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 出願書類ダウンロード -->
+                    <div class="success-section">
+                        <div class="success-section-head">
+                            <svg viewBox="0 0 16 16">
+                                <path d="M8 2v9M5 8l3 3 3-3" />
+                                <path d="M2 13h12" />
+                            </svg>
+                            <span class="success-section-title">出願書類のダウンロード・印刷</span>
+                        </div>
+                        <div class="success-section-body">
+                            <p class="download-note">
+                                マイページから志願票・宛名ラベルをダウンロードし、A4サイズ片面でカラー印刷したうえで、必ず出願期間内に簡易書留・速達で郵送してください。<br>
+                                その他出願書類は入試試験要項で確認してください。
+                            </p>
+                            <a href="mypage.html" class="btn-mypage-access">
+                                マイページへアクセス
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 今後の流れ -->
+                    <div class="success-section">
+                        <div class="success-section-head">
+                            <svg viewBox="0 0 16 16">
+                                <circle cx="8" cy="8" r="6" />
+                                <path d="M8 5v4M8 10.5v.5" />
+                            </svg>
+                            <span class="success-section-title">今後の流れ</span>
+                        </div>
+                        <div class="success-section-body">
+                            <div class="next-steps">
+                                <div class="next-step-item">
+                                    <div class="next-step-num">1</div>
+                                    <div class="next-step-text">
+                                        <strong>出願書類の郵送</strong>
+                                        マイページから志願票・宛名ラベルを印刷し、出願期間内に簡易書留・速達で郵送してください。
+                                    </div>
+                                </div>
+                                <div class="next-step-item">
+                                    <div class="next-step-num">2</div>
+                                    <div class="next-step-text">
+                                        <strong>書類到着確認</strong>
+                                        マイページにて書類の到着状況を確認できます。
+                                    </div>
+                                </div>
+                                <div class="next-step-item">
+                                    <div class="next-step-num">3</div>
+                                    <div class="next-step-text">
+                                        <strong>受験票の印刷</strong>
+                                        書類到着後、マイページから受験票をダウンロード・印刷してください。
+                                    </div>
+                                </div>
+                                <div class="next-step-item">
+                                    <div class="next-step-num">4</div>
+                                    <div class="next-step-text">
+                                        <strong>合否結果の確認</strong>
+                                        合格発表日にマイページから入試結果を確認できます。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CLOSE -->
+                    <div class="action-buttons">
+                        <button class="btn-close" type="button" onclick="window.close()">
+                            閉じる
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <div class="footer-logo">
+                            <img src="assets/university-logo.png" alt="人間環境大学">
+                        </div>
+                        <p class="footer-description">人間環境大学 (UNIVERSITY OF HUMAN ENVIRONMENTS)</p>
+                    </div>
+                    <div class="footer-contact">
+                        <h4>お問い合わせ</h4>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.9 12.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            <span>0564-48-7811（入試・広報部）</span>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h4>クイックリンク</h4>
+                        <ul>
+                            <li><a href="#">入試情報</a></li>
+                            <li><a href="#">プライバシーポリシー</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <p>© 2026 University of Human Environments. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
