@@ -293,6 +293,63 @@ select {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* ===== Hero CTA Primary (今すぐ出願する) ===== */
+.btn-cta-primary {
+    background: linear-gradient(135deg, #f59e0b 0%, #f97316 60%, #ef4444 100%);
+    color: #ffffff !important;
+    font-size: 1.1rem;
+    font-weight: 900;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    border: none !important;
+    box-shadow:
+        0 0 0 3px rgba(249, 115, 22, 0.35),
+        0 8px 24px rgba(239, 68, 68, 0.45),
+        0 2px 6px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.03em;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    animation: cta-pulse 2.8s ease-in-out infinite;
+}
+
+.btn-cta-primary svg {
+    transition: transform 0.25s ease;
+}
+
+.btn-cta-primary:hover {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow:
+        0 0 0 4px rgba(249, 115, 22, 0.45),
+        0 16px 40px rgba(239, 68, 68, 0.55),
+        0 4px 12px rgba(0, 0, 0, 0.25);
+    animation: none;
+}
+
+.btn-cta-primary:hover svg {
+    transform: translateX(4px);
+}
+
+.btn-cta-primary:active {
+    transform: translateY(0) scale(0.98);
+}
+
+@keyframes cta-pulse {
+    0%, 100% {
+        box-shadow:
+            0 0 0 3px rgba(249, 115, 22, 0.35),
+            0 8px 24px rgba(239, 68, 68, 0.45),
+            0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        box-shadow:
+            0 0 0 6px rgba(249, 115, 22, 0.2),
+            0 12px 32px rgba(239, 68, 68, 0.6),
+            0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+}
+
+
 .btn-gradient-blue {
     background: linear-gradient(to right, #3b82f6, #22d3ee);
     color: white;
