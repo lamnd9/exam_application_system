@@ -82,7 +82,8 @@
                             <span class="badge-required">必須</span>
                         </div>
 
-                        <div class="radio-group">
+                        <!-- Normal exam list (shown when exams are available) -->
+                        <div class="radio-group" id="exam-list">
                             <div class="radio-item">
                                 <input type="radio" name="exam-category" id="exam-1" value="総合型選抜 AOA入試（前期型） III期">
                                 <label for="exam-1">総合型選抜 AOA入試（前期型） III期</label>
@@ -102,6 +103,15 @@
                             <div class="radio-item">
                                 <input type="radio" name="exam-category" id="exam-5" value="外国人留学生選抜 III期">
                                 <label for="exam-5">外国人留学生選抜 III期</label>
+                            </div>
+                        </div>
+
+                        <!-- No exams available notice (shown when no exams are available) -->
+                        <div id="no-exam-notice" style="display:none;">
+                            <div class="no-exam-alert">
+                                <p class="no-exam-alert-title">選択できる試験がありません。</p>
+                                <p>志願する入試の出願期間中にログイン・登録してください。</p>
+                                <p>出願期間は募集要項でご確認ください。</p>
                             </div>
                         </div>
                     </div>
@@ -181,6 +191,27 @@
 
     </div>
     <script src="app.js"></script>
+    <script>
+        // Read HAS_EXAMS from URL query param:
+        //   ?exams=1  → show exam list (normal flow from privacy-consent.html)
+        //   ?exams=0  → show "no exams" error notice
+        //   (no param) → defaults to true (show exam list)
+        var params = new URLSearchParams(window.location.search);
+        var HAS_EXAMS = params.get('exams') !== '0';
+
+        (function () {
+            if (!HAS_EXAMS) {
+                document.getElementById('exam-list').style.display = 'none';
+                document.getElementById('no-exam-notice').style.display = 'block';
+                var nextBtn = document.getElementById('exam-next-btn');
+                if (nextBtn) {
+                    nextBtn.disabled = true;
+                    nextBtn.closest('a').style.pointerEvents = 'none';
+                    nextBtn.closest('a').style.opacity = '0.5';
+                }
+            }
+        })();
+    </script>
 </body>
 
 </html>

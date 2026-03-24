@@ -91,7 +91,7 @@
                         <a href="dashboard.html">
                             <button type="button" class="btn btn-outline btn-full btn-lg">戻る</button>
                         </a>
-                        <a href="exam-selection.html">
+                        <a href="exam-selection.html?exams=1">
                             <button type="button" class="btn btn-primary btn-full btn-lg" id="agree-next-btn" disabled>
                                 同意して次へ進む
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
@@ -101,6 +101,13 @@
                                     <path d="m12 5 7 7-7 7"></path>
                                 </svg>
                             </button>
+                        </a>
+                    </div>
+
+                    <!-- Test link for no-exam state -->
+                    <div style="text-align:right; margin-top:0.75rem;">
+                        <a href="exam-selection.html?exams=0" style="font-size:0.75rem; color:var(--muted-foreground); text-decoration:underline;">
+                            [テスト] 試験なし画面を確認する
                         </a>
                     </div>
                 </div>

@@ -1359,6 +1359,25 @@ select {
     padding: 1.5rem;
 }
 
+/* ===== No Exam Available Alert ===== */
+.no-exam-alert {
+    padding: 0.75rem 1rem;
+    border: 1px solid #fca5a5;
+    border-radius: var(--radius);
+    background-color: #fff5f5;
+    line-height: 1.8;
+}
+
+.no-exam-alert p {
+    font-size: 0.875rem;
+    color: var(--destructive);
+    font-style: italic;
+}
+
+.no-exam-alert-title {
+    font-weight: 700;
+}
+
 /* ===== Utility Classes ===== */
 .text-sm {
     font-size: 0.875rem;
