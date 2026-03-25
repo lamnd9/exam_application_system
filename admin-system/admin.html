@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="志願者データ管理 - intelligent VISION management suite">
+    <title>志願者データ管理 - Admin</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+        <div class="sidebar-title">カテゴリー</div>
+
+        <!-- Menu items -->
+        <div class="sidebar-menu">
+            <a href="admin.html" class="sidebar-item active" id="menu-applicant-data">志願者データ管理</a>
+            <a href="admin-assign.html" class="sidebar-item" id="menu-exam-number">受験番号採番</a>
+            <a href="admin-docs.html" class="sidebar-item" id="menu-procedure-docs">手続書類データ取込</a>
+            <a href="admin-payment.html" class="sidebar-item" id="menu-payment-data">入金実績データ出力</a>
+            <a href="admin-results.html" class="sidebar-item" id="menu-result-import">合否発表データ取込</a>
+            <a href="admin-master.html" class="sidebar-item" id="menu-master-data">マスタ管理</a>
+        </div>
+
+        <!-- Branding -->
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">
+                intelligent VISION<br>
+                <span>management suite</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== Main Content ===== -->
+    <main class="admin-main">
+        <h1 class="admin-page-title">志願者データ管理</h1>
+
+        <div class="search-panel">
+            <!-- Header -->
+            <div class="search-panel-header">
+                <span>検索条件</span>
+                <span class="year-badge">入試年度：2026</span>
+            </div>
+
+            <!-- Body -->
+            <div class="search-panel-body">
+                <!-- Row 1: 入試方式 (full width) -->
+                <div class="form-row-1col">
+                    <div class="form-group">
+                        <label for="exam-method">入試方式</label>
+                        <select class="admin-select admin-select-multi" id="exam-method" multiple size="5">
+                            <option>総合型選抜 AO入試（専願型）</option>
+                            <option>総合型選抜 AO入試（併願型）</option>
+                            <option>総合型選抜 ふるさと愛媛特別選抜試験（専願型）</option>
+                            <option>総合型選抜 女子学生特別選抜試験（専願型）</option>
+                            <option>総合型選抜 女子学生特別選抜試験（併願型）</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Row 2: 教科型, 学部等, 学科 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="subject-type">教科型</label>
+                        <select class="admin-select" id="subject-type">
+                            <option value="">選択してください</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="faculty">学部等</label>
+                        <select class="admin-select" id="faculty">
+                            <option value="">選択してください</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">学科</label>
+                        <select class="admin-select" id="department">
+                            <option value="">選択してください</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Row 3: 性別, コース (empty slot) -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gender">性別</label>
+                        <select class="admin-select" id="gender">
+                            <option value="">選択してください</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="course">コース</label>
+                        <select class="admin-select" id="course">
+                            <option value="">選択してください</option>
+                        </select>
+                    </div>
+                    <div class="form-group"></div>
+                </div>
+
+                <!-- Row 4: 出願登録日 (span 2 cols) -->
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>出願登録日</label>
+                        <div class="date-range">
+                            <input type="date" class="admin-input" id="reg-date-from">
+                            <span class="range-separator">～</span>
+                            <input type="date" class="admin-input" id="reg-date-to">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 5: 出身校 (full width) -->
+                <div class="form-row-1col">
+                    <div class="form-group">
+                        <label>出身校</label>
+                        <div class="school-search-group">
+                            <div class="form-group code-group">
+                                <label for="school-code">コード：</label>
+                                <input type="text" class="admin-input" id="school-code">
+                            </div>
+                            <button type="button" class="school-search-btn" id="school-search-btn">学校検索</button>
+                            <button type="button" class="btn-orange-sm" id="btn-school-type">高等学校卒業程度認定試験等、外国の学校等</button>
+                            <div class="form-group name-group">
+                                <label for="school-name">名　称：</label>
+                                <input type="text" class="admin-input" id="school-name" readonly>
+                            </div>
+                        </div>
+                        <div class="school-note">※学校コードがわからない場合は「学校検索」ボタンを押してください。</div>
+                    </div>
+                </div>
+
+                <!-- Row 6: 申込区分, 受付番号, 出願番号 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>申込区分</label>
+                        <div class="radio-inline">
+                            <label><input type="radio" name="app-type" value="all" checked> すべて</label>
+                            <label><input type="radio" name="app-type" value="net"> ネット出願</label>
+                            <label><input type="radio" name="app-type" value="paper"> 紙出願</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="receipt-number">受付番号</label>
+                        <input type="text" class="admin-input" id="receipt-number">
+                    </div>
+                    <div class="form-group">
+                        <label for="application-number">出願番号</label>
+                        <input type="text" class="admin-input" id="application-number">
+                    </div>
+                </div>
+
+                <!-- Row 7: 受験番号, 氏名カナ -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>受験番号</label>
+                        <div class="input-range">
+                            <input type="text" class="admin-input" id="exam-number-start" placeholder="">
+                            <span class="range-separator">～</span>
+                            <input type="text" class="admin-input" id="exam-number-end" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>氏名カナ</label>
+                        <div class="name-inputs">
+                            <input type="text" class="admin-input" id="name-kana-sei">
+                            <input type="text" class="admin-input" id="name-kana-mei">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>氏名</label>
+                        <div class="name-inputs">
+                            <input type="text" class="admin-input" id="name-sei">
+                            <input type="text" class="admin-input" id="name-mei">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 8: 志望情報 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aspiration-info">志望情報</label>
+                        <select class="admin-select" id="aspiration-info">
+                            <option value="">選択してください</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Detail toggle -->
+                <div class="detail-toggle">
+                    <button type="button" class="detail-toggle-btn" id="detail-toggle-btn">
+                        <span class="toggle-icon">∧</span> 詳細条件を閉じる
+                    </button>
+                </div>
+
+                <!-- Detail section (expandable) -->
+                <div class="detail-section" id="detail-section">
+                    <!-- Row D1: 入金状況, 入金方法, 書類到着 -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="payment-status">入金状況</label>
+                            <select class="admin-select" id="payment-status">
+                                <option value="">選択してください</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-method">入金方法</label>
+                            <select class="admin-select" id="payment-method">
+                                <option value="">選択してください</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="doc-arrival">書類到着</label>
+                            <select class="admin-select" id="doc-arrival">
+                                <option value="">選択してください</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Row D2: 入金日 (date range) -->
+                    <div class="form-row">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>入金日</label>
+                            <div class="date-range">
+                                <input type="date" class="admin-input" id="payment-date-from">
+                                <span class="range-separator">～</span>
+                                <input type="date" class="admin-input" id="payment-date-to">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row D3: 出願確定, 不備 -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="app-confirm">出願確定</label>
+                            <select class="admin-select" id="app-confirm">
+                                <option value="">選択してください</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="deficiency">不備</label>
+                            <select class="admin-select" id="deficiency">
+                                <option value="">選択してください</option>
+                            </select>
+                        </div>
+                        <div class="form-group"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sort bar -->
+            <div class="sort-bar">
+                <label>表示順：</label>
+                <select class="admin-select" id="sort-order">
+                    <option value="receipt">受付番号</option>
+                    <option value="application">出願番号</option>
+                    <option value="exam">受験番号</option>
+                    <option value="name">氏名</option>
+                </select>
+                <div class="sort-radio">
+                    <label>
+                        <input type="radio" name="sort-direction" value="asc" checked>
+                        昇順
+                    </label>
+                    <label>
+                        <input type="radio" name="sort-direction" value="desc">
+                        降順
+                    </label>
+                </div>
+            </div>
+
+            <!-- Search actions -->
+            <div class="search-actions">
+                <button type="button" class="btn-admin btn-admin-secondary" id="btn-clear">クリア</button>
+                <button type="button" class="btn-admin btn-admin-primary" id="btn-search">検索</button>
+            </div>
+        </div>
+
+        <!-- ===== Pagination ===== -->
+        <div class="result-info">
+            <span>968件中 1～50件を表示</span>
+            <div class="pagination">
+                <a href="#" class="page-link disabled">&lt;&lt;</a>
+                <a href="#" class="page-link disabled">&lt;</a>
+                <a href="#" class="page-link active">1</a>
+                <a href="#" class="page-link">2</a>
+                <a href="#" class="page-link">3</a>
+                <a href="#" class="page-link">4</a>
+                <a href="#" class="page-link">5</a>
+                <a href="#" class="page-link">6</a>
+                <a href="#" class="page-link">7</a>
+                <a href="#" class="page-link">8</a>
+                <a href="#" class="page-link">9</a>
+                <a href="#" class="page-link">10</a>
+                <span class="page-ellipsis">…</span>
+                <a href="#" class="page-link">&gt;</a>
+                <a href="#" class="page-link">&gt;&gt;</a>
+            </div>
+        </div>
+
+        <!-- ===== Results Table ===== -->
+        <table class="result-table" id="result-table">
+            <thead>
+                <tr>
+                    <th class="col-ids">受験番号<br>出願番号<br>受付番号<br>登録日時</th>
+                    <th class="col-exam">試験種別<br>試験区分</th>
+                    <th class="col-dept">学部<br>学科・コース<br>高校名</th>
+                    <th class="col-name">氏名<br>生年月日</th>
+                    <th class="col-pay">支払い方法<br>入金日</th>
+                    <th class="col-doc">書類到着状況<br>書類到着日</th>
+                    <th class="col-progress">進捗</th>
+                    <th class="col-actions">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="cell-ids">
+                        <span class="id-main">319101</span><br>
+                        9505511137<br>000001<br>
+                        <span class="id-date">2025/08/15 14:36:48</span>
+                    </td>
+                    <td>大学院 総合心<br>理学研究科入試<br>Ⅰ期</td>
+                    <td>総合心理学研究科<br>臨床心理学コース</td>
+                    <td>
+                        <span class="name-kana">カケンイチ</span><br>
+                        <span class="name-kanji">確認いち</span><br>
+                        2000/01/02
+                    </td>
+                    <td>コンビニ<br>2025/08/15<br>14:50</td>
+                    <td>到着済<br>2025/08/15</td>
+                    <td>確定<br><span class="status-lack">不備なし</span></td>
+                    <td class="cell-actions"><a href="admin-edit.html" class="btn-edit">編集</a><a href="admin-status.html" class="btn-status">ステータス変更</a></td>
+                </tr>
+                <tr>
+                    <td class="cell-ids">
+                        <span class="id-main">110210001</span><br>
+                        9020551175<br>000002<br>
+                        <span class="id-date">2025/08/15 16:43:32</span>
+                    </td>
+                    <td>総合型選抜 AO<br>入試（併願型）<br>Ⅰ期</td>
+                    <td>心理学科<br>心理学科<br>北海道教育大学附属特<br>別支援</td>
+                    <td>
+                        <span class="name-kana">カケンサン</span><br>
+                        <span class="name-kanji">確認さん</span><br>
+                        2000/01/02
+                    </td>
+                    <td>コンビニ<br>2025/08/15<br>16:44</td>
+                    <td>到着済<br>2025/08/15</td>
+                    <td>確定<br><span class="status-lack">不備なし</span></td>
+                    <td class="cell-actions"><a href="admin-edit.html" class="btn-edit">編集</a><a href="admin-status.html" class="btn-status">ステータス変更</a></td>
+                </tr>
+                <tr>
+                    <td class="cell-ids">
+                        <span class="id-main">131181</span><br>
+                        5583702488<br>000003<br>
+                        <span class="id-date">2025/08/15 16:58:52</span>
+                    </td>
+                    <td>大学院入間環境<br>学研究科入試<br>学内選考</td>
+                    <td>人間環境学研究科<br>臨床心理学研指導分野</td>
+                    <td>
+                        <span class="name-kana">カケンヨン</span><br>
+                        <span class="name-kanji">確認よん</span><br>
+                        2000/01/02
+                    </td>
+                    <td>コンビニ<br>2025/08/15<br>16:59</td>
+                    <td>到着済<br>2025/08/15</td>
+                    <td>確定<br><span class="status-lack">不備なし</span></td>
+                    <td class="cell-actions"><a href="admin-edit.html" class="btn-edit">編集</a><a href="admin-status.html" class="btn-status">ステータス変更</a></td>
+                </tr>
+                <tr>
+                    <td class="cell-ids">
+                        <span class="id-main">339181</span><br>
+                        5098595560<br>000004<br>
+                        <span class="id-date">2025/08/15 17:18:00</span>
+                    </td>
+                    <td>大学院 総合心<br>理学研究科入試<br>学内選考</td>
+                    <td>総合心理学研究科<br>臨床心理学コース</td>
+                    <td>
+                        <span class="name-kana">カケンゴ</span><br>
+                        <span class="name-kanji">確認ご</span><br>
+                        2000/01/02
+                    </td>
+                    <td>コンビニ<br>2025/08/15<br>17:18</td>
+                    <td>到着済<br>2025/08/15</td>
+                    <td>確定<br><span class="status-lack">不備なし</span></td>
+                    <td class="cell-actions"><a href="admin-edit.html" class="btn-edit">編集</a><a href="admin-status.html" class="btn-status">ステータス変更</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script src="assets/js/admin.js"></script>
+</body>
+</html>

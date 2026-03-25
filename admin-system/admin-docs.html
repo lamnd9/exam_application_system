@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="手続書類データ取込 - intelligent VISION management suite">
+    <title>手続書類データ取込 - Admin</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <style>
+        /* CSS Specific to Docs Import Page */
+        .grid-4col {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .grid-4col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-4col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .docs-import-bar {
+            background: #fff;
+            border: 1px solid #ccd5dc;
+            border-radius: 4px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+
+        .btn-import {
+            background: linear-gradient(135deg, #1e3c87, #152654);
+            color: #fff;
+            border: 1px solid #0f1c3f;
+            border-radius: 3px;
+            padding: 8px 32px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.2);
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn-import:hover {
+            background: linear-gradient(135deg, #152a5e, #0f1c3f);
+        }
+
+        .btn-import:active {
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        .table-dark-header {
+            background: #003366 !important;
+            /* Dark blue from the screenshot */
+            color: #fff !important;
+        }
+
+        .result-table thead th.table-dark-header {
+            background: #003366;
+            background: linear-gradient(180deg, #004080 0%, #002244 100%);
+            border-color: #001122;
+        }
+
+        .btn-preview {
+            background: #004080;
+            color: #fff;
+            border: 1px solid #002244;
+            padding: 4px 12px;
+            border-radius: 3px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .btn-preview:hover {
+            background: #002244;
+        }
+
+        .btn-delete {
+            background: #cc0000;
+            color: #fff;
+            border: 1px solid #990000;
+            padding: 4px 12px;
+            border-radius: 3px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background: #990000;
+        }
+    </style>
+</head>
+
+<body class="admin-body">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-title">カテゴリー</div>
+
+        <div class="sidebar-menu">
+            <a href="admin.html" class="sidebar-item">志願者データ管理</a>
+            <a href="admin-assign.html" class="sidebar-item">受験番号採番</a>
+            <a href="admin-docs.html" class="sidebar-item active">手続書類データ取込</a>
+            <a href="admin-payment.html" class="sidebar-item">入金実績データ出力</a>
+            <a href="admin-results.html" class="sidebar-item">合否発表データ取込</a>
+            <a href="admin-master.html" class="sidebar-item" id="menu-master-data">マスタ管理</a>
+        </div>
+
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">
+                intelligent VISION<br>
+                <span>management suite</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== Main Content ===== -->
+    <main class="admin-main">
+
+        <!-- Breadcrumb -->
+        <div class="assign-breadcrumb" style="font-size: 12px; margin-bottom: 12px;">
+            <a href="admin.html" style="color: var(--admin-link-blue); text-decoration: none;">ホーム</a>
+            <span class="sep" style="margin: 0 6px; color: #999;">＞</span>
+            <span>手続書類データ取込</span>
+        </div>
+
+        <h1 class="admin-page-title"
+            style="font-size: 18px; color: #0b5b88; margin-bottom: 20px; font-weight: bold; border-bottom: 3px double #dce4e8; padding-bottom: 8px;">
+            手続書類データ取込
+        </h1>
+
+        <!-- Search Panel -->
+        <div class="search-panel" style="margin-bottom: 24px;">
+            <div class="search-panel-body">
+
+                <div class="form-row" style="margin-bottom: 20px;">
+                    <div class="form-group" style="grid-column: span 3;">
+                        <label>出力書類</label>
+                        <select class="admin-select" style="max-width: 400px;">
+                            <option>入学手続要項</option>
+                            <option>誓約書</option>
+                            <option>健康診断書</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-4col">
+                    <div class="form-group">
+                        <label>試験種別</label>
+                        <select class="admin-select admin-select-multi" multiple size="6">
+                            <option>総合型選抜 AO入試（専願型）</option>
+                            <option>総合型選抜 AO入試（併願型）</option>
+                            <option>総合型選抜 ふるさと愛媛特別選抜試験（専願型）</option>
+                            <option>総合型選抜 女子学生特別選抜試験（専願型）</option>
+                            <option>総合型選抜 女子学生特別選抜試験（併願型）</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>試験区分</label>
+                        <select class="admin-select admin-select-multi" multiple size="6">
+                            <option>なし</option>
+                            <option>Ⅰ 期</option>
+                            <option>Ⅰ 期A方式（3教科型）</option>
+                            <option>Ⅰ 期B方式（2教科型）</option>
+                            <option>Ⅰ 期（2年次）</option>
+                            <option>Ⅱ 期</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>学部・学科</label>
+                        <select class="admin-select admin-select-multi" multiple size="6">
+                            <option>心理学部_心理学科</option>
+                            <option>心理学部_犯罪心理学科</option>
+                            <option>環境科学部_フィールド生態学科</option>
+                            <option>環境科学部_環境データサイエンス学科</option>
+                            <option>看護学部_看護学科</option>
+                            <option>松山看護学部_看護学科</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>合格区分</label>
+                        <select class="admin-select admin-select-multi" multiple size="6">
+                            <option>合格</option>
+                            <option>総合型選抜免除合格</option>
+                            <option>スカラシップ入試合格</option>
+                            <option>スカラシップ入試合格（附属）</option>
+                            <option>特別奨学生A</option>
+                            <option>特別奨学生B</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="search-actions" style="margin-top: 20px; border-top:none; padding-bottom: 0;">
+                    <button type="button" class="btn-admin"
+                        style="background: linear-gradient(to bottom, #777, #333); color:#fff;">検索</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Import Form -->
+        <div class="docs-import-bar">
+            <label style="font-weight: 600; font-size: 13px; color: #333;">書類データリンク <span
+                    style="color:#e60000;font-size:11px;">【必須】</span>：</label>
+            <input type="text" class="admin-input" id="doc-link"
+                placeholder="例: https://ataraxiadx.sharepoint.com/file/d/..." style="flex: 1;">
+            <button type="button" class="btn-import" id="btn-import">取込</button>
+        </div>
+
+        <!-- Result Table -->
+        <div style="background: #fff; overflow-x: auto;">
+            <table class="result-table" style="text-align: center;">
+                <thead>
+                    <tr>
+                        <th class="table-dark-header">手続書類</th>
+                        <th class="table-dark-header">試験種別<br>試験区分</th>
+                        <th class="table-dark-header">学部<br>学科</th>
+                        <th class="table-dark-header">合格区分</th>
+                        <th class="table-dark-header">取込日時</th>
+                        <th class="table-dark-header">プレビュー</th>
+                        <th class="table-dark-header">削除</th>
+                    </tr>
+                </thead>
+                <tbody id="import-tbody">
+                    <!-- Dummy initial data based on mockup -->
+                    <tr>
+                        <td style="text-align: left; font-weight: 600;">入学手続要項</td>
+                        <td style="text-align: left;">
+                            <div style="color: var(--admin-link-blue);">総合型選抜 AO入試（専願型）</div>
+                            <div style="color: #666; font-size: 10px;">なし</div>
+                        </td>
+                        <td style="text-align: left;">
+                            <div>心理学部</div>
+                            <div style="color: #666; font-size: 10px;">心理学科</div>
+                        </td>
+                        <td>合格</td>
+                        <td>2026/01/15 14:30</td>
+                        <td><button type="button" class="btn-preview">プレビュー</button></td>
+                        <td><button type="button" class="btn-delete">削除</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <script src="assets/js/admin-docs.js"></script>
+</body>
+
+</html>

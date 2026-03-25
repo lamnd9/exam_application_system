@@ -1,0 +1,341 @@
+/* ===== Status Page Styles ===== */
+
+/* Breadcrumb (reuse from edit page) */
+.edit-breadcrumb {
+    font-size: 12px;
+    color: var(--admin-text-muted);
+    margin-bottom: 12px;
+}
+
+.edit-breadcrumb a {
+    color: var(--admin-link-blue);
+    text-decoration: none;
+}
+
+.edit-breadcrumb a:hover { text-decoration: underline; }
+
+.edit-breadcrumb .sep {
+    margin: 0 6px;
+    color: #999;
+}
+
+/* ===== Status Panel ===== */
+.status-panel {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    border: 1px solid #b0c4d0;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    background: #fff;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.status-panel-left {
+    background: #f0f5f8;
+    border-right: 1px solid #b0c4d0;
+    padding: 10px 16px;
+    min-width: 220px;
+    flex-shrink: 0;
+}
+
+.status-panel-title {
+    font-weight: 700;
+    font-size: 12px;
+    margin-bottom: 6px;
+    color: var(--admin-text);
+}
+
+.status-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 12px;
+    color: var(--admin-text);
+    line-height: 1.6;
+}
+
+.status-panel-right {
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.status-btn-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+/* Status panel buttons */
+.sp-btn {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+}
+
+.sp-btn:hover { opacity: 0.85; }
+
+.sp-btn-back {
+    background: #6b7280;
+    color: #fff;
+    border-color: #5a6170;
+}
+
+.sp-btn-cancel {
+    background: #c53030;
+    color: #fff;
+    border-color: #a82424;
+}
+
+.sp-btn-photo {
+    background: #1a6b2f;
+    color: #fff;
+    border-color: #155825;
+}
+
+.sp-btn-fix {
+    background: #1a6b2f;
+    color: #fff;
+    border-color: #155825;
+}
+
+.status-notes {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.status-note {
+    font-size: 11px;
+    color: #c53030;
+    line-height: 1.5;
+}
+
+/* ===== Applicant Info Table ===== */
+.status-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #b0c8d8;
+}
+
+.status-info-table th,
+.status-info-table td {
+    border: 1px solid #c4d6e0;
+    padding: 7px 12px;
+    vertical-align: top;
+    line-height: 1.6;
+}
+
+.status-info-table th {
+    background: #dce8f0;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    width: 160px;
+    color: var(--admin-text);
+}
+
+.status-info-table td {
+    background: #fff;
+}
+
+.editable-cell {
+    padding: 6px 10px !important;
+}
+
+.status-textarea {
+    width: 100%;
+    border: 1px solid #bcc8d0;
+    border-radius: 3px;
+    padding: 6px 8px;
+    font-size: 12px;
+    font-family: inherit;
+    resize: vertical;
+    color: var(--admin-text);
+    background: #fafcfd;
+}
+
+.status-textarea:focus {
+    outline: none;
+    border-color: var(--admin-link-blue);
+    background: #fff;
+}
+
+.link-blue {
+    color: var(--admin-link-blue);
+    text-decoration: none;
+}
+
+.link-blue:hover { text-decoration: underline; }
+
+/* ===== Section Title Bar ===== */
+.section-title-bar {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--admin-text);
+    border-bottom: 2px solid var(--admin-text);
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+}
+
+/* ===== Exam Actions Row ===== */
+.exam-actions-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.ea-btn-group-right {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.ea-btn {
+    padding: 5px 14px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+}
+
+.ea-btn:hover { opacity: 0.85; }
+
+.ea-btn-label {
+    background: #2b5ca8;
+    color: #fff;
+    border-color: #1e4a8c;
+}
+
+.ea-btn-add {
+    background: #2b5ca8;
+    color: #fff;
+    border-color: #1e4a8c;
+}
+
+.ea-btn-deficiency {
+    background: #2b5ca8;
+    color: #fff;
+    border-color: #1e4a8c;
+}
+
+.ea-btn-cancel-app {
+    background: #c53030;
+    color: #fff;
+    border-color: #a82424;
+}
+
+.ea-btn-pass {
+    background: #2b5ca8;
+    color: #fff;
+    border-color: #1e4a8c;
+}
+
+/* ===== Status Mini Table ===== */
+.status-mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #b0c8d8;
+}
+
+.status-mini-table th,
+.status-mini-table td {
+    border: 1px solid #c4d6e0;
+    padding: 6px 12px;
+    vertical-align: middle;
+}
+
+.status-mini-table th {
+    background: #2b7a9b;
+    color: #fff;
+    font-weight: 700;
+    text-align: left;
+    width: 130px;
+    font-size: 12px;
+}
+
+.status-mini-table td {
+    background: #fff;
+}
+
+/* ===== Exam Record Card ===== */
+.exam-record-card {
+    border: 1px solid #b0c8d8;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: #fff;
+}
+
+.exam-record-header {
+    background: #c53030;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+}
+
+.er-btn-delete {
+    padding: 3px 16px;
+    background: #fff;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    color: #333;
+    transition: background 0.15s;
+}
+
+.er-btn-delete:hover { background: #f0f0f0; }
+
+.exam-record-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.exam-record-table th,
+.exam-record-table td {
+    border: 1px solid #c4d6e0;
+    padding: 7px 12px;
+    vertical-align: top;
+    line-height: 1.6;
+}
+
+.exam-record-table th {
+    background: #dce8f0;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    width: 140px;
+    color: var(--admin-text);
+}
+
+.exam-record-table td {
+    background: #fff;
+}

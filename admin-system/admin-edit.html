@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="志願者データ編集 - intelligent VISION management suite">
+    <title>志願者データ編集 - Admin</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/admin-edit.css">
+</head>
+<body class="admin-body">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+        <div class="sidebar-title">カテゴリー</div>
+
+        <div class="sidebar-menu">
+            <a href="admin.html" class="sidebar-item active" id="menu-applicant-data">志願者データ管理</a>
+            <a href="admin-assign.html" class="sidebar-item" id="menu-exam-number">受験番号採番</a>
+            <a href="admin-docs.html" class="sidebar-item" id="menu-procedure-docs">手続書類データ取込</a>
+            <a href="admin-payment.html" class="sidebar-item" id="menu-payment-data">入金実績データ出力</a>
+            <a href="admin-results.html" class="sidebar-item" id="menu-result-import">合否発表データ取込</a>
+            <a href="admin-master.html" class="sidebar-item" id="menu-master-data">マスタ管理</a>
+        </div>
+
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">
+                intelligent VISION<br>
+                <span>management suite</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== Main Content ===== -->
+    <main class="admin-main">
+
+        <!-- Breadcrumb -->
+        <div class="edit-breadcrumb">
+            <a href="admin.html">志願者データ管理</a>
+            <span class="sep">＞</span>
+            <span>志願者データ編集</span>
+        </div>
+
+        <h1 class="admin-page-title">志願者データ編集</h1>
+
+        <!-- Applicant summary bar -->
+        <div class="edit-summary-bar">
+            <div class="summary-item">
+                <span class="summary-label">受付番号：</span>
+                <span class="summary-value">000001</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">出願番号：</span>
+                <span class="summary-value">9505511137</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">受験番号：</span>
+                <span class="summary-value">319101</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">氏名：</span>
+                <span class="summary-value">確認いち（カケンイチ）</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">ステータス：</span>
+                <span class="summary-value status-confirmed">確定</span>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="edit-tabs">
+            <button class="edit-tab active" data-tab="0">志願者情報</button>
+            <button class="edit-tab" data-tab="1">保護者情報</button>
+            <button class="edit-tab" data-tab="2">志望校アンケート</button>
+            <button class="edit-tab" data-tab="3">出身高等学校情報</button>
+            <button class="edit-tab" data-tab="4">入金・書類</button>
+        </div>
+
+        <!-- ===== Tab 0: 志願者情報 ===== -->
+        <div class="edit-tab-content active" data-tab="0">
+            <div class="edit-section">
+                <div class="edit-section-header">志願者情報</div>
+                <div class="edit-section-body">
+                    <table class="edit-form-table">
+                        <tr>
+                            <th>姓 <span class="req">必須</span></th>
+                            <td><input type="text" class="admin-input" value="確認" style="width:200px;"></td>
+                            <th>名 <span class="req">必須</span></th>
+                            <td><input type="text" class="admin-input" value="いち" style="width:200px;"></td>
+                        </tr>
+                        <tr>
+                            <th>セイ（フリガナ） <span class="req">必須</span></th>
+                            <td><input type="text" class="admin-input" value="カケン" style="width:200px;"></td>
+                            <th>メイ（フリガナ） <span class="req">必須</span></th>
+                            <td><input type="text" class="admin-input" value="イチ" style="width:200px;"></td>
+                        </tr>
+                        <tr>
+                            <th>性別 <span class="req">必須</span></th>
+                            <td colspan="3">
+                                <div class="radio-inline">
+                                    <label><input type="radio" name="gender" value="男性" checked> 男性</label>
+                                    <label><input type="radio" name="gender" value="女性"> 女性</label>
+                                    <label><input type="radio" name="gender" value="その他"> その他</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>生年月日 <span class="req">必須</span></th>
+                            <td colspan="3">
+                                <div class="date-inline">
+                                    <input type="text" class="admin-input" value="2000" style="width:70px;" maxlength="4"> 年
+                                    <input type="text" class="admin-input" value="01" style="width:50px;" maxlength="2"> 月
+                                    <input type="text" class="admin-input" value="02" style="width:50px;" maxlength="2"> 日
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="edit-section">
+                <div class="edit-section-header">住所</div>
+                <div class="edit-section-body">
+                    <table class="edit-form-table">
+                        <tr>
+                            <th>郵便番号 <span class="req">必須</span></th>
+                            <td colspan="3">
+                                <div class="flex-inline">
+                                    <input type="text" class="admin-input" value="444-3505" style="width:150px;">
+                                    <button type="button" class="btn-admin-sm">住所検索</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>都道府県 <span class="req">必須</span></th>
+                            <td><input type="text" class="admin-input" value="愛知県" style="width:200px;"></td>
+                            <th>市区町村 <span class="req">必須</span></th>
+                            <td><input type="text" class="admin-input" value="岡崎市" style="width:200px;"></td>
+                        </tr>
+                        <tr>
+                            <th>番地 <span class="req">必須</span></th>
+                            <td colspan="3"><input type="text" class="admin-input" value="本宿町上三本松6-2" style="width:400px;"></td>
+                        </tr>
+                        <tr>
+                            <th>建物名・部屋番号</th>
+                            <td colspan="3"><input type="text" class="admin-input" value="" style="width:400px;"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="edit-section">
+                <div class="edit-section-header">連絡先</div>
+                <div class="edit-section-body">
+                    <table class="edit-form-table">
+                        <tr>
+                            <th>電話番号</th>
+                            <td><input type="text" class="admin-input" value="0564-48-7811" style="width:200px;"></td>
+                            <th>携帯電話番号</th>
+                            <td><input type="text" class="admin-input" value="090-1234-5678" style="width:200px;"></td>
+                        </tr>
+                        <tr>
+                            <th>メールアドレス <span class="req">必須</span></th>
+                            <td colspan="3"><input type="email" class="admin-input" value="kakenichi@example.com" style="width:400px;"></td>
+                        </tr>
+                    </table>
+                    <p class="edit-note">＊電話番号または携帯電話番号のどちらか一方は必須です</p>
+                </div>
+            </div>
+
+            <div class="edit-section">
+                <div class="edit-section-header">顔写真</div>
+                <div class="edit-section-body">
+                    <div class="photo-area">
+                        <div class="photo-preview">
+                            <div class="photo-placeholder">写真未登録</div>
+                        </div>
+                        <div class="photo-actions">
+                            <input type="file" id="photo-upload" accept=".jpg,.jpeg,.png,.webp" style="display:none;">
+                            <button type="button" class="btn-admin-sm" onclick="document.getElementById('photo-upload').click();">写真アップロード</button>
+                            <button type="button" class="btn-admin-sm btn-danger-sm">写真削除</button>
+                            <p class="edit-note" style="margin-top:8px;">JPEG / PNG / WebP、5MB以内</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Tab 1: 保護者情報 ===== -->
+        <div class="edit-tab-content" data-tab="1">
+            <div class="edit-section">
+                <div class="edit-section-header">保護者情報</div>
+                <div class="edit-section-body">
+                    <p class="edit-note" style="margin-bottom:12px;">＊本人と同居の場合、入力不要（外国人留学生選抜および日本大学適合学力試験(JPUE)利用入試志願者は必須）</p>
+                    <table class="edit-form-table">
+                        <tr>
+                            <th>保護者氏名（漢字）姓</th>
+                            <td><input type="text" class="admin-input" value="" style="width:200px;"></td>
+                            <th>名</th>
+                            <td><input type="text" class="admin-input" value="" style="width:200px;"></td>
+                        </tr>
+                        <tr>
+                            <th>保護者氏名（カナ）セイ</th>
+                            <td><input type="text" class="admin-input" value="" style="width:200px;"></td>
+                            <th>メイ</th>
+                            <td><input type="text" class="admin-input" value="" style="width:200px;"></td>
+                        </tr>
+                        <tr>
+                            <th>郵便番号</th>
+                            <td colspan="3">
+                                <div class="flex-inline">
+                                    <input type="text" class="admin-input" value="" style="width:150px;">
+                                    <button type="button" class="btn-admin-sm">住所検索</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>都道府県</th>
+                            <td colspan="3"><input type="text" class="admin-input" value="" style="width:200px;"></td>
+                        </tr>
+                        <tr>
+                            <th>住所</th>
+                            <td colspan="3"><input type="text" class="admin-input" value="" style="width:400px;"></td>
+                        </tr>
+                        <tr>
+                            <th>電話番号</th>
+                            <td colspan="3"><input type="text" class="admin-input" value="" style="width:200px;"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Tab 2: 志望校アンケート ===== -->
+        <div class="edit-tab-content" data-tab="2">
+            <div class="edit-section">
+                <div class="edit-section-header">志望校に関するアンケート</div>
+                <div class="edit-section-body">
+                    <p class="edit-note" style="margin-bottom:12px;">志望校に関するアンケートのお願いです。本学含め志望順位ごとに学校名と学部学科を入力してください。</p>
+                    <table class="edit-form-table">
+                        <tr>
+                            <th>第1志望 学校名</th>
+                            <td><input type="text" class="admin-input" value="人間環境大学" style="width:280px;"></td>
+                            <th>学部・学科</th>
+                            <td><input type="text" class="admin-input" value="心理学部・心理学科" style="width:280px;"></td>
+                        </tr>
+                        <tr>
+                            <th>第2志望 学校名</th>
+                            <td><input type="text" class="admin-input" value="" style="width:280px;"></td>
+                            <th>学部・学科</th>
+                            <td><input type="text" class="admin-input" value="" style="width:280px;"></td>
+                        </tr>
+                        <tr>
+                            <th>第3志望 学校名</th>
+                            <td><input type="text" class="admin-input" value="" style="width:280px;"></td>
+                            <th>学部・学科</th>
+                            <td><input type="text" class="admin-input" value="" style="width:280px;"></td>
+                        </tr>
+                        <tr>
+                            <th>第4志望 学校名</th>
+                            <td><input type="text" class="admin-input" value="" style="width:280px;"></td>
+                            <th>学部・学科</th>
+                            <td><input type="text" class="admin-input" value="" style="width:280px;"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Tab 3: 出身高等学校情報 ===== -->
+        <div class="edit-tab-content" data-tab="3">
+            <div class="edit-section">
+                <div class="edit-section-header">出身高等学校情報</div>
+                <div class="edit-section-body">
+                    <table class="edit-form-table">
+                        <tr>
+                            <th>出身学校名 <span class="req">必須</span></th>
+                            <td colspan="3">
+                                <div class="flex-inline" style="margin-bottom:8px;">
+                                    <span class="field-label">コード：</span>
+                                    <input type="text" class="admin-input" value="23643B" style="width:120px;">
+                                    <button type="button" class="btn-admin-sm">学校検索</button>
+                                    <button type="button" class="btn-orange-sm">高等学校卒業程度認定試験等</button>
+                                </div>
+                                <div class="flex-inline">
+                                    <span class="field-label">名　称：</span>
+                                    <input type="text" class="admin-input" value="人間環境大学附属岡崎" style="width:350px;" readonly>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>課程 <span class="req">必須</span></th>
+                            <td colspan="3"><input type="text" class="admin-input" value="" style="width:300px;"></td>
+                        </tr>
+                        <tr>
+                            <th>学科 <span class="req">必須</span></th>
+                            <td colspan="3"><input type="text" class="admin-input" value="" style="width:300px;"></td>
+                        </tr>
+                        <tr>
+                            <th>卒業年 <span class="req">必須</span></th>
+                            <td colspan="3">
+                                <div class="date-inline">
+                                    西暦：<input type="text" class="admin-input" value="2019" style="width:70px;"> 年
+                                    <input type="text" class="admin-input" value="03" style="width:50px;"> 月
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Tab 4: 入金・書類 ===== -->
+        <div class="edit-tab-content" data-tab="4">
+            <div class="edit-section">
+                <div class="edit-section-header">入金情報</div>
+                <div class="edit-section-body">
+                    <table class="edit-form-table">
+                        <tr>
+                            <th>入金状況</th>
+                            <td>
+                                <select class="admin-select" style="width:200px;">
+                                    <option value="paid" selected>入金済</option>
+                                    <option value="unpaid">未入金</option>
+                                </select>
+                            </td>
+                            <th>入金方法</th>
+                            <td><span class="display-value">コンビニ</span></td>
+                        </tr>
+                        <tr>
+                            <th>入金日</th>
+                            <td><span class="display-value">2025/08/15 14:50</span></td>
+                            <th>入金額</th>
+                            <td><span class="display-value">¥35,000</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="edit-section">
+                <div class="edit-section-header">書類情報</div>
+                <div class="edit-section-body">
+                    <table class="edit-form-table">
+                        <tr>
+                            <th>書類到着状況</th>
+                            <td>
+                                <select class="admin-select" style="width:200px;">
+                                    <option value="arrived" selected>到着済</option>
+                                    <option value="not-arrived">未到着</option>
+                                </select>
+                            </td>
+                            <th>書類到着日</th>
+                            <td><input type="date" class="admin-input" value="2025-08-15" style="width:180px;"></td>
+                        </tr>
+                        <tr>
+                            <th>出願確定</th>
+                            <td>
+                                <select class="admin-select" style="width:200px;">
+                                    <option value="confirmed" selected>確定</option>
+                                    <option value="unconfirmed">未確定</option>
+                                </select>
+                            </td>
+                            <th>不備</th>
+                            <td>
+                                <select class="admin-select" style="width:200px;">
+                                    <option value="none" selected>不備なし</option>
+                                    <option value="has">不備あり</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="edit-actions">
+            <a href="admin.html" class="btn-admin btn-admin-secondary">戻る</a>
+            <button type="button" class="btn-admin btn-admin-primary" id="btn-save">保存</button>
+        </div>
+
+    </main>
+
+    <script src="assets/js/admin-edit.js"></script>
+</body>
+</html>

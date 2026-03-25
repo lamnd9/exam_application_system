@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="出願状況管理[編集] - intelligent VISION management suite">
+    <title>出願状況管理[編集] - Admin</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/admin-status.css">
+</head>
+
+<body class="admin-body">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-title">カテゴリー</div>
+        <div class="sidebar-menu">
+            <a href="admin.html" class="sidebar-item active">志願者データ管理</a>
+            <a href="admin-assign.html" class="sidebar-item">受験番号採番</a>
+            <a href="admin-docs.html" class="sidebar-item">手続書類データ取込</a>
+            <a href="admin-payment.html" class="sidebar-item">入金実績データ出力</a>
+            <a href="admin-results.html" class="sidebar-item">合否発表データ取込</a>
+            <a href="admin-master.html" class="sidebar-item" id="menu-master-data">マスタ管理</a>
+        </div>
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">
+                intelligent VISION<br>
+                <span>management suite</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== Main Content ===== -->
+    <main class="admin-main">
+
+        <!-- Breadcrumb -->
+        <div class="edit-breadcrumb">
+            <a href="admin.html">志願者データ管理</a>
+            <span class="sep">＞</span>
+            <span>出願状況管理[編集]</span>
+        </div>
+
+        <h1 class="admin-page-title">出願状況管理[編集]</h1>
+
+        <!-- ===== Status Panel (Top) ===== -->
+        <div class="status-panel">
+            <div class="status-panel-left">
+                <div class="status-panel-title">各種ステータス</div>
+                <div class="status-lines">
+                    <div>【書類到着】：済</div>
+                    <div>【入金状況】：35000円　済</div>
+                    <div>【顔写真再登録】：無効</div>
+                </div>
+            </div>
+            <div class="status-panel-right">
+                <div class="status-btn-row">
+                    <a href="admin.html" class="sp-btn sp-btn-back">戻る</a>
+                    <button type="button" class="sp-btn sp-btn-cancel" id="btn-payment-cancel">入金取消</button>
+                    <button type="button" class="sp-btn sp-btn-photo" id="btn-photo-reregister">顔写真再登録開始</button>
+                    <button type="button" class="sp-btn sp-btn-fix" id="btn-fix-start">手続修正開始</button>
+                </div>
+                <div class="status-notes">
+                    <div class="status-note">※顔写真再登録は出願のみ</div>
+                    <div class="status-note">※手続の顔写真再登録は手続修正開始を実行</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Applicant Info Table ===== -->
+        <table class="status-info-table">
+            <tr>
+                <th>年度</th>
+                <td>2026</td>
+            </tr>
+            <tr>
+                <th>出願番号</th>
+                <td><a href="#" class="link-blue">9505511137</a></td>
+            </tr>
+            <tr>
+                <th>氏名</th>
+                <td>
+                    姓：確認<br>
+                    名：いち
+                </td>
+            </tr>
+            <tr>
+                <th>カナ名</th>
+                <td>
+                    セイ：カケン<br>
+                    メイ：イチ
+                </td>
+            </tr>
+            <tr>
+                <th>性別</th>
+                <td>男</td>
+            </tr>
+            <tr>
+                <th>生年月日</th>
+                <td>2000/01/02</td>
+            </tr>
+            <tr>
+                <th>郵便番号：</th>
+                <td>211-8550</td>
+            </tr>
+            <tr>
+                <th>都道府県</th>
+                <td>神奈川県</td>
+            </tr>
+            <tr>
+                <th>都市区町村：</th>
+                <td>川崎市中原区市ノ坪１５０</td>
+            </tr>
+            <tr>
+                <th>番地：</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>建物名・部屋番号：</th>
+                <td>環境ビル108号</td>
+            </tr>
+            <tr>
+                <th>メールアドレス</th>
+                <td>bpm01@toukei.co.jp</td>
+            </tr>
+            <tr>
+                <th>自宅電話番号</th>
+                <td>123-456789</td>
+            </tr>
+            <tr>
+                <th>緊急連絡先</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>学校名</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>保護者氏名</th>
+                <td>
+                    姓：<br>
+                    名：
+                </td>
+            </tr>
+            <tr>
+                <th>保護者カナ</th>
+                <td>
+                    セイ：<br>
+                    メイ：
+                </td>
+            </tr>
+            <tr>
+                <th>不備内容</th>
+                <td class="editable-cell">
+                    <textarea class="status-textarea" rows="3" placeholder="不備内容を入力してください..."></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>不備解消</th>
+                <td class="editable-cell">
+                    <textarea class="status-textarea" rows="3" placeholder="不備解消内容を入力してください..."></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>入金状況変更理由</th>
+                <td class="editable-cell">
+                    <textarea class="status-textarea" rows="3" placeholder="入金状況変更理由を入力してください..."></textarea>
+                </td>
+            </tr>
+        </table>
+
+        <!-- ===== 出願入試情報 section ===== -->
+        <div class="section-title-bar">出願入試情報</div>
+
+        <!-- Action buttons row -->
+        <div class="exam-actions-row">
+            <button type="button" class="ea-btn ea-btn-label" id="btn-label">志願票・宛名ラベル等</button>
+            <div class="ea-btn-group-right">
+                <button type="button" class="ea-btn ea-btn-add" id="btn-exam-add">試験追加</button>
+                <button type="button" class="ea-btn ea-btn-deficiency" id="btn-deficiency">不備登録</button>
+                <button type="button" class="ea-btn ea-btn-cancel-app" id="btn-app-cancel">出願取消</button>
+                <button type="button" class="ea-btn ea-btn-pass" id="btn-pass">詳遇</button>
+            </div>
+        </div>
+
+        <!-- Status mini-table -->
+        <table class="status-mini-table">
+            <tr>
+                <th>不備状況</th>
+                <td>不備なし</td>
+            </tr>
+            <tr>
+                <th>出願確定</th>
+                <td>確定</td>
+            </tr>
+        </table>
+
+        <!-- Exam record card -->
+        <div class="exam-record-card">
+            <div class="exam-record-header">
+                <button type="button" class="er-btn-delete" id="btn-delete-record">削除</button>
+            </div>
+            <table class="exam-record-table">
+                <tr>
+                    <th>受付番号</th>
+                    <td>000001</td>
+                </tr>
+                <tr>
+                    <th>受験番号</th>
+                    <td>319101</td>
+                </tr>
+                <tr>
+                    <th>志望順位</th>
+                    <td>第志望</td>
+                </tr>
+                <tr>
+                    <th>試験種別</th>
+                    <td>大学院 総合心理学研究科入試</td>
+                </tr>
+                <tr>
+                    <th>試験日</th>
+                    <td>2025/09/27</td>
+                </tr>
+                <tr>
+                    <th>学部・学科・コース</th>
+                    <td>総合心理学研究科 臨床心理学コース</td>
+                </tr>
+                <tr>
+                    <th>試験区分</th>
+                    <td>Ⅰ期</td>
+                </tr>
+                <tr>
+                    <th>試験場</th>
+                    <td>本学（松山道後）</td>
+                </tr>
+                <tr>
+                    <th>試験科目</th>
+                    <td>1限：外国語　2限：心理学（臨床心理学を含む）</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ===== Status Panel (Bottom - duplicate) ===== -->
+        <div class="status-panel" style="margin-top: 24px;">
+            <div class="status-panel-left">
+                <div class="status-panel-title">各種ステータス</div>
+                <div class="status-lines">
+                    <div>【書類到着】：済</div>
+                    <div>【入金状況】：35000円　済</div>
+                    <div>【顔写真再登録】：無効</div>
+                </div>
+            </div>
+            <div class="status-panel-right">
+                <div class="status-btn-row">
+                    <a href="admin.html" class="sp-btn sp-btn-back">戻る</a>
+                    <button type="button" class="sp-btn sp-btn-cancel">入金取消</button>
+                    <button type="button" class="sp-btn sp-btn-photo">顔写真再登録開始</button>
+                    <button type="button" class="sp-btn sp-btn-fix">手続修正開始</button>
+                </div>
+                <div class="status-notes">
+                    <div class="status-note">※顔写真再登録は出願のみ</div>
+                    <div class="status-note">※手続の顔写真再登録は手続修正開始を実行</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="assets/js/admin-status.js"></script>
+</body>
+
+</html>

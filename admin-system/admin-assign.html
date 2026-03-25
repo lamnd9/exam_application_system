@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="受験番号採番 - intelligent VISION management suite">
+    <title>受験番号採番 - Admin</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/admin-assign.css">
+</head>
+<body class="admin-body">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-title">カテゴリー</div>
+
+        <div class="sidebar-menu">
+            <a href="admin.html" class="sidebar-item">志願者データ管理</a>
+            <a href="admin-assign.html" class="sidebar-item active">受験番号採番</a>
+            <a href="admin-docs.html" class="sidebar-item">手続書類データ取込</a>
+            <a href="admin-payment.html" class="sidebar-item">入金実績データ出力</a>
+            <a href="admin-results.html" class="sidebar-item">合否発表データ取込</a>
+            <a href="admin-master.html" class="sidebar-item" id="menu-master-data">マスタ管理</a>
+        </div>
+
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">
+                intelligent VISION<br>
+                <span>management suite</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== Main Content ===== -->
+    <main class="admin-main">
+
+        <!-- Breadcrumb -->
+        <div class="assign-breadcrumb">
+            <a href="admin.html">ホーム</a>
+            <span class="sep">＞</span>
+            <span>受験番号採番</span>
+        </div>
+
+        <h1 class="admin-page-title">受験番号採番</h1>
+
+        <!-- Content Area -->
+        <div class="assign-content-area">
+            
+            <div class="search-panel" style="margin-bottom: 30px;">
+                <div class="search-panel-header">
+                    <span>採番条件設定</span>
+                </div>
+                <div class="search-panel-body">
+                    <!-- Row 1 -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>年度 <span style="color:#e60000; font-size:11px;">【必須項目】</span></label>
+                            <input type="date" class="admin-input" value="2026-01-01" style="width: 150px;">
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>試験種別 <span style="color:#e60000; font-size:11px;">【必須項目】</span></label>
+                            <select class="admin-select" style="max-width: 400px;">
+                                <option value="">選択してください</option>
+                                <option value="1">大学院 総合心理学研究科入試</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 2 -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>学部</label>
+                            <select class="admin-select">
+                                <option value="">選択してください</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>学科</label>
+                            <select class="admin-select">
+                                <option value="">選択してください</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>採番日</label>
+                            <input type="date" class="admin-input" style="width: 150px;">
+                        </div>
+                    </div>
+
+                    <div class="search-actions">
+                        <button type="button" class="btn-admin btn-admin-primary" id="btn-search">検索</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Section -->
+            <div class="assign-result-section">
+                <div class="assign-count">採番件数：1件</div>
+                <button type="button" class="btn-assign-execute" id="btn-execute">採番</button>
+            </div>
+            
+        </div>
+
+    </main>
+
+    <script src="assets/js/admin-assign.js"></script>
+</body>
+</html>

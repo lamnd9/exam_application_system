@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="合否発表データ取込 - intelligent VISION management suite">
+    <title>合否発表データ取込 - Admin</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <style>
+        .info-callout {
+            background: #eef4f9;
+            border-left: 4px solid #2b7a9b;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border: 2px dashed #b9c8d4;
+            padding: 8px 16px;
+            border-radius: 4px;
+            color: #4a6c82;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-btn:hover {
+            background: #f0f5f9;
+            border-color: #2b7a9b;
+            color: #2b7a9b;
+        }
+
+        .upload-filename {
+            font-size: 11.5px;
+            color: #778b9c;
+            word-break: break-all;
+            margin-left: 12px;
+        }
+
+        .upload-filename.has-file {
+            color: #1b8a3e;
+            font-weight: 600;
+        }
+
+        .btn-payment-execute {
+            background: linear-gradient(135deg, #1e3c87, #152654);
+            color: #fff;
+            border: 1px solid #0f1c3f;
+            border-radius: 4px;
+            padding: 8px 32px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+            letter-spacing: 1px;
+            height: 38px;
+        }
+
+        .btn-payment-execute:hover {
+            background: linear-gradient(135deg, #152a5e, #0f1c3f);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .btn-payment-execute:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .section-header {
+            font-size: 15px;
+            font-weight: bold;
+            color: #2b7a9b;
+            margin-bottom: 12px;
+            border-left: 4px solid #2b7a9b;
+            padding-left: 8px;
+        }
+    </style>
+</head>
+
+<body class="admin-body">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+        <div class="sidebar-title">カテゴリー</div>
+
+        <div class="sidebar-menu">
+            <a href="admin.html" class="sidebar-item" id="menu-applicant-data">志願者データ管理</a>
+            <a href="admin-assign.html" class="sidebar-item" id="menu-exam-number">受験番号採番</a>
+            <a href="admin-docs.html" class="sidebar-item" id="menu-procedure-docs">手続書類データ取込</a>
+            <a href="admin-payment.html" class="sidebar-item" id="menu-payment-data">入金実績データ出力</a>
+            <a href="admin-results.html" class="sidebar-item active" id="menu-result-import">合否発表データ取込</a>
+            <a href="admin-master.html" class="sidebar-item" id="menu-master-data">マスタ管理</a>
+        </div>
+
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">
+                intelligent VISION<br>
+                <span>management suite</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== Main Content ===== -->
+    <main class="admin-main">
+
+        <!-- Breadcrumb -->
+        <div style="font-size: 12px; margin-bottom: 12px;">
+            <a href="admin.html" style="color: var(--admin-link-blue); text-decoration: none;">ホーム</a>
+            <span class="sep" style="margin: 0 6px; color: #999;">＞</span>
+            <span>合否発表データ取込</span>
+        </div>
+
+        <h1 class="admin-page-title"
+            style="font-size: 18px; color: #0b5b88; margin-bottom: 20px; font-weight: bold; border-bottom: 3px double #dce4e8; padding-bottom: 8px;">
+            合否発表データ取込
+        </h1>
+
+        <!-- Content Area -->
+        <div
+            style="background: #fff; border: 1px solid #ccd5dc; border-radius: 4px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+
+            <div class="info-callout">
+                <strong>【説明】</strong><br>
+                ・取込ファイル形式はＣＳＶファイルとなります。<br>
+                ・ヘッダー付き合否発表データのＣＳＶファイルを指定してください。<br>
+                ・『ファイルを選択』ボタンをクリックし、ファイルを選択して『取込』ボタンをクリックすると、取込が開始されます。<br>
+                ・取込を行うと、選択した受験番号のデータは上書きされます。
+            </div>
+
+            <!-- Upload Panel -->
+            <div class="search-panel" style="margin-bottom: 36px; border-radius: 6px; border-color: #d1d9e0;">
+                <div class="search-panel-body" style="display:flex; gap: 24px; align-items: flex-end; padding: 24px;">
+                    <div class="form-group" style="flex: 0 0 200px;">
+                        <label style="margin-bottom:8px;">合否発表日 <span
+                                style="color:#e60000; font-size:11px;">【必須項目】</span></label>
+                        <input type="date" id="result-date" class="admin-input">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label style="margin-bottom:8px;">ファイル</label>
+                        <div style="display:flex; align-items:center;">
+                            <input type="file" id="result-csv" class="file-input" accept=".csv" style="display: none;">
+                            <label for="result-csv" class="upload-btn">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2"
+                                    fill="none">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                                ファイルを選択
+                            </label>
+                            <span class="upload-filename" id="result-filename">選択されていません</span>
+                        </div>
+                    </div>
+                    <div class="form-group" style="flex: 0 0 auto;">
+                        <button type="button" class="btn-payment-execute" id="btn-import">取込</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Import Result Section -->
+            <div style="margin-bottom: 36px;">
+                <h2 class="section-header">【取込結果】</h2>
+                <table class="result-table" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">行</th>
+                            <th style="text-align: left; padding-left: 20px;">メッセージ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="import-result-tbody">
+                        <tr id="empty-result-msg">
+                            <td colspan="2" style="background: #fafbfc; color: #999; padding: 16px;">取込結果がここに表示されます</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Import History Section -->
+            <div style="margin-bottom: 10px;">
+                <h2 class="section-header">【取込履歴】</h2>
+                <div class="result-info" style="padding-top: 0;">
+                    <span>86件中 1～10件を表示</span>
+                    <div class="pagination">
+                        <span class="page-link disabled">&lt;&lt;</span>
+                        <span class="page-link disabled">&lt;</span>
+                        <span class="page-link active">1</span>
+                        <a href="#" class="page-link">2</a>
+                        <a href="#" class="page-link">3</a>
+                        <a href="#" class="page-link">4</a>
+                        <a href="#" class="page-link">5</a>
+                        <a href="#" class="page-link">6</a>
+                        <a href="#" class="page-link">7</a>
+                        <a href="#" class="page-link">8</a>
+                        <a href="#" class="page-link">9</a>
+                        <a href="#" class="page-link">&gt;</a>
+                        <a href="#" class="page-link">&gt;&gt;</a>
+                    </div>
+                </div>
+                <table class="result-table" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th style="width: 200px;">取込日時</th>
+                            <th style="text-align: left; padding-left: 12px;">取込ファイル名</th>
+                            <th style="width: 150px;">データ件数</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-tbody">
+                        <tr>
+                            <td>2026/03/18 17:44:13</td>
+                            <td style="text-align: left; padding-left: 12px;"><a href="#"
+                                    style="color: var(--admin-link-blue); text-decoration: underline;">(8)合否取込データ0325（一般Ⅳ期）.csv</a>
+                            </td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <td>2026/02/24 18:46:08</td>
+                            <td style="text-align: left; padding-left: 12px;"><a href="#"
+                                    style="color: var(--admin-link-blue); text-decoration: underline;">(8)合否取込データ0212（一般Ⅱ期）.csv</a>
+                            </td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>2026/02/24 18:45:26</td>
+                            <td style="text-align: left; padding-left: 12px;"><a href="#"
+                                    style="color: var(--admin-link-blue); text-decoration: underline;">(8)合否取込データ0212（一般Ⅱ期）.csv</a>
+                            </td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>2025/12/26 14:19:38</td>
+                            <td style="text-align: left; padding-left: 12px;"><a href="#"
+                                    style="color: var(--admin-link-blue); text-decoration: underline;">(8)合否取込データ0226（松看院Ⅲ期）.csv</a>
+                            </td>
+                            <td>9</td>
+                        </tr>
+                        <tr>
+                            <td>2025/12/25 14:07:35</td>
+                            <td style="text-align: left; padding-left: 12px;"><a href="#"
+                                    style="color: var(--admin-link-blue); text-decoration: underline;">(8)合否取込データ0129（大学院看護Ⅲ期）.csv</a>
+                            </td>
+                            <td>11</td>
+                        </tr>
+                        <tr>
+                            <td>2025/12/25 14:06:38</td>
+                            <td style="text-align: left; padding-left: 12px;"><a href="#"
+                                    style="color: var(--admin-link-blue); text-decoration: underline;">(8)合否取込データ0226（大学院看護Ⅲ期）.csv</a>
+                            </td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>2025/12/25 11:36:31</td>
+                            <td style="text-align: left; padding-left: 12px;"><a href="#"
+                                    style="color: var(--admin-link-blue); text-decoration: underline;">(8)合否取込データ0226（総心院Ⅱ期）.csv</a>
+                            </td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>2025/12/25 11:36:20</td>
+                            <td style="text-align: left; padding-left: 12px;"><a href="#"
+                                    style="color: var(--admin-link-blue); text-decoration: underline;">(8)合否取込データ0219（大学院人環Ⅱ期）.csv</a>
+                            </td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>2025/12/25 11:34:21</td>
+                            <td style="text-align: left; padding-left: 12px;"><a href="#"
+                                    style="color: var(--admin-link-blue); text-decoration: underline;">(8)合否取込データ0219（大学院人環Ⅱ期）.csv</a>
+                            </td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>2025/12/23 10:10:04</td>
+                            <td style="text-align: left; padding-left: 12px;"><a href="#"
+                                    style="color: var(--admin-link-blue); text-decoration: underline;">(8)合否取込データ0302（一般Ⅱ期、AOⅢ・Ⅳ期、外国人Ⅱ期）1223再取り込み.csv</a>
+                            </td>
+                            <td>45</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="assets/js/admin-results.js"></script>
+</body>
+
+</html>
