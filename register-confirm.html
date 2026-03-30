@@ -195,6 +195,11 @@
             color: var(--foreground);
         }
 
+        .guardian-skip-message {
+            color: hsl(178 63% 28%);
+            font-weight: 600;
+        }
+
         .teal-val {
             color: hsl(178 63% 28%);
             font-weight: 500;
@@ -791,27 +796,31 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="guardian-skip-message-row" hidden>
+                                <td class="lbl">保護者情報</td>
+                                <td class="val guardian-skip-message">本人と同居のため入力不要</td>
+                            </tr>
+                            <tr class="guardian-detail-row">
                                 <td class="lbl">保護者氏名（漢字）</td>
                                 <td class="val two-col"><span>姓：環境</span><span>名：父</span></td>
                             </tr>
-                            <tr>
+                            <tr class="guardian-detail-row">
                                 <td class="lbl">保護者氏名（カナ）</td>
                                 <td class="val two-col"><span>セイ：かんキョウ</span><span>メイ：チチ</span></td>
                             </tr>
-                            <tr>
+                            <tr class="guardian-detail-row">
                                 <td class="lbl">郵便番号</td>
                                 <td class="val">444-3505</td>
                             </tr>
-                            <tr>
+                            <tr class="guardian-detail-row">
                                 <td class="lbl">都道府県</td>
                                 <td class="val">愛知県</td>
                             </tr>
-                            <tr>
+                            <tr class="guardian-detail-row">
                                 <td class="lbl">住所</td>
                                 <td class="val">岡崎市本宿町上三本松6-2</td>
                             </tr>
-                            <tr>
+                            <tr class="guardian-detail-row">
                                 <td class="lbl">電話番号</td>
                                 <td class="val">0564-48-7811</td>
                             </tr>

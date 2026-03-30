@@ -113,6 +113,23 @@ function getGuardianValidationMessage() {
     return document.getElementById('guardian-validation-message');
 }
 
+function scrollGuardianNextButtonIntoView() {
+    const button = getGuardianNextButton();
+    if (!button) return;
+
+    window.requestAnimationFrame(function () {
+        button.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+        try {
+            button.focus({ preventScroll: true });
+        } catch (error) {
+            button.focus();
+        }
+    });
+}
+
 function areGuardianFieldsComplete() {
     const fields = getGuardianFields();
     if (!fields.length) return true;
@@ -189,6 +206,10 @@ function setupGuardianStepControls() {
     checkbox.addEventListener('change', function () {
         writeGuardianSameHouseholdState(this.checked);
         syncGuardianStepState();
+
+        if (this.checked) {
+            scrollGuardianNextButtonIntoView();
+        }
     });
 
     getGuardianFields().forEach(function (field) {
@@ -205,9 +226,20 @@ function setupGuardianStepControls() {
 
 function renderGuardianSameHouseholdConfirm() {
     const checkbox = document.getElementById('guardian-same-household-confirm');
-    if (!checkbox) return;
+    const isSameHousehold = readGuardianSameHouseholdState() === '1';
 
-    checkbox.checked = readGuardianSameHouseholdState() === '1';
+    if (checkbox) {
+        checkbox.checked = isSameHousehold;
+    }
+
+    const skipMessageRow = document.getElementById('guardian-skip-message-row');
+    if (skipMessageRow) {
+        skipMessageRow.hidden = !isSameHousehold;
+    }
+
+    document.querySelectorAll('.guardian-detail-row').forEach(function (row) {
+        row.hidden = isSameHousehold;
+    });
 }
 
 function nextSubStep() {
