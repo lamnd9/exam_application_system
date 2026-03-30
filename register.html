@@ -8,6 +8,27 @@
     <meta name="description" content="人間環境大学 インターネット出願 志願者情報入力">
     <link rel="stylesheet" href="styles.css">
     <style>
+        .guardian-skip-toggle {
+            margin-bottom: 0.75rem;
+        }
+
+        .guardian-fields-group {
+            border: 0;
+            display: grid;
+            gap: 2rem;
+            min-width: 0;
+            padding: 0;
+            margin: 0;
+        }
+
+        .guardian-fields-group.guardian-fields-disabled {
+            opacity: 0.55;
+        }
+
+        .guardian-validation-message {
+            margin-top: -0.5rem;
+        }
+
         @media(min-width:1024px) {
             .container-form {
                 max-width: 68rem;
@@ -492,70 +513,81 @@
                                 <h2>保護者情報</h2>
                             </div>
 
+                            <div class="checkbox-item guardian-skip-toggle">
+                                <input type="checkbox" id="guardian-same-household">
+                                <label for="guardian-same-household">保護者と同居している。</label>
+                            </div>
+
                             <div class="section-hint">
                                 ＊本人と同居の場合、入力不要（外国人留学生選抜および日本大学適合学力試験(JPUE)利用入試志願者は必須）
                             </div>
 
-                            <!-- 保護者氏名（漢字） -->
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
+                            <fieldset id="guardian-fields-group" class="guardian-fields-group">
+                                <!-- 保護者氏名（漢字） -->
+                                <div class="grid grid-cols-2 gap-4"
+                                    style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
+                                    <div>
+                                        <label class="form-label-block">保護者氏名（漢字）姓</label>
+                                        <input type="text" class="form-input" placeholder="国境" data-guardian-field>
+                                    </div>
+                                    <div>
+                                        <label class="form-label-block">名</label>
+                                        <input type="text" class="form-input" placeholder="父" data-guardian-field>
+                                    </div>
+                                </div>
+
+                                <!-- 保護者氏名（カナ） -->
+                                <div class="grid grid-cols-2 gap-4"
+                                    style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
+                                    <div>
+                                        <label class="form-label-block">保護者氏名（カナ）セイ</label>
+                                        <input type="text" class="form-input" placeholder="カナキョリ" data-guardian-field>
+                                    </div>
+                                    <div>
+                                        <label class="form-label-block">メイ</label>
+                                        <input type="text" class="form-input" placeholder="チチ" data-guardian-field>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-destructive">＊半角カタカナで入力してください。</p>
+
+                                <!-- 郵便番号 -->
                                 <div>
-                                    <label class="form-label-block">保護者氏名（漢字）姓</label>
-                                    <input type="text" class="form-input" placeholder="国境">
+                                    <label class="form-label-block">郵便番号</label>
+                                    <div class="flex items-center gap-3">
+                                        <input type="text" class="form-input form-input-md" placeholder="444-3505" data-guardian-field>
+                                        <button type="button" class="btn btn-primary btn-address-muted">住所検索</button>
+                                        <button type="button" class="btn btn-primary btn-address-muted">住所検証</button>
+                                    </div>
+                                    <p class="text-xs text-destructive mt-1">＊半角数字で入力してください。</p>
+                                    <p class="text-xs text-primary mt-1" style="cursor:pointer;">郵便番号がわからない場合はこちらから検索をしてください
+                                    </p>
                                 </div>
+
+                                <!-- 都道府県 -->
                                 <div>
-                                    <label class="form-label-block">名</label>
-                                    <input type="text" class="form-input" placeholder="父">
+                                    <label class="form-label-block">都道府県</label>
+                                    <input type="text" class="form-input" placeholder="" data-guardian-field>
                                 </div>
-                            </div>
 
-                            <!-- 保護者氏名（カナ） -->
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
+                                <!-- 住所 -->
                                 <div>
-                                    <label class="form-label-block">保護者氏名（カナ）セイ</label>
-                                    <input type="text" class="form-input" placeholder="カナキョリ">
+                                    <label class="form-label-block">住所</label>
+                                    <input type="text" class="form-input" placeholder="岡崎市本宿町上三本松6-2" data-guardian-field>
+                                    <p class="text-xs text-destructive mt-1">＊カナ、英字、数字、1/2/()は半角で入力してください。＊100文字以内</p>
                                 </div>
+
+                                <!-- 電話番号 -->
                                 <div>
-                                    <label class="form-label-block">メイ</label>
-                                    <input type="text" class="form-input" placeholder="チチ">
+                                    <label class="form-label-block">電話番号</label>
+                                    <input type="text" class="form-input" placeholder="0564-48-7811" data-guardian-field>
+                                    <p class="text-xs text-destructive mt-1">＊数字、ハイフン(-)は半角で入力してください。＊30文字以内</p>
+                                    <p class="text-xs text-destructive">＊自宅に固定電話がない方は携帯番号を入力してください。</p>
                                 </div>
-                            </div>
-                            <p class="text-xs text-destructive">＊半角カタカナで入力してください。</p>
+                            </fieldset>
 
-                            <!-- 郵便番号 -->
-                            <div>
-                                <label class="form-label-block">郵便番号</label>
-                                <div class="flex items-center gap-3">
-                                    <input type="text" class="form-input form-input-md" placeholder="444-3505">
-                                    <button type="button" class="btn btn-primary btn-address-muted">住所検索</button>
-                                    <button type="button" class="btn btn-primary btn-address-muted">住所検証</button>
-                                </div>
-                                <p class="text-xs text-destructive mt-1">＊半角数字で入力してください。</p>
-                                <p class="text-xs text-primary mt-1" style="cursor:pointer;">郵便番号がわからない場合はこちらから検索をしてください
-                                </p>
-                            </div>
-
-                            <!-- 都道府県 -->
-                            <div>
-                                <label class="form-label-block">都道府県</label>
-                                <input type="text" class="form-input" placeholder="">
-                            </div>
-
-                            <!-- 住所 -->
-                            <div>
-                                <label class="form-label-block">住所</label>
-                                <input type="text" class="form-input" placeholder="岡崎市本宿町上三本松6-2">
-                                <p class="text-xs text-destructive mt-1">＊カナ、英字、数字、1/2/()は半角で入力してください。＊100文字以内</p>
-                            </div>
-
-                            <!-- 電話番号 -->
-                            <div>
-                                <label class="form-label-block">電話番号</label>
-                                <input type="text" class="form-input" placeholder="0564-48-7811">
-                                <p class="text-xs text-destructive mt-1">＊数字、ハイフン(-)は半角で入力してください。＊30文字以内</p>
-                                <p class="text-xs text-destructive">＊自宅に固定電話がない方は携帯番号を入力してください。</p>
-                            </div>
+                            <p id="guardian-validation-message" class="text-xs text-destructive hidden guardian-validation-message">
+                                ＊保護者と同居していない場合は、保護者情報を入力してください。
+                            </p>
 
                             <!-- Buttons -->
                             <div class="grid grid-cols-2 gap-4"
@@ -563,7 +595,7 @@
                                 style="padding-top: 1rem;">
                                 <button type="button" class="btn btn-outline btn-full btn-lg"
                                     onclick="prevSubStep()">戻る</button>
-                                <button type="button" class="btn btn-primary btn-full btn-lg" onclick="nextSubStep()">
+                                <button type="button" class="btn btn-primary btn-full btn-lg" id="guardian-next-btn" onclick="nextSubStep()">
                                     次へ進む
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"

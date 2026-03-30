@@ -43,6 +43,7 @@ function setupRadioToggle(radioName, buttonId) {
 // --- Multi-step tabs (Register page) ---
 let currentSubStep = 0;
 const totalSubSteps = 4;
+const GUARDIAN_SAME_HOUSEHOLD_KEY = 'guardianSameHousehold';
 
 function switchSubStep(index) {
     if (index < 0 || index >= totalSubSteps) return;
@@ -80,7 +81,140 @@ function switchSubStep(index) {
     window.scrollTo(0, 0);
 }
 
+function readGuardianSameHouseholdState() {
+    return readStorage(sessionStorage, GUARDIAN_SAME_HOUSEHOLD_KEY) ||
+        readStorage(localStorage, GUARDIAN_SAME_HOUSEHOLD_KEY) ||
+        '0';
+}
+
+function writeGuardianSameHouseholdState(checked) {
+    const value = checked ? '1' : '0';
+    writeStorage(sessionStorage, GUARDIAN_SAME_HOUSEHOLD_KEY, value);
+    writeStorage(localStorage, GUARDIAN_SAME_HOUSEHOLD_KEY, value);
+}
+
+function getGuardianSameHouseholdCheckbox() {
+    return document.getElementById('guardian-same-household');
+}
+
+function getGuardianFields() {
+    return Array.from(document.querySelectorAll('[data-guardian-field]'));
+}
+
+function getGuardianFieldset() {
+    return document.getElementById('guardian-fields-group');
+}
+
+function getGuardianNextButton() {
+    return document.getElementById('guardian-next-btn');
+}
+
+function getGuardianValidationMessage() {
+    return document.getElementById('guardian-validation-message');
+}
+
+function areGuardianFieldsComplete() {
+    const fields = getGuardianFields();
+    if (!fields.length) return true;
+
+    return fields.every(function (field) {
+        return field.value.trim() !== '';
+    });
+}
+
+function setGuardianValidationMessageVisible(visible) {
+    const message = getGuardianValidationMessage();
+    if (!message) return;
+
+    message.classList.toggle('hidden', !visible);
+}
+
+function updateGuardianNextButtonState() {
+    const button = getGuardianNextButton();
+    if (!button) return;
+
+    const checkbox = getGuardianSameHouseholdCheckbox();
+    const canProceed = !!(checkbox && checkbox.checked) || areGuardianFieldsComplete();
+    button.disabled = !canProceed;
+}
+
+function syncGuardianStepState() {
+    const checkbox = getGuardianSameHouseholdCheckbox();
+    const fieldset = getGuardianFieldset();
+    const isSameHousehold = !!(checkbox && checkbox.checked);
+
+    if (fieldset) {
+        fieldset.disabled = isSameHousehold;
+        fieldset.classList.toggle('guardian-fields-disabled', isSameHousehold);
+    }
+
+    if (isSameHousehold) {
+        setGuardianValidationMessageVisible(false);
+    }
+
+    updateGuardianNextButtonState();
+}
+
+function validateGuardianStep() {
+    const checkbox = getGuardianSameHouseholdCheckbox();
+    if (!checkbox) return true;
+
+    if (checkbox.checked) {
+        setGuardianValidationMessageVisible(false);
+        return true;
+    }
+
+    const isValid = areGuardianFieldsComplete();
+    setGuardianValidationMessageVisible(!isValid);
+
+    if (!isValid) {
+        const firstEmptyField = getGuardianFields().find(function (field) {
+            return field.value.trim() === '';
+        });
+
+        if (firstEmptyField) {
+            firstEmptyField.focus();
+        }
+    }
+
+    return isValid;
+}
+
+function setupGuardianStepControls() {
+    const checkbox = getGuardianSameHouseholdCheckbox();
+    if (!checkbox) return;
+
+    checkbox.checked = readGuardianSameHouseholdState() === '1';
+
+    checkbox.addEventListener('change', function () {
+        writeGuardianSameHouseholdState(this.checked);
+        syncGuardianStepState();
+    });
+
+    getGuardianFields().forEach(function (field) {
+        field.addEventListener('input', function () {
+            if (!checkbox.checked) {
+                setGuardianValidationMessageVisible(false);
+            }
+            updateGuardianNextButtonState();
+        });
+    });
+
+    syncGuardianStepState();
+}
+
+function renderGuardianSameHouseholdConfirm() {
+    const checkbox = document.getElementById('guardian-same-household-confirm');
+    if (!checkbox) return;
+
+    checkbox.checked = readGuardianSameHouseholdState() === '1';
+}
+
 function nextSubStep() {
+    if (currentSubStep === 1 && !validateGuardianStep()) {
+        return;
+    }
+
     switchSubStep(currentSubStep + 1);
 }
 
@@ -497,6 +631,8 @@ function clearRegistrationData() {
     removeStorage(localStorage, 'uploadedPhotoName');
     removeStorage(localStorage, 'uploadedPhotoSize');
     removeStorage(localStorage, 'uploadedPhoto');
+    removeStorage(sessionStorage, GUARDIAN_SAME_HOUSEHOLD_KEY);
+    removeStorage(localStorage, GUARDIAN_SAME_HOUSEHOLD_KEY);
     // Clear flow flag
     removeStorage(sessionStorage, 'registrationFlowActive');
     // Clear IndexedDB record asynchronously
@@ -543,6 +679,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Exam Selection radios
     setupRadioToggle('exam-category', 'exam-next-btn');
+    setupGuardianStepControls();
 
     // Register page tabs
     const tabs = document.querySelectorAll('.substep-tab');
@@ -557,6 +694,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Photo upload
     setupPhotoUpload('photo-input', 'photo-preview');
     setupRegisterConfirmLink('registerConfirmLink');
+    renderGuardianSameHouseholdConfirm();
     renderStoredUploadedPhoto('confirmPhotoThumb', 'confirmPhotoFallback', {
         alt: '顔写真',
         borderRadius: '4px'
