@@ -64,60 +64,316 @@
                     <p class="text-sm text-muted mb-1">以下の内容を入力して、「次へ」ボタンをクリックしてください。</p>
                     <p class="text-sm text-destructive mb-6">[必須]欄については、必ず入力してください。</p>
 
-                    <!-- 試験選択 section -->
-                    <div class="section-header">
-                        <h2>試験選択</h2>
+                    <!-- 試験選択 header -->
+                    <div
+                        style="background-color: #fcecd7; border-radius: 999px; padding: 0.4rem 2rem; display: inline-block; margin-bottom: 1.5rem;">
+                        <h2 style="color: #a85507; font-size: 1.1rem; font-weight: 700;">試験選択</h2>
                     </div>
 
-                    <div class="exam-notice">
-                        <p>＊試験区分が同日の方式を複数受験することはできません。</p>
-                        <p>＊「併願する学部・学科」での併願が可能な方式等の合否判定を行います。追加の検定料等は不要です。</p>
-                        <p>＊心理学部、環境科学部で一般入試／大学入学共通テスト利用入試・II期の入試合格科(3教科型)を出願もしくは併願選択した場合、B方式(2教科型)も併願となります。</p>
+                    <div class="exam-notice" style="border: none; padding-left: 0; margin-bottom: 1.5rem;">
+                        <p>※試験日が同日の方式を複数受験することはできません。</p>
+                        <p>※「併願する学部・学科」での併願が可能な方式等の合否判定を行います。追加の検定料等はかかりません。</p>
+                        <p>※心理学部、環境科学部で一般入試 I 期および大学入学共通テスト利用入試 I・II期のA方式(3教科型)を出願もしくは併願選択した場合、B方式(2教科型)も併願となります。</p>
                     </div>
 
-                    <!-- 入試区分 -->
-                    <div class="bordered-section mb-8">
-                        <div class="flex items-center gap-2 mb-4">
-                            <h3 class="font-bold">入試区分</h3>
-                            <span class="badge-required">必須</span>
-                        </div>
+                    <!-- Exam Table -->
+                    <style>
+                        .exam-table {
+                            width: 100%;
+                            border: 1px solid #ccc;
+                            border-collapse: collapse;
+                            margin-bottom: 2rem;
+                        }
 
-                        <!-- Normal exam list (shown when exams are available) -->
-                        <div class="radio-group" id="exam-list">
-                            <div class="radio-item">
-                                <input type="radio" name="exam-category" id="exam-1" value="総合型選抜 AOA入試（前期型） III期">
-                                <label for="exam-1">総合型選抜 AOA入試（前期型） III期</label>
+                        .exam-table tr {
+                            border-bottom: 1px solid #ccc;
+                        }
+
+                        .exam-table tr:last-child {
+                            border-bottom: none;
+                        }
+
+                        .exam-table th {
+                            width: 160px;
+                            background-color: #f9f9f9;
+                            padding: 1.5rem 1rem;
+                            font-weight: 700;
+                            border-right: 1px solid #ccc;
+                            vertical-align: middle;
+                            text-align: center;
+                        }
+
+                        .exam-table td {
+                            padding: 1.5rem;
+                            background-color: #fff;
+                            vertical-align: middle;
+                        }
+
+                        .exam-req {
+                            display: block;
+                            color: #e53e3e;
+                            font-size: 0.75rem;
+                            font-weight: 700;
+                            margin-top: 0.25rem;
+                        }
+
+                        .subj-table {
+                            border-collapse: collapse;
+                            border: 1px solid #888;
+                        }
+
+                        .subj-table th {
+                            width: auto;
+                            background-color: #f1f1f1;
+                            border: 1px solid #888;
+                            padding: 0.5rem 1rem;
+                            font-size: 0.9rem;
+                        }
+
+                        .subj-table td {
+                            border: 1px solid #888;
+                            padding: 0.5rem 1rem;
+                            min-width: 120px;
+                            font-size: 0.9rem;
+                        }
+                    </style>
+
+                    <div id="exam-selection-container">
+                        <table class="exam-table">
+                            <!-- 入試区分 (Always visible) -->
+                            <tr>
+                                <th>
+                                    入試区分
+                                    <span class="exam-req">[必須]</span>
+                                </th>
+                                <td>
+                                    <div class="radio-group" id="exam-list">
+                                        <!-- Default Case -->
+                                        <div class="radio-item">
+                                            <input type="radio" name="exam-category" id="exam-1" data-case="default">
+                                            <label for="exam-1">総合型選抜 AO入試（専願型）</label>
+                                        </div>
+                                        <!-- Case 1: Concurrent Application -->
+                                        <div class="radio-item">
+                                            <input type="radio" name="exam-category" id="exam-2" data-case="concurrent">
+                                            <label for="exam-2">総合型選抜 ふるさと愛媛特別選抜試験（専願型） I 期</label>
+                                        </div>
+                                        <!-- Case 2: Multi-day -->
+                                        <div class="radio-item">
+                                            <input type="radio" name="exam-category" id="exam-3" data-case="multiday">
+                                            <label for="exam-3">一般選抜 女子スカラシップ入試</label>
+                                        </div>
+                                        <!-- Case 3: Password Required -->
+                                        <div class="radio-item">
+                                            <input type="radio" name="exam-category" id="exam-4" data-case="password">
+                                            <label for="exam-4">総合型選抜 特別AO入試</label>
+                                        </div>
+                                        <div class="radio-item">
+                                            <input type="radio" name="exam-category" id="exam-5" data-case="default">
+                                            <label for="exam-5">一般入試／大学入学共通テスト利用入試</label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Secondary Info Wrapper (Hidden by default) -->
+                        <div id="exam-details-wrapper" style="display: none;">
+
+                            <!-- Case: Default / Single Day -->
+                            <div id="case-default" class="case-content">
+                                <table class="exam-table">
+                                    <tr>
+                                        <th>学部・学科<span class="exam-req">[必須]</span></th>
+                                        <td>
+                                            <select class="form-input" style="max-width: 300px;">
+                                                <option>看護学部 看護学科</option>
+                                                <option>人間環境学部 心理学科</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>試験地<span class="exam-req">[必須]</span></th>
+                                        <td>本学（大府）</td>
+                                    </tr>
+                                    <tr>
+                                        <th>教科・科目<span class="exam-req">[必須]</span></th>
+                                        <td>
+                                            <table class="subj-table">
+                                                <tr>
+                                                    <th>1時間目</th>
+                                                    <td>テーマ作文</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>2時間目</th>
+                                                    <td>面接</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
-                            <div class="radio-item">
-                                <input type="radio" name="exam-category" id="exam-2" value="総合型選抜 AOA入試（前期型） IV期">
-                                <label for="exam-2">総合型選抜 AOA入試（前期型） IV期</label>
+
+                            <!-- Case: Concurrent -->
+                            <div id="case-concurrent" class="case-content" style="display: none;">
+                                <table class="exam-table">
+                                    <tr>
+                                        <th>学部・学科<span class="exam-req">[必須]</span></th>
+                                        <td> 松山看護学部 看護学科 </td>
+                                    </tr>
+                                    <tr>
+                                        <th>併願する学部・学科<span class="exam-req">[必須]</span></th>
+                                        <td class="text-xs space-y-2">
+                                            <p>ふるさと愛媛特別選抜 I 期（専願型） 総合環境学部 フィールド自然学科に出願した場合、AO入試 I 期（専願型） 総合環境学部
+                                                フィールド自然学科の合否判定も同時に実施します。</p>
+                                            <p>ふるさと愛媛特別選抜 I 期（専願型） 総合環境学部 環境情報学科に出願した場合、AO入試 I 期（専願型） 総合環境学部
+                                                環境情報学科の合否判定も同時に実施します。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>試験地<span class="exam-req">[必須]</span></th>
+                                        <td><select class="form-input" style="max-width: 300px;">
+                                                <option>松山キャンパス</option>
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <th>教科・科目<span class="exam-req">[必須]</span></th>
+                                        <td>
+                                            <table class="subj-table">
+                                                <tr>
+                                                    <th>1時間目</th>
+                                                    <td>小論文</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>2時間目</th>
+                                                    <td>面接</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
-                            <div class="radio-item">
-                                <input type="radio" name="exam-category" id="exam-3" value="一般入試／大学入学共通テスト利用入試">
-                                <label for="exam-3">一般入試／大学入学共通テスト利用入試</label>
+
+                            <!-- Case: Multi-day -->
+                            <div id="case-multiday" class="case-content" style="display: none;">
+                                <!-- Day 1 -->
+                                <div
+                                    style="background-color: #fce4ec; padding: 0.5rem 1rem; font-weight: bold; border: 1px solid #ccc; border-bottom: none; text-align: center; font-size: 0.9rem;">
+                                    女子スカラシップ 2月2日</div>
+                                <table class="exam-table" style="margin-bottom: 1.5rem;">
+                                    <tr>
+                                        <th>学部・学科<span class="exam-req">[必須]</span></th>
+                                        <td><select class="form-input">
+                                                <option>環境科学部 環境データサイエンス学科</option>
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <th>併願する学部・学科</th>
+                                        <td>
+                                            <div class="checkbox-item">
+                                                <input type="checkbox" id="co-app-1" checked>
+                                                <label for="co-app-1">総合環境学部 環境情報学科</label>
+                                            </div>
+                                            <p class="text-xs text-muted mt-2">※チェックされている学部・学科の合否判定が無料で出ます。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>試験地</th>
+                                        <td>本学（岡崎）</td>
+                                    </tr>
+                                    <tr>
+                                        <th>教科・科目</th>
+                                        <td>
+                                            <table class="subj-table">
+                                                <tr>
+                                                    <th>1時間目</th>
+                                                    <td><select class="form-input">
+                                                            <option>外国語（英語）</option>
+                                                        </select></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>2時間目 第1解答</th>
+                                                    <td><select class="form-input">
+                                                            <option>国語</option>
+                                                        </select></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>2時間目 第2解答</th>
+                                                    <td><select class="form-input">
+                                                            <option>日本史探求</option>
+                                                        </select></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!-- Day 2 -->
+                                <div
+                                    style="background-color: #fce4ec; padding: 0.5rem 1rem; font-weight: bold; border: 1px solid #ccc; border-bottom: none; text-align: center; font-size: 0.9rem;">
+                                    女子スカラシップ 2月6日</div>
+                                <table class="exam-table">
+                                    <tr>
+                                        <th>学部・学科<span class="exam-req">[必須]</span></th>
+                                        <td><select class="form-input">
+                                                <option>環境科学部 環境データサイエンス学科</option>
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <th>試験地</th>
+                                        <td>本学（岡崎）</td>
+                                    </tr>
+                                    <tr>
+                                        <th>教科・科目</th>
+                                        <td>
+                                            <table class="subj-table">
+                                                <tr>
+                                                    <th>1時間目</th>
+                                                    <td><select class="form-input">
+                                                            <option>数学</option>
+                                                        </select></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>2時間目</th>
+                                                    <td>面接</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
-                            <div class="radio-item">
-                                <input type="radio" name="exam-category" id="exam-4" value="転部認定試験">
-                                <label for="exam-4">転部認定試験</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="exam-category" id="exam-5" value="外国人留学生選抜 III期">
-                                <label for="exam-5">外国人留学生選抜 III期</label>
+
+                        </div>
+                    </div>
+
+                    <!-- Password Modal -->
+                    <div id="password-modal"
+                        style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+                        <div
+                            style="background: white; padding: 2.5rem; border-radius: 8px; width: 400px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
+                            <h3 class="font-bold mb-4" style="line-height: 1.5;">出願に必要なパスワードを<br>入力してください。</h3>
+                            <input type="password" id="exam-password-input" class="form-input mb-6"
+                                style="text-align: center; font-size: 1.2rem; letter-spacing: 0.5rem;">
+                            <div class="flex gap-4">
+                                <button type="button" class="btn btn-secondary flex-1"
+                                    onclick="closePasswordModal()">キャンセル</button>
+                                <button type="button" class="btn btn-primary flex-1"
+                                    onclick="verifyPassword()">確認</button>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- No exams available notice (shown when no exams are available) -->
-                        <div id="no-exam-notice" style="display:none;">
-                            <div class="no-exam-alert">
-                                <p class="no-exam-alert-title">選択できる試験がありません。</p>
-                                <p>志願する入試の出願期間中にログイン・登録してください。</p>
-                                <p>出願期間は募集要項でご確認ください。</p>
-                            </div>
+                    <!-- No exams available notice remains same but hidden -->
+                    <div id="no-exam-notice" style="display:none; margin-bottom: 2rem;">
+                        <div class="no-exam-alert">
+                            <p class="no-exam-alert-title">選択できる試験がありません。</p>
+                            <p>志願する入試の出願期間中にログイン・登録してください。</p>
+                            <p>出願期間は募集要項でご確認ください。</p>
                         </div>
                     </div>
 
                     <!-- Buttons -->
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 mt-12">
                         <a href="privacy-consent.html">
                             <button type="button" class="btn btn-outline btn-full btn-lg">戻る</button>
                         </a>
@@ -132,6 +388,21 @@
                                 </svg>
                             </button>
                         </a>
+                    </div>
+
+                    <!-- Debug/Demo Links for Testing Registration Types -->
+                    <div class="mt-12 p-6 bg-gray-50 border border-dashed border-gray-300 rounded-xl">
+                        <h4 class="text-xs font-bold text-gray-400 mb-4 uppercase tracking-widest text-center">Development Demo Links</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                            <a href="register.html?is_only_female=true" class="btn btn-outline btn-sm text-[10px] bg-white hover:bg-pink-50 transition-colors">Only Female</a>
+                            <a href="register.html?is_department_transfer=true" class="btn btn-outline btn-sm text-[10px] bg-white hover:bg-blue-50 transition-colors">Dept Transfer</a>
+                            <a href="register.html?is_adult=true" class="btn btn-outline btn-sm text-[10px] bg-white hover:bg-green-50 transition-colors">Adult Status</a>
+                            <a href="register.html?is_foreigner=true" class="btn btn-outline btn-sm text-[10px] bg-white hover:bg-orange-50 transition-colors">Foreigner</a>
+                            <a href="register.html?is_jpue=true" class="btn btn-outline btn-sm text-[10px] bg-white hover:bg-indigo-50 transition-colors">JPUE Exam</a>
+                            <a href="register.html?is_graduate_school=true" class="btn btn-outline btn-sm text-[10px] bg-white hover:bg-purple-50 transition-colors">Grad School</a>
+                            <a href="register.html?is_nursing_grad=true" class="btn btn-outline btn-sm text-[10px] bg-white hover:bg-red-50 transition-colors">Nursing Grad</a>
+                            <a href="register.html" class="btn btn-outline btn-sm text-[10px] bg-gray-100 hover:bg-gray-200 transition-colors">Default Form</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -192,23 +463,79 @@
     </div>
     <script src="app.js"></script>
     <script>
-        // Read HAS_EXAMS from URL query param:
-        //   ?exams=1  → show exam list (normal flow from privacy-consent.html)
-        //   ?exams=0  → show "no exams" error notice
-        //   (no param) → defaults to true (show exam list)
+        // Read HAS_EXAMS from URL query param
         var params = new URLSearchParams(window.location.search);
         var HAS_EXAMS = params.get('exams') !== '0';
 
+        // Modal elements
+        var modal = document.getElementById('password-modal');
+        var passInput = document.getElementById('exam-password-input');
+        var nextBtn = document.getElementById('exam-next-btn');
+        var detailsWrapper = document.getElementById('exam-details-wrapper');
+        var lastSelectedRadio = null;
+
+        function closePasswordModal() {
+            modal.style.display = 'none';
+            if (lastSelectedRadio) lastSelectedRadio.checked = false;
+            detailsWrapper.style.display = 'none';
+            nextBtn.disabled = true;
+        }
+
+        function verifyPassword() {
+            if (passInput.value === '1234') { // Mock password
+                modal.style.display = 'none';
+                showCase('default'); // Or specific case for password-protected exam
+                nextBtn.disabled = false;
+            } else {
+                alert('パスワードが正しくありません。');
+                passInput.value = '';
+            }
+        }
+
+        function showCase(caseType) {
+            detailsWrapper.style.display = 'block';
+            document.querySelectorAll('.case-content').forEach(function (el) {
+                el.style.display = 'none';
+            });
+            var target = document.getElementById('case-' + caseType);
+            if (target) {
+                target.style.display = 'block';
+            } else {
+                // Fallback for types not explicitly defined
+                document.getElementById('case-default').style.display = 'block';
+            }
+        }
+
         (function () {
             if (!HAS_EXAMS) {
-                document.getElementById('exam-list').style.display = 'none';
+                document.getElementById('exam-selection-container').style.display = 'none';
                 document.getElementById('no-exam-notice').style.display = 'block';
-                var nextBtn = document.getElementById('exam-next-btn');
                 if (nextBtn) {
                     nextBtn.disabled = true;
-                    nextBtn.closest('a').style.pointerEvents = 'none';
-                    nextBtn.closest('a').style.opacity = '0.5';
+                    var parentLink = nextBtn.closest('a');
+                    if (parentLink) {
+                        parentLink.style.pointerEvents = 'none';
+                        parentLink.style.opacity = '0.5';
+                    }
                 }
+            } else {
+                // Category selection logic
+                document.querySelectorAll('input[name="exam-category"]').forEach(function (radio) {
+                    radio.addEventListener('change', function () {
+                        var caseType = this.getAttribute('data-case');
+                        lastSelectedRadio = this;
+
+                        if (caseType === 'password') {
+                            detailsWrapper.style.display = 'none';
+                            nextBtn.disabled = true;
+                            modal.style.display = 'flex';
+                            passInput.focus();
+                        } else {
+                            showCase(caseType);
+                            nextBtn.disabled = false;
+                        }
+                    });
+                });
             }
         })();
     </script>

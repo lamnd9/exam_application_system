@@ -125,9 +125,9 @@
                 <!-- Sub-step tabs -->
                 <div class="substep-tabs">
                     <button class="substep-tab active" data-step="0">志願者情報入力</button>
-                    <button class="substep-tab" data-step="1">保護者情報</button>
+                    <button class="substep-tab" data-step="1" id="tab-step1">保護者情報</button>
                     <button class="substep-tab" data-step="2">志望校アンケート</button>
-                    <button class="substep-tab" data-step="3">出身高等学校情報</button>
+                    <button class="substep-tab" data-step="3" id="tab-step3">出身高等学校情報</button>
                 </div>
 
                 <!-- Main card -->
@@ -135,364 +135,652 @@
 
                     <!-- ===== Sub-step 0: 志願者情報入力 ===== -->
                     <div class="substep-content active" data-step="0">
-                        <div class="space-y-8">
-                            <h2 class="text-xl font-bold text-center">志願者情報入力</h2>
+                        <div class="space-y-12">
+                            
+                            <!-- Internal styles for the registration tables -->
+                            <style>
+                                .reg-section { margin-bottom: 3rem; }
+                                .reg-header {
+                                    background-color: #fcecd7;
+                                    border-radius: 0 999px 999px 0;
+                                    padding: 0.5rem 2rem;
+                                    display: inline-block;
+                                    margin-bottom: 1.5rem;
+                                    margin-left: -2rem;
+                                }
+                                .reg-header h2 {
+                                    color: #a85507;
+                                    font-size: 1.1rem;
+                                    font-weight: 700;
+                                }
+                                .reg-table {
+                                    width: 100%;
+                                    border: 1px solid #ccc;
+                                    border-collapse: collapse;
+                                }
+                                .reg-table th {
+                                    width: 200px;
+                                    background-color: #f3f3f3;
+                                    padding: 1.5rem 1rem;
+                                    font-weight: 700;
+                                    border: 1px solid #ccc;
+                                    text-align: center;
+                                    vertical-align: middle;
+                                }
+                                .reg-table td {
+                                    padding: 1.5rem;
+                                    background-color: #fff;
+                                    border: 1px solid #ccc;
+                                    vertical-align: middle;
+                                }
+                                .reg-req {
+                                    display: block;
+                                    color: #e53e3e;
+                                    font-size: 0.75rem;
+                                    margin-top: 0.25rem;
+                                }
+                                .reg-hint {
+                                    font-size: 0.75rem;
+                                    color: #e53e3e;
+                                    margin-top: 0.5rem;
+                                }
+                                .input-inline-group {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 0.5rem;
+                                    flex-wrap: wrap;
+                                }
+                            </style>
 
-                            <!-- 姓・名 -->
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
-                                <div>
-                                    <label class="form-label">姓 <span class="badge-required">必須</span></label>
-                                    <input type="text" class="form-input" placeholder="山田">
-                                </div>
-                                <div>
-                                    <label class="form-label">名 <span class="badge-required">必須</span></label>
-                                    <input type="text" class="form-input" placeholder="太郎">
-                                </div>
+                            <!-- Section 1: 志願者情報 (Japan) -->
+                            <div class="reg-section" id="section-applicant-jp">
+                                <div class="reg-header"><h2>志願者情報</h2></div>
+                                <table class="reg-table">
+                                    <tr id="row-student-id" style="display: none;">
+                                        <th style="background-color: #f1f5f9;">学籍番号<br><span class="reg-req" style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 240px;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>志願者氏名（漢字）<span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <span>姓：</span>
+                                                <input type="text" class="form-input" style="width: 180px;" placeholder="">
+                                                <span class="text-xs text-muted">例）環境</span>
+                                                <span class="ml-4">名：</span>
+                                                <input type="text" class="form-input" style="width: 180px;" placeholder="">
+                                                <span class="text-xs text-muted">例）太郎</span>
+                                            </div>
+                                            <p class="reg-hint">※全角で入力してください。※JIS第一・第二水準までで入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>志願者氏名（カナ）<span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <span>セイ：</span>
+                                                <input type="text" class="form-input" style="width: 180px;" placeholder="">
+                                                <span class="text-xs text-muted">例）カンキョウ</span>
+                                                <span class="ml-4">メイ：</span>
+                                                <input type="text" class="form-input" style="width: 180px;" placeholder="">
+                                                <span class="text-xs text-muted">例）タロウ</span>
+                                            </div>
+                                            <p class="reg-hint">※半角カタカナで入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>性別<span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="radio-group horizontal">
+                                                <div class="radio-item">
+                                                    <input type="radio" name="gender" id="g-male"><label for="g-male">男</label>
+                                                </div>
+                                                <div class="radio-item">
+                                                    <input type="radio" name="gender" id="g-female" checked><label for="g-female">女</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>生年月日<span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <span>西暦：</span>
+                                                <input type="text" class="form-input" style="width: 80px;" placeholder="">
+                                                <span>年</span>
+                                                <select class="form-input" style="width: 80px;">
+                                                    <option value="">--</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+                                                </select>
+                                                <span>月</span>
+                                                <select class="form-input" style="width: 80px;">
+                                                    <option value="">--</option>
+                                                    <script>for(var i=1;i<=31;i++) document.write('<option>'+i+'</option>');</script>
+                                                </select>
+                                                <span>日</span>
+                                            </div>
+                                            <p class="reg-hint">※半角数字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <!-- セイ・メイ -->
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
-                                <div>
-                                    <label class="form-label">セイ（フリガナ） <span class="badge-required">必須</span></label>
-                                    <input type="text" class="form-input" placeholder="ヤマダ">
-                                </div>
-                                <div>
-                                    <label class="form-label">メイ（フリガナ） <span class="badge-required">必須</span></label>
-                                    <input type="text" class="form-input" placeholder="タロウ">
-                                </div>
+                            <!-- Section 1: 志願者情報 (Foreigner) -->
+                            <div class="reg-section" id="section-applicant-en" style="display: none;">
+                                <div class="reg-header"><h2>志願者情報</h2></div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th>志願者氏名（英字）<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="space-y-2">
+                                                <div class="input-inline-group">
+                                                    <span>Family Name：</span>
+                                                    <input type="text" class="form-input" style="width: 180px;">
+                                                    <span class="text-xs text-muted ml-1">例）KANKYO</span>
+                                                    <span class="ml-12">First Name：</span>
+                                                    <input type="text" class="form-input" style="width: 180px;">
+                                                    <span class="text-xs text-muted ml-1">例）TARO</span>
+                                                </div>
+                                                <div class="input-inline-group">
+                                                    <span>Middle Name：</span>
+                                                    <input type="text" class="form-input" style="width: 180px;">
+                                                    <span class="text-xs text-muted ml-1">例）JAMES</span>
+                                                </div>
+                                            </div>
+                                            <p class="reg-hint">※半角英字で入力してください。※パスポートの記載のとおり入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>志願者氏名（カナ）<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="space-y-2">
+                                                <div class="input-inline-group">
+                                                    <span>セイ：</span>
+                                                    <input type="text" class="form-input" style="width: 150px;">
+                                                    <span class="text-xs text-muted ml-1">例）ｶﾝｷｮｳ</span>
+                                                    <span class="ml-12">メイ：</span>
+                                                    <input type="text" class="form-input" style="width: 150px;">
+                                                    <span class="text-xs text-muted ml-1">例）ﾀﾛｳ</span>
+                                                </div>
+                                                <div class="input-inline-group">
+                                                    <span>ミドルネーム：</span>
+                                                    <input type="text" class="form-input" style="width: 180px;">
+                                                    <span class="text-xs text-muted ml-1">例）ｼﾞｪｰﾑｽﾞ</span>
+                                                </div>
+                                            </div>
+                                            <p class="reg-hint">※半角カタカナで入力してください。フリガナは自国語の発音に従って入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>性別<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="radio-group horizontal">
+                                                <div class="radio-item"><input type="radio" name="gender-en" id="g-male-en"><label for="g-male-en">男</label></div>
+                                                <div class="radio-item"><input type="radio" name="gender-en" id="g-female-en" checked><label for="g-female-en">女</label></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>生年月日<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <span>西暦：</span>
+                                                <input type="text" class="form-input" style="width: 80px;">
+                                                <span>年</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select>
+                                                <span>月</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select>
+                                                <span>日</span>
+                                            </div>
+                                            <p class="reg-hint">※半角数字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>国籍<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 250px;">
+                                            <p class="reg-hint">※30文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>出生地<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <span>国：</span>
+                                                <input type="text" class="form-input" style="width: 200px;">
+                                                <span class="ml-12">都市：</span>
+                                                <input type="text" class="form-input" style="width: 200px;">
+                                            </div>
+                                            <p class="reg-hint">※各項目30文字以内</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <!-- 性別 -->
-                            <div>
-                                <label class="form-label mb-2">性別 <span class="badge-required">必須</span></label>
-                                <div class="radio-group horizontal">
-                                    <div class="radio-item">
-                                        <input type="radio" name="gender" id="gender-male" value="男性">
-                                        <label for="gender-male">男性</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" name="gender" id="gender-female" value="女性">
-                                        <label for="gender-female">女性</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" name="gender" id="gender-other" value="その他">
-                                        <label for="gender-other">その他</label>
-                                    </div>
-                                </div>
+                            <!-- Section: 在留資格 (Foreigner Only) -->
+                            <div class="reg-section" id="section-residence" style="display: none;">
+                                <div class="reg-header"><h2>在留資格</h2></div>
+                                <p class="text-xs mb-4">※日本大学連合学力試験(JPUE)利用入試志願者でパスポートがない場合は、入試・広報部(0564-48-7811)までご連絡ください。</p>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th>在留資格<br><span class="reg-req">[必須]</span></th>
+                                        <td><select class="form-input" style="width: 200px;"><option value=""></option></select></td>
+                                    </tr>
+                                    <tr>
+                                        <th>在留期限<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <span>西暦：</span>
+                                                <input type="text" class="form-input" style="width: 80px;"><span>年</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select><span>月</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select><span>日</span>
+                                            </div>
+                                            <p class="reg-hint">※半角数字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>パスポート番号<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 250px;">
+                                            <p class="reg-hint">※半角英数字で入力してください。※15文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>来日年月日<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <span>西暦：</span>
+                                                <input type="text" class="form-input" style="width: 80px;"><span>年</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select><span>月</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select><span>日</span>
+                                            </div>
+                                            <p class="reg-hint">※半角数字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <!-- 生年月日 -->
-                            <div>
-                                <label class="form-label mb-2">生年月日 <span class="badge-required">必須</span></label>
-                                <div class="flex items-center gap-2">
-                                    <input type="text" class="form-input form-input-sm form-input-year"
-                                        placeholder="例：2006" maxlength="4" inputmode="numeric"
-                                        oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                                    <span class="text-sm"
-                                        style="color:var(--muted-foreground);white-space:nowrap;">年</span>
-                                    <input type="text" class="form-input form-input-xs" placeholder="01" maxlength="2"
-                                        inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                                    <span class="text-sm"
-                                        style="color:var(--muted-foreground);white-space:nowrap;">月</span>
-                                    <input type="text" class="form-input form-input-xs" placeholder="01" maxlength="2"
-                                        inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                                    <span class="text-sm"
-                                        style="color:var(--muted-foreground);white-space:nowrap;">日</span>
-                                </div>
+                            <!-- Section 2: 志願者連絡先 (Japan) -->
+                            <div class="reg-section" id="section-contact-jp">
+                                <div class="reg-header"><h2>志願者連絡先</h2></div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th>郵便番号<span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <input type="text" class="form-input" style="width: 60px;" maxlength="3">
+                                                <span>-</span>
+                                                <input type="text" class="form-input" style="width: 80px;" maxlength="4">
+                                                <button type="button" class="btn btn-dark btn-sm" style="background: #333; color: white;">住所検索</button>
+                                                <span class="text-xs text-muted">「住所検索」ボタンを押すと住所が自動入力されます。</span>
+                                            </div>
+                                            <p class="reg-hint">※半角数字で入力してください。</p>
+                                            <a href="#" class="text-xs text-blue-600 underline">郵便番号がわからない場合はこちらから検索をしてください</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>都道府県<span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <select class="form-input" style="width: 200px;">
+                                                <option value="">選択してください</option>
+                                                <option>愛知県</option>
+                                                <!-- other prefectures ... -->
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>市区町村 番地<span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <input type="text" class="form-input" style="width: 400px;" placeholder="">
+                                                <span class="text-xs text-muted">例）岡崎市本宿町上三本松6-2</span>
+                                            </div>
+                                            <p class="reg-hint">※カナ、英字、数字、ハイフン(-)は半角で入力してください。※100文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>建物名・部屋番号</th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <input type="text" class="form-input" style="width: 400px;" placeholder="">
+                                                <span class="text-xs text-muted">例）環境ビル108号</span>
+                                            </div>
+                                            <p class="reg-hint">※カナ、英字、数字、ハイフン(-)は半角で入力してください。※100文字以内 ※部屋番号がある場合は必ず入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>電話番号<div class="reg-req text-xs" style="font-weight:normal;">【電話番号または携帯電話 いずれか必須】</div></th>
+                                        <td>
+                                            <p class="reg-hint" style="margin-top:0; margin-bottom: 0.5rem;">※つながりやすい番号を入力してください（出願の不備などによりご連絡する場合があります）。</p>
+                                            <input type="text" class="form-input" style="width: 300px;" placeholder="">
+                                            <p class="reg-hint">※数字、ハイフン(-)は半角で入力してください。※30文字以内<br>※自宅に固定電話がない方は携帯番号を入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>本人携帯電話<div class="reg-req text-xs" style="font-weight:normal;">【電話番号または携帯電話 いずれか必須】</div></th>
+                                        <td>
+                                            <p class="reg-hint" style="margin-top:0; margin-bottom: 0.5rem;">※出願の不備などによりご連絡する場合があります。</p>
+                                            <input type="text" class="form-input" style="width: 300px;" placeholder="">
+                                            <p class="reg-hint">※数字、ハイフン(-)は半角で入力してください。※30文字以内</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <!-- 郵便番号 -->
-                            <div>
-                                <label class="form-label">郵便番号 <span class="badge-required">必須</span></label>
-                                <div class="flex items-center gap-3">
-                                    <input type="text" class="form-input form-input-md" placeholder="123-4567">
-                                    <button type="button" class="btn btn-primary btn-address-soft">住所検索</button>
-                                </div>
                             </div>
 
-                            <!-- 都道府県・市区町村 -->
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
-                                <div>
-                                    <label class="form-label">都道府県 <span class="badge-required">必須</span></label>
-                                    <input type="text" class="form-input" placeholder="">
-                                </div>
-                                <div>
-                                    <label class="form-label">市区町村 <span class="badge-required">必須</span></label>
-                                    <input type="text" class="form-input" placeholder="岡崎市">
-                                </div>
+                            <!-- Section: 現住所 (Foreigner Only) -->
+                            <div class="reg-section" id="section-current-address-en" style="display: none;">
+                                <div class="reg-header"><h2>現住所</h2></div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 200px;">郵便番号<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <p class="reg-hint">※半角英数字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>住所<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <input type="text" class="form-input" style="width: 500px;">
+                                                <span class="text-xs text-muted">例）岡崎市本宿町上三本松6-2 環境ﾋﾞﾙ108号</span>
+                                            </div>
+                                            <p class="reg-hint">※ｶﾅ、英字、数字、ﾊｲﾌﾝ(-)は半角で入力してください。※100文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>電話番号<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <p class="reg-hint">※数字、ハイフン(-)は半角で入力してください。※30文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>FAX</th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <p class="reg-hint">※数字、ハイフン(-)は半角で入力してください。※30文字以内</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <!-- 番地 -->
-                            <div>
-                                <label class="form-label">番地 <span class="badge-required">必須</span></label>
-                                <input type="text" class="form-input" placeholder="大門1-1-1">
+                            <!-- Section: 本国住所 (Foreigner Only) -->
+                            <div class="reg-section" id="section-home-address" style="display: none;">
+                                <div class="reg-header"><h2>本国住所</h2></div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 200px;">郵便番号<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <p class="reg-hint">※半角英数記号(ﾊｲﾌﾝ[-])で入力してください。※20文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>住所<br><span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 450px;">
+                                            <p class="reg-hint">※半角英数記号(ﾊｲﾌﾝ[-])で入力してください。※100文字以内</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <!-- 建物名 -->
-                            <div>
-                                <label class="form-label-block">建物名・部屋番号</label>
-                                <input type="text" class="form-input" placeholder="〇〇マンション101号室">
+                            <!-- Section 3: メールアドレス -->
+                            <div class="reg-section">
+                                <div class="reg-header"><h2>メールアドレス</h2></div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th>メールアドレス<span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <p class="reg-hint" style="margin-top:0; margin-bottom: 0.5rem;">※メールの受信を制限されている方は"ientryml.jp"からのメールを許可する設定をしてください。</p>
+                                            <input type="email" class="form-input" style="width: 400px;">
+                                            <p class="reg-hint">※半角英数記号（ピリオド[.]ハイフン[-]アンダースコア[_]）で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>メールアドレス（確認）<span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <input type="email" class="form-input" style="width: 400px; margin-bottom: 1rem;">
+                                            <p class="reg-hint" style="margin-top:0;">※半角英数記号（ピリオド[.]ハイフン[-]アンダースコア[_]）で入力してください。</p>
+                                            <button type="button" class="btn btn-outline" style="padding: 0.5rem 1.5rem;">メール送信テスト</button>
+                                            <p class="reg-hint" style="color: #666;">※メール送信テストボタンを押下すると入力したメールアドレスにテストメールが送信されます。</p>
+                                            <div style="background: #fff5f5; border: 1px solid #fed7d7; padding: 1rem; border-radius: 4px; margin-top: 1rem;">
+                                                <p class="text-xs text-destructive">ご登録いただくメールアドレスに、出願登録後、メールを送信させていただきます。<br>その本文には受験票の案内など重要な情報が含まれております。確実に受信できるアドレスをご登録ください。</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <!-- 電話番号 -->
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
-                                <div>
-                                    <label class="form-label-block">電話番号</label>
-                                    <input type="text" class="form-input" placeholder="0564-XX-XXXX">
-                                </div>
-                                <div>
-                                    <label class="form-label-block">携帯電話番号</label>
-                                    <input type="text" class="form-input" placeholder="090-XXXX-XXXX">
-                                </div>
-                            </div>
-                            <p class="text-xs text-destructive">＊電話番号または携帯電話番号のどちらか一方は必須です</p>
+                            <!-- Section 5: 顔写真 -->
+                            <div class="reg-section">
+                                <div class="reg-header"><h2>顔写真</h2></div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th>写真<span class="reg-req">[必須]</span></th>
+                                        <td>
+                                            <div style="background-color: #fffde7; border: 1px solid #d4d4d4; padding: 1rem; display: flex; align-items: center; gap: 1rem;">
+                                                <button type="button" class="btn" style="background: #73c2fb; color: white;">ファイル取込</button>
+                                                <div style="flex: 1; height: 2rem;"></div> <!-- space for file path -->
+                                            </div>
+                                            <div class="reg-hint" style="color: #00875a; font-size: 0.8rem; line-height: 1.6;">
+                                                ※1. 「ファイル取込」ボタンを押し、顔写真データを選択します。最後に「保存」ボタンを押してください。<br>
+                                                ※2. 添付の差し替えは、「削除」ボタンを押し新たに顔写真データを選択し登録を行ってください。
+                                            </div>
+                                            <div class="text-sm mt-4 space-y-1">
+                                                <p>※写真の規格は下記のとおりです。</p>
+                                                <p>1）最近3ヶ月以内に撮影したもの</p>
+                                                <p>2）カラーのもの（白黒は不可）</p>
+                                                <p>3）正面、上半身、脱帽、背景無地</p>
+                                                <p>4）ピントが合っていて、顔が鮮明に写っているもの</p>
+                                                <p>5）画像に加工を施していないもの</p>
+                                                <p>6）JPEG形式のデータで、５MB以内のもの</p>
+                                            </div>
+                                            
+                                            
+                                            <!-- NG PHOTO EXAMPLES — Robot block -->
+                                            <div class="ng-photo-block">
+                                                <div class="ng-photo-block-title">※受付できない例</div>
+                                                <div class="ng-robots-grid">
 
-                            <!-- メールアドレス -->
-                            <div>
-                                <label class="form-label">メールアドレス <span class="badge-required">必須</span></label>
-                                <input type="email" class="form-input" placeholder="example@email.com">
-                            </div>
-                            <div>
-                                <label class="form-label">メールアドレス（確認） <span class="badge-required">必須</span></label>
-                                <input type="email" class="form-input" placeholder="example@email.com">
-                            </div>
+                                                    <!-- NG1: 髪が長すぎ目にかかっている (variant1 — gray) -->
+                                                    <div class="ng-robot-card">
+                                                        <span class="ng-robot-close-icon" aria-hidden="true"></span>
+                                                        <svg class="robot-svg" viewBox="20 10 100 150" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <!-- Body gray -->
+                                                            <g transform="translate(26.6,80.7)">
+                                                                <path
+                                                                    d="M73.15 0H6.65C2.977 0 0 2.977 0 6.65V59.85C0 63.523 2.977 66.5 6.65 66.5H73.15C76.823 66.5 79.8 63.523 79.8 59.85V6.65C79.8 2.977 76.823 0 73.15 0Z"
+                                                                    fill="#4A5568" />
+                                                            </g>
+                                                            <!-- Head -->
+                                                            <g transform="translate(39.9,14.2)">
+                                                                <path
+                                                                    d="M26.6 66.5C41.291 66.5 53.2 51.614 53.2 33.25C53.2 14.887 41.291 0 26.6 0C11.909 0 0 14.887 0 33.25C0 51.614 11.909 66.5 26.6 66.5Z"
+                                                                    fill="#F0D0A0" />
+                                                            </g>
+                                                            <!-- Long hair band covering eyes -->
+                                                            <g transform="translate(39.9,20)">
+                                                                <path d="M0 0C17.733 8 35.467 8 53.2 0H0Z" fill="#3D3D3D" />
+                                                            </g>
+                                                            <g transform="translate(39.9,20)">
+                                                                <rect width="53.2" height="22" fill="#3D3D3D" rx="2" />
+                                                            </g>
+                                                            <!-- Neck -->
+                                                            <g transform="translate(39.9,67.4)">
+                                                                <path d="M0 0C17.733 17.733 35.467 17.733 53.2 0H0Z"
+                                                                    fill="#4A5568" />
+                                                            </g>
+                                                            <!-- Eyes barely visible under hair -->
+                                                            <g transform="translate(53.2,39)" opacity="0.4">
+                                                                <circle cx="2.66" cy="2.66" r="2.66" fill="#1a202c" />
+                                                            </g>
+                                                            <g transform="translate(74.48,39)" opacity="0.4">
+                                                                <circle cx="2.66" cy="2.66" r="2.66" fill="#1a202c" />
+                                                            </g>
+                                                            <!-- Mouth -->
+                                                            <g transform="translate(53.3,54)">
+                                                                <path d="M0.26 1.3C9.127 3.078 17.994 3.078 26.861 1.3"
+                                                                    stroke="#000" stroke-width="2.66" stroke-linecap="round" />
+                                                            </g>
+                                                        </svg>
+                                                        <span class="ng-robot-label">髪が長すぎ<br>目にかかっている</span>
+                                                    </div>
 
-                            <!-- パスワード -->
-                            <div>
-                                <label class="form-label">マイページ用パスワード <span class="badge-required">必須</span></label>
-                                <input type="password" class="form-input" placeholder="4〜8文字の半角英数">
-                                <p class="text-xs text-destructive mt-1">＊4〜8文字の半角英数で登録（入力）してください。マイページログイン時に使用します。</p>
-                            </div>
+                                                    <!-- NG2: 目を閉じている (variant2 — red) -->
+                                                    <div class="ng-robot-card">
+                                                        <span class="ng-robot-close-icon" aria-hidden="true"></span>
+                                                        <svg class="robot-svg" viewBox="20 10 100 150" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <!-- Body red -->
+                                                            <g transform="translate(26.6,80.7)">
+                                                                <path
+                                                                    d="M73.15 0H6.65C2.977 0 0 2.977 0 6.65V59.85C0 63.523 2.977 66.5 6.65 66.5H73.15C76.823 66.5 79.8 63.523 79.8 59.85V6.65C79.8 2.977 76.823 0 73.15 0Z"
+                                                                    fill="#E53E3E" />
+                                                            </g>
+                                                            <!-- Head -->
+                                                            <g transform="translate(39.9,14.2)">
+                                                                <path
+                                                                    d="M26.6 66.5C41.291 66.5 53.2 51.614 53.2 33.25C53.2 14.887 41.291 0 26.6 0C11.909 0 0 14.887 0 33.25C0 51.614 11.909 66.5 26.6 66.5Z"
+                                                                    fill="#F0D0A0" />
+                                                            </g>
+                                                            <!-- Neck -->
+                                                            <g transform="translate(39.9,67.4)">
+                                                                <path d="M0 0C17.733 17.733 35.467 17.733 53.2 0H0Z"
+                                                                    fill="#2D3748" />
+                                                            </g>
+                                                            <!-- Eyes closed (arc lines) -->
+                                                            <g transform="translate(51.5,40.8)">
+                                                                <path d="M0.595 1.19C4.141 2.963 7.688 2.963 11.235 1.19"
+                                                                    stroke="#1a202c" stroke-width="2.66" stroke-linecap="round" />
+                                                            </g>
+                                                            <g transform="translate(71.82,40.8)">
+                                                                <path d="M0.595 1.19C4.141 2.963 7.688 2.963 11.235 1.19"
+                                                                    stroke="#1a202c" stroke-width="2.66" stroke-linecap="round" />
+                                                            </g>
+                                                            <!-- Mouth smile -->
+                                                            <g transform="translate(53.3,54)">
+                                                                <path d="M0.26 1.3C9.127 3.078 17.994 3.078 26.861 1.3"
+                                                                    stroke="#000" stroke-width="2.66" stroke-linecap="round" />
+                                                            </g>
+                                                        </svg>
+                                                        <span class="ng-robot-label">目を閉じている</span>
+                                                    </div>
 
-                            <!-- 顔写真 -->
-                            <div>
-                                <label class="form-label mb-2">顔写真 <span class="badge-required">必須</span></label>
-                                <div class="photo-upload-area">
-                                    <label class="photo-upload-box" for="photo-input" id="photo-preview">
-                                        <div class="photo-upload-placeholder">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                                <polyline points="17 8 12 3 7 8" />
-                                                <line x1="12" y1="3" x2="12" y2="15" />
-                                            </svg>
-                                            <span class="upload-text">ファイルを選択</span>
-                                            <span class="upload-hint">クリックしてアップロード</span>
-                                        </div>
-                                        <img class="photo-upload-image" alt="選択した顔写真" hidden>
-                                        <input type="file" id="photo-input"
-                                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                                            style="display:none">
-                                    </label>
-                                    <div class="photo-requirements">
-                                        <p class="title">＊写真の規格は下記のとおりです。</p>
-                                        <p>1）撮影3ヶ月以内に撮影したもの</p>
-                                        <p>2）カラーのもの（白黒は不可）</p>
-                                        <p>3）正面、上半身、脱帽、背景無地</p>
-                                        <p>4）ピントが合っていて、顔が鮮明に写っているもの</p>
-                                        <p>5）画像に加工を施していないもの</p>
-                                        <p>6）JPEG、PNG、WebP形式のデータで、5MB以内のもの</p>
-                                    </div>
-                                </div>
+                                                    <!-- NG3: マスク・サングラスを着用 (variant3 — green) -->
+                                                    <div class="ng-robot-card">
+                                                        <span class="ng-robot-close-icon" aria-hidden="true"></span>
+                                                        <svg class="robot-svg" viewBox="20 10 100 150" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <!-- Body green -->
+                                                            <g transform="translate(26.6,80.7)">
+                                                                <path
+                                                                    d="M73.15 0H6.65C2.977 0 0 2.977 0 6.65V59.85C0 63.523 2.977 66.5 6.65 66.5H73.15C76.823 66.5 79.8 63.523 79.8 59.85V6.65C79.8 2.977 76.823 0 73.15 0Z"
+                                                                    fill="#047857" />
+                                                            </g>
+                                                            <!-- Head -->
+                                                            <g transform="translate(39.9,14.2)">
+                                                                <path
+                                                                    d="M26.6 66.5C41.291 66.5 53.2 51.614 53.2 33.25C53.2 14.887 41.291 0 26.6 0C11.909 0 0 14.887 0 33.25C0 51.614 11.909 66.5 26.6 66.5Z"
+                                                                    fill="#F0D0A0" />
+                                                            </g>
+                                                            <!-- Neck -->
+                                                            <g transform="translate(39.9,67.4)">
+                                                                <path d="M0 0C17.733 17.733 35.467 17.733 53.2 0H0Z"
+                                                                    fill="#6B4423" />
+                                                            </g>
+                                                            <!-- Sunglasses visor -->
+                                                            <g transform="translate(46.55,34.15)">
+                                                                <rect width="39.9" height="13.3" rx="2.66" fill="#1A202C" />
+                                                            </g>
+                                                            <!-- White eye glints on visor -->
+                                                            <g transform="translate(53.2,36.81)" opacity="0.5">
+                                                                <ellipse cx="3.99" cy="2.66" rx="3.99" ry="2.66" fill="white" />
+                                                            </g>
+                                                            <g transform="translate(71.82,36.81)" opacity="0.5">
+                                                                <ellipse cx="3.99" cy="2.66" rx="3.99" ry="2.66" fill="white" />
+                                                            </g>
+                                                            <!-- Mask covering lower face -->
+                                                            <g transform="translate(39.9,47.45)" opacity="0.9">
+                                                                <rect width="53.2" height="15.96" rx="2.66" fill="#E5E7EB" />
+                                                            </g>
+                                                            <!-- Mask line detail -->
+                                                            <g transform="translate(42,53)">
+                                                                <path d="M0 0h49.2" stroke="#CBD5E0" stroke-width="1"
+                                                                    stroke-dasharray="3 2" />
+                                                            </g>
+                                                        </svg>
+                                                        <span class="ng-robot-label">マスク、サングラス<br>を着用している</span>
+                                                    </div>
 
-                                <!-- NG PHOTO EXAMPLES — Robot block -->
-                                <div class="ng-photo-block">
-                                    <div class="ng-photo-block-title">※受付できない例</div>
-                                    <div class="ng-robots-grid">
+                                                    <!-- NG4: どちらか目がかくれている (variant4 — blue) -->
+                                                    <div class="ng-robot-card">
+                                                        <span class="ng-robot-close-icon" aria-hidden="true"></span>
+                                                        <svg class="robot-svg" viewBox="20 10 100 150" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <!-- Body blue -->
+                                                            <g transform="translate(26.6,80.7)">
+                                                                <path
+                                                                    d="M73.15 0H6.65C2.977 0 0 2.977 0 6.65V59.85C0 63.523 2.977 66.5 6.65 66.5H73.15C76.823 66.5 79.8 63.523 79.8 59.85V6.65C79.8 2.977 76.823 0 73.15 0Z"
+                                                                    fill="#2563EB" />
+                                                            </g>
+                                                            <!-- Head -->
+                                                            <g transform="translate(39.9,14.2)">
+                                                                <path
+                                                                    d="M26.6 66.5C41.291 66.5 53.2 51.614 53.2 33.25C53.2 14.887 41.291 0 26.6 0C11.909 0 0 14.887 0 33.25C0 51.614 11.909 66.5 26.6 66.5Z"
+                                                                    fill="#F0D0A0" />
+                                                            </g>
+                                                            <!-- Neck -->
+                                                            <g transform="translate(39.9,67.4)">
+                                                                <path d="M0 0C17.733 17.733 35.467 17.733 53.2 0H0Z"
+                                                                    fill="#8B6F47" />
+                                                            </g>
+                                                            <!-- Diagonal sash/band covering left eye -->
+                                                            <g transform="translate(33.25,27.5)">
+                                                                <path d="M6.159 10.264L72.659 50.164" stroke="#E2E8F0"
+                                                                    stroke-width="23.94" opacity="0.8" />
+                                                            </g>
+                                                            <!-- Left eye (hidden under sash) -->
+                                                            <g transform="translate(53.2,38.14)" opacity="0.15">
+                                                                <circle cx="2.66" cy="2.66" r="2.66" fill="black" />
+                                                            </g>
+                                                            <!-- Right eye visible -->
+                                                            <g transform="translate(74.48,38.14)">
+                                                                <circle cx="2.66" cy="2.66" r="2.66" fill="black" />
+                                                            </g>
+                                                            <!-- Mouth -->
+                                                            <g transform="translate(53.3,54)">
+                                                                <path d="M0.26 1.3C9.127 3.078 17.994 3.078 26.861 1.3"
+                                                                    stroke="#000" stroke-width="2.66" stroke-linecap="round" />
+                                                            </g>
+                                                        </svg>
+                                                        <span class="ng-robot-label">どちらか目が<br>かくれている</span>
+                                                    </div>
 
-                                        <!-- NG1: 髪が長すぎ目にかかっている (variant1 — gray) -->
-                                        <div class="ng-robot-card">
-                                            <span class="ng-robot-close-icon" aria-hidden="true"></span>
-                                            <svg class="robot-svg" viewBox="20 10 100 150" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <!-- Body gray -->
-                                                <g transform="translate(26.6,80.7)">
-                                                    <path
-                                                        d="M73.15 0H6.65C2.977 0 0 2.977 0 6.65V59.85C0 63.523 2.977 66.5 6.65 66.5H73.15C76.823 66.5 79.8 63.523 79.8 59.85V6.65C79.8 2.977 76.823 0 73.15 0Z"
-                                                        fill="#4A5568" />
-                                                </g>
-                                                <!-- Head -->
-                                                <g transform="translate(39.9,14.2)">
-                                                    <path
-                                                        d="M26.6 66.5C41.291 66.5 53.2 51.614 53.2 33.25C53.2 14.887 41.291 0 26.6 0C11.909 0 0 14.887 0 33.25C0 51.614 11.909 66.5 26.6 66.5Z"
-                                                        fill="#F0D0A0" />
-                                                </g>
-                                                <!-- Long hair band covering eyes -->
-                                                <g transform="translate(39.9,20)">
-                                                    <path d="M0 0C17.733 8 35.467 8 53.2 0H0Z" fill="#3D3D3D" />
-                                                </g>
-                                                <g transform="translate(39.9,20)">
-                                                    <rect width="53.2" height="22" fill="#3D3D3D" rx="2" />
-                                                </g>
-                                                <!-- Neck -->
-                                                <g transform="translate(39.9,67.4)">
-                                                    <path d="M0 0C17.733 17.733 35.467 17.733 53.2 0H0Z"
-                                                        fill="#4A5568" />
-                                                </g>
-                                                <!-- Eyes barely visible under hair -->
-                                                <g transform="translate(53.2,39)" opacity="0.4">
-                                                    <circle cx="2.66" cy="2.66" r="2.66" fill="#1a202c" />
-                                                </g>
-                                                <g transform="translate(74.48,39)" opacity="0.4">
-                                                    <circle cx="2.66" cy="2.66" r="2.66" fill="#1a202c" />
-                                                </g>
-                                                <!-- Mouth -->
-                                                <g transform="translate(53.3,54)">
-                                                    <path d="M0.26 1.3C9.127 3.078 17.994 3.078 26.861 1.3"
-                                                        stroke="#000" stroke-width="2.66" stroke-linecap="round" />
-                                                </g>
-                                            </svg>
-                                            <span class="ng-robot-label">髪が長すぎ<br>目にかかっている</span>
-                                        </div>
-
-                                        <!-- NG2: 目を閉じている (variant2 — red) -->
-                                        <div class="ng-robot-card">
-                                            <span class="ng-robot-close-icon" aria-hidden="true"></span>
-                                            <svg class="robot-svg" viewBox="20 10 100 150" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <!-- Body red -->
-                                                <g transform="translate(26.6,80.7)">
-                                                    <path
-                                                        d="M73.15 0H6.65C2.977 0 0 2.977 0 6.65V59.85C0 63.523 2.977 66.5 6.65 66.5H73.15C76.823 66.5 79.8 63.523 79.8 59.85V6.65C79.8 2.977 76.823 0 73.15 0Z"
-                                                        fill="#E53E3E" />
-                                                </g>
-                                                <!-- Head -->
-                                                <g transform="translate(39.9,14.2)">
-                                                    <path
-                                                        d="M26.6 66.5C41.291 66.5 53.2 51.614 53.2 33.25C53.2 14.887 41.291 0 26.6 0C11.909 0 0 14.887 0 33.25C0 51.614 11.909 66.5 26.6 66.5Z"
-                                                        fill="#F0D0A0" />
-                                                </g>
-                                                <!-- Neck -->
-                                                <g transform="translate(39.9,67.4)">
-                                                    <path d="M0 0C17.733 17.733 35.467 17.733 53.2 0H0Z"
-                                                        fill="#2D3748" />
-                                                </g>
-                                                <!-- Eyes closed (arc lines) -->
-                                                <g transform="translate(51.5,40.8)">
-                                                    <path d="M0.595 1.19C4.141 2.963 7.688 2.963 11.235 1.19"
-                                                        stroke="#1a202c" stroke-width="2.66" stroke-linecap="round" />
-                                                </g>
-                                                <g transform="translate(71.82,40.8)">
-                                                    <path d="M0.595 1.19C4.141 2.963 7.688 2.963 11.235 1.19"
-                                                        stroke="#1a202c" stroke-width="2.66" stroke-linecap="round" />
-                                                </g>
-                                                <!-- Mouth smile -->
-                                                <g transform="translate(53.3,54)">
-                                                    <path d="M0.26 1.3C9.127 3.078 17.994 3.078 26.861 1.3"
-                                                        stroke="#000" stroke-width="2.66" stroke-linecap="round" />
-                                                </g>
-                                            </svg>
-                                            <span class="ng-robot-label">目を閉じている</span>
-                                        </div>
-
-                                        <!-- NG3: マスク・サングラスを着用 (variant3 — green) -->
-                                        <div class="ng-robot-card">
-                                            <span class="ng-robot-close-icon" aria-hidden="true"></span>
-                                            <svg class="robot-svg" viewBox="20 10 100 150" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <!-- Body green -->
-                                                <g transform="translate(26.6,80.7)">
-                                                    <path
-                                                        d="M73.15 0H6.65C2.977 0 0 2.977 0 6.65V59.85C0 63.523 2.977 66.5 6.65 66.5H73.15C76.823 66.5 79.8 63.523 79.8 59.85V6.65C79.8 2.977 76.823 0 73.15 0Z"
-                                                        fill="#047857" />
-                                                </g>
-                                                <!-- Head -->
-                                                <g transform="translate(39.9,14.2)">
-                                                    <path
-                                                        d="M26.6 66.5C41.291 66.5 53.2 51.614 53.2 33.25C53.2 14.887 41.291 0 26.6 0C11.909 0 0 14.887 0 33.25C0 51.614 11.909 66.5 26.6 66.5Z"
-                                                        fill="#F0D0A0" />
-                                                </g>
-                                                <!-- Neck -->
-                                                <g transform="translate(39.9,67.4)">
-                                                    <path d="M0 0C17.733 17.733 35.467 17.733 53.2 0H0Z"
-                                                        fill="#6B4423" />
-                                                </g>
-                                                <!-- Sunglasses visor -->
-                                                <g transform="translate(46.55,34.15)">
-                                                    <rect width="39.9" height="13.3" rx="2.66" fill="#1A202C" />
-                                                </g>
-                                                <!-- White eye glints on visor -->
-                                                <g transform="translate(53.2,36.81)" opacity="0.5">
-                                                    <ellipse cx="3.99" cy="2.66" rx="3.99" ry="2.66" fill="white" />
-                                                </g>
-                                                <g transform="translate(71.82,36.81)" opacity="0.5">
-                                                    <ellipse cx="3.99" cy="2.66" rx="3.99" ry="2.66" fill="white" />
-                                                </g>
-                                                <!-- Mask covering lower face -->
-                                                <g transform="translate(39.9,47.45)" opacity="0.9">
-                                                    <rect width="53.2" height="15.96" rx="2.66" fill="#E5E7EB" />
-                                                </g>
-                                                <!-- Mask line detail -->
-                                                <g transform="translate(42,53)">
-                                                    <path d="M0 0h49.2" stroke="#CBD5E0" stroke-width="1"
-                                                        stroke-dasharray="3 2" />
-                                                </g>
-                                            </svg>
-                                            <span class="ng-robot-label">マスク、サングラス<br>を着用している</span>
-                                        </div>
-
-                                        <!-- NG4: どちらか目がかくれている (variant4 — blue) -->
-                                        <div class="ng-robot-card">
-                                            <span class="ng-robot-close-icon" aria-hidden="true"></span>
-                                            <svg class="robot-svg" viewBox="20 10 100 150" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <!-- Body blue -->
-                                                <g transform="translate(26.6,80.7)">
-                                                    <path
-                                                        d="M73.15 0H6.65C2.977 0 0 2.977 0 6.65V59.85C0 63.523 2.977 66.5 6.65 66.5H73.15C76.823 66.5 79.8 63.523 79.8 59.85V6.65C79.8 2.977 76.823 0 73.15 0Z"
-                                                        fill="#2563EB" />
-                                                </g>
-                                                <!-- Head -->
-                                                <g transform="translate(39.9,14.2)">
-                                                    <path
-                                                        d="M26.6 66.5C41.291 66.5 53.2 51.614 53.2 33.25C53.2 14.887 41.291 0 26.6 0C11.909 0 0 14.887 0 33.25C0 51.614 11.909 66.5 26.6 66.5Z"
-                                                        fill="#F0D0A0" />
-                                                </g>
-                                                <!-- Neck -->
-                                                <g transform="translate(39.9,67.4)">
-                                                    <path d="M0 0C17.733 17.733 35.467 17.733 53.2 0H0Z"
-                                                        fill="#8B6F47" />
-                                                </g>
-                                                <!-- Diagonal sash/band covering left eye -->
-                                                <g transform="translate(33.25,27.5)">
-                                                    <path d="M6.159 10.264L72.659 50.164" stroke="#E2E8F0"
-                                                        stroke-width="23.94" opacity="0.8" />
-                                                </g>
-                                                <!-- Left eye (hidden under sash) -->
-                                                <g transform="translate(53.2,38.14)" opacity="0.15">
-                                                    <circle cx="2.66" cy="2.66" r="2.66" fill="black" />
-                                                </g>
-                                                <!-- Right eye visible -->
-                                                <g transform="translate(74.48,38.14)">
-                                                    <circle cx="2.66" cy="2.66" r="2.66" fill="black" />
-                                                </g>
-                                                <!-- Mouth -->
-                                                <g transform="translate(53.3,54)">
-                                                    <path d="M0.26 1.3C9.127 3.078 17.994 3.078 26.861 1.3"
-                                                        stroke="#000" stroke-width="2.66" stroke-linecap="round" />
-                                                </g>
-                                            </svg>
-                                            <span class="ng-robot-label">どちらか目が<br>かくれている</span>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <!-- END NG PHOTO BLOCK -->
-
+                                                </div>
+                                            </div>
+                                            <!-- END NG PHOTO BLOCK -->
+                                            
+                                            <div class="mt-6 text-center">
+                                                <img src="assets/applicant-sample.png" alt="Sample Photo" style="width: 150px; border: 1px solid #ccc;">
+                                                <p class="mt-2"><a href="#" class="text-xs text-blue-600 underline">※表示された顔写真が横向きになる場合はこちら</a></p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
                             <!-- Buttons -->
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;"
-                                style="padding-top: 1rem;">
-                                <a href="exam-selection.html"><button type="button"
-                                        class="btn btn-outline btn-full btn-lg">戻る</button></a>
-                                <button type="button" class="btn btn-primary btn-full btn-lg" onclick="nextSubStep()">
+                            <div class="flex justify-between gap-4 mt-12">
+                                <a href="exam-selection.html" class="w-1/2">
+                                    <button type="button" class="btn btn-outline btn-full btn-lg">戻る</button>
+                                </a>
+                                <button type="button" class="btn btn-primary w-1/2 btn-lg" onclick="nextSubStep()">
                                     次へ進む
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
@@ -505,97 +793,461 @@
                         </div>
                     </div>
 
-                    <!-- ===== Sub-step 1: 保護者情報 ===== -->
+                    <!-- ===== Sub-step 1: 保護者情報 / 最終学歴 (Adult) ===== -->
                     <div class="substep-content" data-step="1">
                         <div class="space-y-8">
-                            <!-- Section header -->
-                            <div class="section-header-orange">
-                                <h2>保護者情報</h2>
+                            <!-- Section: 保護者情報 -->
+                            <div class="reg-section" id="section-guardian">
+                                <div class="reg-header"><h2>保護者情報</h2></div>
+                                
+                                <p class="text-xs mb-4" style="color: #333;">※本人と同居の場合、入力不要（外国人留学生選抜および日本大学連合学力試験(JPUE)利用入試志願者は必須）</p>
+
+                                <div class="flex items-center gap-2 mb-4">
+                                    <input type="checkbox" id="guardian-same-household" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                    <label for="guardian-same-household" class="text-sm font-bold text-gray-700">保護者と同居している。</label>
+                                </div>
+
+                                <div id="guardian-skip-message-row" class="p-4 bg-blue-50 border border-blue-200 rounded-lg mb-6" hidden>
+                                    <p class="text-sm text-blue-700">※保護者と同居しているため、以下の情報の入力は不要です。そのまま「次へ」進んでください。</p>
+                                </div>
+
+                                <table class="reg-table">
+                                    <tr class="guardian-detail-row">
+                                        <th style="width: 200px;">保護者氏名（漢字）</th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <span>姓：</span>
+                                                <input type="text" class="form-input" style="width: 150px;">
+                                                <span class="text-xs text-muted ml-1">例）環境</span>
+                                                <span class="ml-12">名：</span>
+                                                <input type="text" class="form-input" style="width: 150px;">
+                                                <span class="text-xs text-muted ml-1">例）太郎</span>
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※全角で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="guardian-detail-row">
+                                        <th>保护者氏名（カナ）</th>
+                                        <td>
+                                            <div class="input-inline-group">
+                                                <span>セイ：</span>
+                                                <input type="text" class="form-input" style="width: 150px;">
+                                                <span class="text-xs text-muted ml-1">例）ｶﾝｷｮｳ</span>
+                                                <span class="ml-12">メイ：</span>
+                                                <input type="text" class="form-input" style="width: 150px;">
+                                                <span class="text-xs text-muted ml-1">例）ﾀﾛｳ</span>
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角カタカナで入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="guardian-detail-row">
+                                        <th>郵便番号</th>
+                                        <td>
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <input type="text" class="form-input" style="width: 60px;" maxlength="3">
+                                                <span>-</span>
+                                                <input type="text" class="form-input" style="width: 80px;" maxlength="4">
+                                                <button type="button" class="btn btn-dark btn-sm ml-2">住所検索</button>
+                                                <span class="text-xs text-muted">「住所検索」ボタンを押すと住所が自動入力されます。</span>
+                                            </div>
+                                            <p class="text-xs mb-1" style="color: #ef4444;">※半角数字で入力してください。</p>
+                                            <p class="text-xs"><a href="#" class="text-blue-600 underline">郵便番号がわからない場合はこちらから検索をしてください</a></p>
+                                        </td>
+                                    </tr>
+                                    <tr class="guardian-detail-row">
+                                        <th>都道府県</th>
+                                        <td>
+                                            <select class="form-input" style="width: 120px;">
+                                                <option value=""></option>
+                                                <option>愛知県</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="guardian-detail-row">
+                                        <th>住所</th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <input type="text" class="form-input" style="width: 450px;">
+                                                <span class="text-xs text-muted">例）岡崎市本宿町上三本松6-2 環境ﾋﾞﾙ108号</span>
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※ｶﾅ、英字、数字、ﾊｲﾌﾝ(-)は半角で入力してください。※100文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="guardian-detail-row">
+                                        <th>電話番号</th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <div class="text-xs mt-1 space-y-1" style="color: #ef4444;">
+                                                <p>※数字、ハイフン(-)は半角で入力してください。※30文字以内</p>
+                                                <p>※自宅に固定電話がない方は携帯番号を入力してください。</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <div class="checkbox-item guardian-skip-toggle">
-                                <input type="checkbox" id="guardian-same-household">
-                                <label for="guardian-same-household">保護者と同居している。</label>
+                            <!-- Section: 保護者情報 (Foreigner) -->
+                            <div class="reg-section" id="section-guardian-en" style="display: none;">
+                                <div class="reg-header"><h2>保護者情報</h2></div>
+                                <p class="text-xs mb-4" style="color: #333;">※本人と同居の場合、入力不要（外国人留学生選抜および日本大学連合学力試験(JPUE)利用入試志願者は必須）</p>
+
+                                <div class="flex items-center gap-2 mb-4">
+                                    <input type="checkbox" id="guardian-same-household-en" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                    <label for="guardian-same-household-en" class="text-sm font-bold text-gray-700">保護者と同居している。</label>
+                                </div>
+
+                                <div id="guardian-skip-message-row-en" class="p-4 bg-blue-50 border border-blue-200 rounded-lg mb-6" hidden>
+                                    <p class="text-sm text-blue-700">※保護者と同居しているため、以下の情報の入力は不要です。そのまま「次へ」進んでください。</p>
+                                </div>
+                                <table class="reg-table">
+                                    <tr class="guardian-detail-row">
+                                        <th style="width: 200px;">保護者氏名<br><span class="reg-req" style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <span class="text-xs text-muted ml-2">例）KANKYO TARO</span>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角英字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="guardian-detail-row">
+                                        <th>保護者氏名（カナ）<br><span class="reg-req" style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <span class="text-xs text-muted ml-2">例）ｶﾝｷｮｳ ﾀﾛｳ</span>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角カタカナで入力してください。※フリガナは自国語の発音に従って入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="guardian-detail-row">
+                                        <th>続柄<br><span class="reg-req" style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td><select class="form-input" style="width: 150px;"><option value=""></option></select></td>
+                                    </tr>
+                                    <tr class="guardian-detail-row">
+                                        <th>郵便番号<br><span class="reg-req" style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 250px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角英数字で入力してください。※20文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="guardian-detail-row">
+                                        <th>住所<br><span class="reg-req" style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 450px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※ｶﾅ、英字、数字、ﾊｲﾌﾝ(-)は半角で入力してください。※100文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="guardian-detail-row">
+                                        <th>電話番号<br><span class="reg-req" style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※数字、ハイフン(-)は半角で入力してください。※30文字以内</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <div class="section-hint">
-                                ＊本人と同居の場合、入力不要（外国人留学生選抜および日本大学適合学力試験(JPUE)利用入試志願者は必須）
+                            <!-- Section: 最終学歴 (Shown if is_adult=true) -->
+                            <div class="reg-section" id="section-final-edu" style="display: none;">
+                                <div class="reg-header"><h2>最終学歴</h2></div>
+                                <p class="text-xs mb-4" style="color: #333;">※高等学校等が最終学歴の場合は入力不要</p>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 200px;">学校名</th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 450px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>学部・学科・科 等</th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 450px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="4">卒業・修了年月</th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span>西暦：</span>
+                                                <input type="text" class="form-input" style="width: 80px;">
+                                                <span>年</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select>
+                                                <span>月　卒業もしくは卒業見込</span>
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角数字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-top: 1px solid #e2e8f0;">
+                                            <div class="flex items-center gap-2">
+                                                <span>西暦：</span>
+                                                <input type="text" class="form-input" style="width: 80px;">
+                                                <span>年</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select>
+                                                <span>月</span>
+                                                <select class="form-input" style="width: 80px;"><option value=""></option></select>
+                                                <span>年次　修了もしくは修了見込</span>
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角数字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <fieldset id="guardian-fields-group" class="guardian-fields-group">
-                                <!-- 保護者氏名（漢字） -->
-                                <div class="grid grid-cols-2 gap-4"
-                                    style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
-                                    <div>
-                                        <label class="form-label-block">保護者氏名（漢字）姓</label>
-                                        <input type="text" class="form-input" placeholder="国境" data-guardian-field>
-                                    </div>
-                                    <div>
-                                        <label class="form-label-block">名</label>
-                                        <input type="text" class="form-input" placeholder="父" data-guardian-field>
-                                    </div>
-                                </div>
+                            <!-- Section: 最終学歴 (Graduate School version) -->
+                            <div class="reg-section" id="section-final-edu-grad" style="display: none;">
+                                <div class="reg-header"><h2>最終学歴</h2></div>
+                                <div class="text-xs mb-4" style="color: #ef4444; font-weight: bold;">A・B・Cいずれか必須</div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 250px;">大学名1<br><span style="color: #ef4444; font-size: 0.75rem;">[A]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                            <p class="text-xs mt-1" style="color: #666;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>学部1<br><span style="color: #ef4444; font-size: 0.75rem;">[A]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                            <p class="text-xs mt-1" style="color: #666;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>学科1<br><span style="color: #ef4444; font-size: 0.75rem;">[A]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                            <p class="text-xs mt-1" style="color: #666;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid #ccc;">
+                                        <th>大学名2<br><span style="color: #ef4444; font-size: 0.75rem;">[B]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                            <p class="text-xs mt-1" style="color: #666;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>学部2<br><span style="color: #ef4444; font-size: 0.75rem;">[B]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                            <p class="text-xs mt-1" style="color: #666;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>学科2<br><span style="color: #ef4444; font-size: 0.75rem;">[B]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                            <p class="text-xs mt-1" style="color: #666;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid #ccc;">
+                                        <th>大学院名<br><span style="color: #ef4444; font-size: 0.75rem;">[C]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                            <p class="text-xs mt-1" style="color: #666;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>研究科<br><span style="color: #ef4444; font-size: 0.75rem;">[C]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                            <p class="text-xs mt-1" style="color: #666;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>専攻<br><span style="color: #ef4444; font-size: 0.75rem;">[C]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                            <p class="text-xs mt-1" style="color: #666;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>課程<br><span style="color: #ef4444; font-size: 0.75rem;">[C]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                            <p class="text-xs mt-1" style="color: #666;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
 
-                                <!-- 保護者氏名（カナ） -->
-                                <div class="grid grid-cols-2 gap-4"
-                                    style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
-                                    <div>
-                                        <label class="form-label-block">保護者氏名（カナ）セイ</label>
-                                        <input type="text" class="form-input" placeholder="カナキョリ" data-guardian-field>
-                                    </div>
-                                    <div>
-                                        <label class="form-label-block">メイ</label>
-                                        <input type="text" class="form-input" placeholder="チチ" data-guardian-field>
-                                    </div>
-                                </div>
-                                <p class="text-xs text-destructive">＊半角カタカナで入力してください。</p>
+                            <!-- Section: 出願資格に該当する出身大学等 (Nursing Grad) -->
+                            <div class="reg-section" id="section-nursing-eligibility" style="display: none;">
+                                <div class="reg-header"><h2>出願資格に該当する出身大学等</h2></div>
+                                <div class="text-xs mb-4" style="color: #ef4444; font-weight: bold;">A・B・Cいずれか必須</div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 250px;">大学名・大学院名<br><span style="color: #ef4444; font-size: 0.75rem;">[A]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※60文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>学部・研究科<br><span style="color: #ef4444; font-size: 0.75rem;">[A]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※60文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>学科・専攻・課程<br><span style="color: #ef4444; font-size: 0.75rem;">[A]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※60文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>入学年月<br><span style="color: #ef4444; font-size: 0.75rem;">[A]</span></th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span>西暦：</span>
+                                                <input type="text" class="form-input" style="width: 80px;">
+                                                <span>年</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select>
+                                                <span>月</span>
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角数字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>卒業・卒業見込み年月<br><span style="color: #ef4444; font-size: 0.75rem;">[A]</span></th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span>西暦：</span>
+                                                <input type="text" class="form-input" style="width: 80px;">
+                                                <span>年</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select>
+                                                <span>月</span>
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角数字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid #ccc;">
+                                        <th>大学改革支援・学位授与機構<br><span style="color: #ef4444; font-size: 0.75rem;">[B]</span></th>
+                                        <td>
+                                            <div class="flex items-center gap-4">
+                                                <div class="flex items-center gap-1">
+                                                    <span>取得学位名称：</span>
+                                                    <input type="text" class="form-input" style="width: 200px;">
+                                                </div>
+                                                <div class="flex items-center gap-1">
+                                                    <span>取得年月：西暦：</span>
+                                                    <input type="text" class="form-input" style="width: 60px;">
+                                                    <span>年</span>
+                                                    <select class="form-input" style="width: 60px;"><option value=""></option></select>
+                                                    <span>月</span>
+                                                </div>
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※60文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid #ccc;">
+                                        <th>本学資格審査合格者<br><span style="color: #ef4444; font-size: 0.75rem;">[C]</span></th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <input type="checkbox" id="screening-check">
+                                                <label for="screening-check">本学資格審査合格者</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
 
-                                <!-- 郵便番号 -->
-                                <div>
-                                    <label class="form-label-block">郵便番号</label>
-                                    <div class="flex items-center gap-3">
-                                        <input type="text" class="form-input form-input-md" placeholder="444-3505" data-guardian-field>
-                                        <button type="button" class="btn btn-primary btn-address-muted">住所検索</button>
-                                        <button type="button" class="btn btn-primary btn-address-muted">住所検証</button>
-                                    </div>
-                                    <p class="text-xs text-destructive mt-1">＊半角数字で入力してください。</p>
-                                    <p class="text-xs text-primary mt-1" style="cursor:pointer;">郵便番号がわからない場合はこちらから検索をしてください
-                                    </p>
-                                </div>
+                            <!-- Section: 勤務先 (Nursing Grad) -->
+                            <div class="reg-section" id="section-workplace" style="display: none;">
+                                <div class="reg-header"><h2>勤務先</h2></div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 250px;">名称</th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※60文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>郵便番号</th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <input type="text" class="form-input" style="width: 100px;">
+                                                <span>-</span>
+                                                <input type="text" class="form-input" style="width: 100px;">
+                                                <button type="button" class="btn btn-sm btn-outline">住所検索</button>
+                                                <span class="text-xs">「住所検索」ボタンを押すと住所が自動入力されます。</span>
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角数字で入力してください。</p>
+                                            <a href="#" class="text-xs text-blue-600 underline">郵便番号がわからない場合はこちらから検索をしてください</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>住所</th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 500px;">
+                                            <span class="text-xs ml-2">例）岡崎市本宿町上三本松6-2環境ﾋﾞﾙ108号</span>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※ｶﾅ、英字、数字、ﾊｲﾌﾝ(-)は半角で入力してください。 ※100文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>電話番号</th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※数字、ハイフン(-)は半角で入力してください。 ※30文字以内</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
 
-                                <!-- 都道府県 -->
-                                <div>
-                                    <label class="form-label-block">都道府県</label>
-                                    <input type="text" class="form-input" placeholder="" data-guardian-field>
-                                </div>
+                            <!-- Section: 研究指導希望教員名 (Nursing Grad) -->
+                            <div class="reg-section" id="section-supervisor" style="display: none;">
+                                <div class="reg-header"><h2>研究指導希望教員名</h2></div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 250px;">研究指導希望教員名<br><span style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 400px;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
 
-                                <!-- 住所 -->
-                                <div>
-                                    <label class="form-label-block">住所</label>
-                                    <input type="text" class="form-input" placeholder="岡崎市本宿町上三本松6-2" data-guardian-field>
-                                    <p class="text-xs text-destructive mt-1">＊カナ、英字、数字、1/2/()は半角で入力してください。＊100文字以内</p>
-                                </div>
+                            <!-- Section: 入学資格認定審査該当の有無 (Nursing Grad) -->
+                            <div class="reg-section" id="section-eligibility-screening" style="display: none;">
+                                <div class="reg-header"><h2>入学資格認定審査該当の有無</h2></div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 250px;">入学資格認定審査該当の有無</th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <input type="checkbox" id="nursing-elig-check">
+                                                <label for="nursing-elig-check">入学資格認定審査</label>
+                                            </div>
+                                            <p class="text-xs mt-2" style="color: #ef4444;">※入学資格審査に該当する場合はチェックしてください。</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
 
-                                <!-- 電話番号 -->
-                                <div>
-                                    <label class="form-label-block">電話番号</label>
-                                    <input type="text" class="form-input" placeholder="0564-48-7811" data-guardian-field>
-                                    <p class="text-xs text-destructive mt-1">＊数字、ハイフン(-)は半角で入力してください。＊30文字以内</p>
-                                    <p class="text-xs text-destructive">＊自宅に固定電話がない方は携帯番号を入力してください。</p>
-                                </div>
-                            </fieldset>
-
-                            <p id="guardian-validation-message" class="text-xs text-destructive hidden guardian-validation-message">
-                                ＊保護者と同居していない場合は、保護者情報を入力してください。
-                            </p>
+                            <!-- Section: 人間環境大学出身者 -->
+                            <div class="reg-section" id="section-uhe-alumni" style="display: none;">
+                                <div class="reg-header"><h2>人間環境大学出身者</h2></div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 250px;">人間環境大学出身者</th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <input type="checkbox" id="uhe-alumni-check">
+                                                <label for="uhe-alumni-check">人間環境大学出身者</label>
+                                            </div>
+                                            <p class="text-xs mt-2" style="color: #ef4444;">※人間環境大学出身者（在籍者含む）はこちらをチェックしてください。</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
 
                             <!-- Buttons -->
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;"
-                                style="padding-top: 1rem;">
-                                <button type="button" class="btn btn-outline btn-full btn-lg"
-                                    onclick="prevSubStep()">戻る</button>
-                                <button type="button" class="btn btn-primary btn-full btn-lg" id="guardian-next-btn" onclick="nextSubStep()">
+                            <div class="flex justify-between gap-4 mt-12">
+                                <button type="button" class="btn btn-outline w-1/2 btn-lg" onclick="prevSubStep()">戻る</button>
+                                <button type="button" class="btn btn-primary w-1/2 btn-lg" onclick="nextSubStep()">
                                     次へ進む
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
@@ -608,79 +1260,85 @@
                         </div>
                     </div>
 
-                    <!-- ===== Sub-step 2: 志望校アンケート ===== -->
+                    <!-- ===== Sub-step 2: 志望校に関するアンケート ===== -->
                     <div class="substep-content" data-step="2">
                         <div class="space-y-8">
-                            <!-- Section header -->
-                            <div class="section-header-orange">
-                                <h2>志望校に関するアンケート</h2>
-                            </div>
+                            <!-- Section: 志望校アンケート -->
+                            <div class="reg-section">
+                                <div class="reg-header"><h2>志望校に関するアンケート</h2></div>
+                                <div class="text-xs mb-4 space-y-1" style="color: #333; line-height: 1.6;">
+                                    <p>志望校に関するアンケートのお願いです。本学含め志望順位ごとに学校名と学部学科を入力してください。大学院志願者は学部・学科の欄に研究科を入力してください。尚、本アンケートの内容が合否に影響することは一切ありません。</p>
+                                    <p>※該当する志望校がない場合は、その他を選び、志望校を直接入力してください。</p>
+                                </div>
 
-                            <div class="section-hint">
-                                志望校に関するアンケートのお願いです。本学含め志望順位ごとに学校名と学部学科を入力してください。大学院志願者は学部・学科の欄に研究科を入力してください。尚、本アンケートの内容が合否に影響することは一切ありません。<br>
-                                ＊該当する志望校がない場合は、その他を選び、志望校を直接入力してください。
-                            </div>
-
-                            <!-- 第1～4志望 -->
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
-                                <div>
-                                    <label class="form-label-block">第1志望 学校名</label>
-                                    <input type="text" class="form-input" placeholder="">
-                                    <p class="text-xs text-destructive mt-1">＊各項目60文字以内</p>
-                                </div>
-                                <div>
-                                    <label class="form-label-block">学部・学科</label>
-                                    <input type="text" class="form-input" placeholder="心理学部・心理学科">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
-                                <div>
-                                    <label class="form-label-block">第2志望 学校名</label>
-                                    <input type="text" class="form-input" placeholder="">
-                                    <p class="text-xs text-destructive mt-1">＊各項目60文字以内</p>
-                                </div>
-                                <div>
-                                    <label class="form-label-block">学部・学科</label>
-                                    <input type="text" class="form-input" placeholder="">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
-                                <div>
-                                    <label class="form-label-block">第3志望 学校名</label>
-                                    <input type="text" class="form-input" placeholder="">
-                                    <p class="text-xs text-destructive mt-1">＊各項目60文字以内</p>
-                                </div>
-                                <div>
-                                    <label class="form-label-block">学部・学科</label>
-                                    <input type="text" class="form-input" placeholder="">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;">
-                                <div>
-                                    <label class="form-label-block">第4志望 学校名</label>
-                                    <input type="text" class="form-input" placeholder="">
-                                    <p class="text-xs text-destructive mt-1">＊各項目60文字以内</p>
-                                </div>
-                                <div>
-                                    <label class="form-label-block">学部・学科</label>
-                                    <input type="text" class="form-input" placeholder="">
-                                </div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 150px; text-align: center;">第1志望</th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span>学校名：</span>
+                                                <select class="form-input" style="width: 250px;"><option value=""></option></select>
+                                                <span class="ml-12">学部・学科：</span>
+                                                <input type="text" class="form-input" style="width: 250px;">
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※各項目60文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center;">第2志望</th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span>学校名：</span>
+                                                <select class="form-input" style="width: 250px;"><option value=""></option></select>
+                                                <span class="ml-12">学部・学科：</span>
+                                                <input type="text" class="form-input" style="width: 250px;">
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※各項目60文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center;">第3志望</th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span>学校名：</span>
+                                                <select class="form-input" style="width: 250px;"><option value=""></option></select>
+                                                <span class="ml-12">学部・学科：</span>
+                                                <input type="text" class="form-input" style="width: 250px;">
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※各項目60文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center;">第4志望</th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span>学校名：</span>
+                                                <select class="form-input" style="width: 250px;"><option value=""></option></select>
+                                                <span class="ml-12">学部・学科：</span>
+                                                <input type="text" class="form-input" style="width: 250px;">
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※各項目60文字以内</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center;">第5志望</th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span>学校名：</span>
+                                                <select class="form-input" style="width: 250px;"><option value=""></option></select>
+                                                <span class="ml-12">学部・学科：</span>
+                                                <input type="text" class="form-input" style="width: 250px;">
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※各項目60文字以内</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
                             <!-- Buttons -->
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;"
-                                style="padding-top: 1rem;">
-                                <button type="button" class="btn btn-outline btn-full btn-lg"
-                                    onclick="prevSubStep()">戻る</button>
-                                <button type="button" class="btn btn-primary btn-full btn-lg" onclick="nextSubStep()">
+                            <div class="flex justify-between gap-4 mt-12">
+                                <button type="button" class="btn btn-outline w-1/2 btn-lg" onclick="prevSubStep()">戻る</button>
+                                <button type="button" class="btn btn-primary w-1/2 btn-lg" onclick="nextSubStep()">
                                     次へ進む
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
@@ -696,80 +1354,153 @@
                     <!-- ===== Sub-step 3: 出身高等学校情報 ===== -->
                     <div class="substep-content" data-step="3">
                         <div class="space-y-8">
-                            <!-- Section header -->
-                            <div class="section-header-orange">
-                                <h2>出身高等学校情報</h2>
+                            <!-- Section: 出身高等学校情報 -->
+                            <div class="reg-section" id="section-highschool">
+                                <div class="reg-header"><h2>出身高等学校情報</h2></div>
+                                <p class="text-xs mb-4" style="color: #333;">※該当する課程・学科がない場合は、その他を選び、直接入力してください。</p>
+
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 200px; text-align: center;">出身学校名<br><span style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <div class="flex items-center gap-3">
+                                                    <span>コード：</span>
+                                                    <input type="text" class="form-input" style="width: 100px;">
+                                                    <button type="button" class="btn btn-dark btn-sm">学校検索</button>
+                                                    <button type="button" class="btn btn-sm" style="background: #f59e0b; color: white;">高等学校卒業程度認定試験、外国の学校等</button>
+                                                </div>
+                                                <div class="flex items-center gap-3">
+                                                    <span>名　称：</span>
+                                                    <input type="text" class="form-input" style="width: 400px;">
+                                                </div>
+                                                <div class="text-xs space-y-1" style="color: #666;">
+                                                    <p>※「学校検索」ボタンから出身学校名を選択してください。</p>
+                                                    <p>※名称に正しい高校名が表示されているか必ず確認してください。</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center;">課程<br><span style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <select class="form-input" style="width: 300px;"><option value=""></option></select>
+                                            <div class="text-xs mt-2" style="color: #ef4444; line-height: 1.5;">
+                                                <p>※出身学校名で「高等学校卒業程度認定試験、外国の学校等」を選択した方は、</p>
+                                                <p>&lt;課程&gt; でも「高等学校卒業程度認定試験、外国の学校等」を選択してください。</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center;">学科<br><span style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <select class="form-input" style="width: 300px;"><option value=""></option></select>
+                                            <div class="text-xs mt-2" style="color: #ef4444; line-height: 1.5;">
+                                                <p>※出身学校名で「高等学校卒業程度認定試験、外国の学校等」を選択した方は、</p>
+                                                <p>&lt;学科&gt; でも「高等学校卒業程度認定試験、外国の学校等」を選択してください。</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center;">卒業年<br><span style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span>西暦：</span>
+                                                <input type="text" class="form-input" style="width: 100px;">
+                                                <span>年</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select>
+                                                <span>月</span>
+                                            </div>
+                                            <div class="text-xs mt-2 space-y-1" style="color: #ef4444; line-height: 1.5;">
+                                                <p>※半角数字で入力してください。</p>
+                                                <p>※高等学校等を卒業もしくは卒業見込みの受験者は、卒業式가2月の場合でも高校卒業月は「03」を選んでください（秋季卒業の場合を除く）。</p>
+                                                <p>※高卒認定の場合は、大学入学資格を得た年月を選択してください。</p>
+                                                <p>※高等学校在職中の志願者は、高校卒業年は「2026」と入力してください。</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <div class="section-hint">
-                                ＊該当する課程・学科がない場合は、その他を選び、直接入力してください。
+                            <!-- Section: 日本留学試験・日本語能力試験 (Foreigner only) -->
+                            <div class="reg-section" id="section-eju-jlpt" style="display: none;">
+                                <div class="reg-header"><h2>日本留学試験・日本語能力試験</h2></div>
+                                <div class="text-xs mb-4" style="color: #ef4444; font-weight: bold;">A・Bいずれか必須</div>
+
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 250px;">日本留学試験受検番号<br><span style="color: #ef4444; font-size: 0.75rem;">[A]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角英数字で入力してください。 ※20文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>日本留学試験受検年月<br><span style="color: #ef4444; font-size: 0.75rem;">[A]</span></th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span>西暦：</span>
+                                                <input type="text" class="form-input" style="width: 80px;">
+                                                <span>年</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select>
+                                                <span>月</span>
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角数字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>日本語能力試験受検年月<br><span style="color: #ef4444; font-size: 0.75rem;">[B]</span></th>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span>西暦：</span>
+                                                <input type="text" class="form-input" style="width: 80px;">
+                                                <span>年</span>
+                                                <select class="form-input" style="width: 60px;"><option value=""></option></select>
+                                                <span>月</span>
+                                            </div>
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角数字で入力してください。</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <!-- 出身学校名 -->
-                            <div class="bordered-section space-y-4">
-                                <label class="form-label">出身学校名 <span class="badge-required">必須</span></label>
-                                <div>
-                                    <span class="text-sm text-muted">コード：</span>
-                                    <div class="flex items-center gap-3 mt-1">
-                                        <input type="text" class="form-input form-input-code" placeholder="23643B">
-                                        <button type="button" class="btn btn-primary-sm">学校検索</button>
-                                        <button type="button" class="btn btn-orange">高等学校卒業程度認定試験、外国の学校等</button>
-                                    </div>
-                                </div>
-                                <div>
-                                    <span class="text-sm text-muted">名称：</span>
-                                    <input type="text" class="form-input mt-1" placeholder="人間環境大学附属岡崎">
-                                    <p class="text-xs text-muted mt-1">＊「学校検索」ボタンから出身学校名を選択してください。</p>
-                                    <p class="text-xs text-muted">＊名称に正しい高校名が表示されているかを確認してください。</p>
-                                </div>
-                            </div>
-
-                            <!-- 課程 -->
-                            <div class="bordered-section">
-                                <label class="form-label mb-3">課程 <span class="badge-required">必須</span></label>
-                                <input type="text" class="form-input" placeholder="">
-                                <p class="text-xs text-muted mt-2">＊出身学校名を「高等学校卒業程度認定試験、外国の学校等」を選択した方は、</p>
-                                <p class="text-xs text-muted">＜課程＞でも「高等学校卒業程度認定試験、外国の学校等」を選択してください。</p>
-                            </div>
-
-                            <!-- 学科 -->
-                            <div class="bordered-section">
-                                <label class="form-label mb-3">学科 <span class="badge-required">必須</span></label>
-                                <input type="text" class="form-input" placeholder="">
-                                <p class="text-xs text-muted mt-2">＊出身学校名を「高等学校卒業程度認定試験、外国の学校等」を選択した方は、</p>
-                                <p class="text-xs text-muted">＜学科＞でも「高等学校卒業程度認定試験、外国の学校等」を選択してください。</p>
-                            </div>
-
-                            <!-- 卒業年 -->
-                            <div class="bordered-section">
-                                <label class="form-label mb-3">卒業年 <span class="badge-required">必須</span></label>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-sm">西暦：</span>
-                                    <input type="text" class="form-input form-input-sm" placeholder="">
-                                    <span class="text-sm">年</span>
-                                    <input type="text" class="form-input form-input-xs" placeholder="">
-                                    <span class="text-sm">月</span>
-                                </div>
-                                <div class="text-xs text-muted mt-2 space-y-1">
-                                    <p>＊卒年月ですので入力してください。</p>
-                                    <p>＊高等学校を卒業もしくは卒業見込みの受験者は、卒業または卒業見込月は「03」を選択してください（秋季卒の場合を除く）。</p>
-                                    <p>＊高卒認定の場合は、大学入学資格を得た年月を選択してください。</p>
-                                    <p>＊高等学校在籍中の受験者は、高校卒業は「2026」と入力してください。</p>
-                                </div>
+                            <!-- Section: 日本大学連合学力試験(JPUE) -->
+                            <div class="reg-section" id="section-jpue" style="display: none;">
+                                <div class="reg-header"><h2>日本大学連合学力試験(JPUE)</h2></div>
+                                <table class="reg-table">
+                                    <tr>
+                                        <th style="width: 250px;">JPUE受検番号<br><span style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <input type="text" class="form-input" style="width: 300px;">
+                                            <p class="text-xs mt-1" style="color: #ef4444;">※半角英数字で入力してください（ハイフン(-)は入力しないこと）。※30文字以内。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>JPUE試験地<br><span style="color: #ef4444; font-size: 0.75rem;">[必須]</span></th>
+                                        <td>
+                                            <select class="form-input" style="width: 200px;"><option value="">選択してください</option></select>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
                             <!-- Buttons -->
-                            <div class="grid grid-cols-2 gap-4"
-                                style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;"
-                                style="padding-top: 1rem;">
-                                <button type="button" class="btn btn-outline btn-full btn-lg"
-                                    onclick="prevSubStep()">戻る</button>
-                                <a href="register-confirm.html" id="registerConfirmLink"><button type="button"
-                                        class="btn btn-primary btn-full btn-lg">確認画面へ</button></a>
+                            <div class="flex justify-between gap-4 mt-12">
+                                <button type="button" class="btn btn-outline w-1/2 btn-lg" onclick="prevSubStep()">戻る</button>
+                                <button type="button" class="btn btn-primary w-1/2 btn-lg" onclick="submitRegistration()">
+                                    規約に同意して次へ進む
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M5 12h14"></path>
+                                        <path d="m12 5 7 7-7 7"></path>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                     </div>
 
+                </div> <!-- Close main card -->
                 </div>
             </div>
         </main>

@@ -39,6 +39,134 @@
                 grid-template-columns: repeat(2, 1fr) !important;
             }
         }
+
+        /* MyPage Detail Sections */
+        .mypage-step-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .mypage-step-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #333;
+            border-left: 4px solid #0055aa;
+            padding-left: 0.75rem;
+            width: 100%;
+            background: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
+            padding-top: 0.35rem;
+            padding-bottom: 0.35rem;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+        }
+
+        .mypage-blue-box {
+            background-color: #e6f3ff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .mypage-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border: 1px solid #ccc;
+        }
+
+        .mypage-table th {
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            width: 180px;
+            font-size: 0.85rem;
+            color: #444;
+        }
+
+        .mypage-table td {
+            border: 1px solid #ccc;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            color: #333;
+            vertical-align: middle;
+        }
+        /* Horizontal Table Support */
+        .mypage-table.horizontal th {
+            text-align: center;
+            width: auto;
+        }
+        .mypage-table.horizontal td {
+            text-align: center;
+        }
+        .btn-link-blue {
+            color: #0066cc;
+            text-decoration: underline;
+            background: none;
+            border: 1px solid #0066cc;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .btn-gray-print {
+            background: #eee;
+            border: 1px solid #ccc;
+            color: #666;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: not-allowed;
+        }
+        .mypage-white-btn {
+            background: #fff;
+            border: 1px solid #00bbff;
+            color: #00bbff;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .mypage-photo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .mypage-photo-info {
+            font-size: 0.875rem;
+            color: #333;
+            line-height: 1.8;
+            text-align: left;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .mypage-photo-container {
+            width: 140px;
+            height: 180px;
+            background: #fff;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .mypage-photo-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 
@@ -115,67 +243,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- ========== Application Info Summary ========== -->
-                <div class="mypage-section">
-                    <div class="app-info-grid">
-                        <div class="app-info-item">
-                            <div class="app-info-label">出願番号</div>
-                            <div class="app-info-value highlight">2026-031234</div>
-                        </div>
-                        <div class="app-info-item">
-                            <div class="app-info-label">出願日</div>
-                            <div class="app-info-value">2026年3月15日</div>
-                        </div>
-                        <div class="app-info-item">
-                            <div class="app-info-label">受験番号</div>
-                            <div class="app-info-value highlight">A-10042</div>
-                        </div>
-                        <div class="app-info-item">
-                            <div class="app-info-label">現在のステータス</div>
-                            <div class="app-info-value"><span class="status-badge processing">審査中</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Actions -->
-                <div class="quick-actions">
-                    <a href="register-confirm.html" class="quick-action-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                            <circle cx="12" cy="12" r="3" />
-                        </svg>
-                        出願内容を確認
-                    </a>
-                    <a href="#" class="quick-action-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                            <path
-                                d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
-                        </svg>
-                        出願内容を修正
-                    </a>
-                    <a href="#" class="quick-action-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                            <line x1="12" y1="17" x2="12.01" y2="17" />
-                        </svg>
-                        よくある質問
-                    </a>
-                    <a href="#" class="quick-action-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-                        </svg>
-                        お問い合わせ
-                    </a>
-                </div>
-
                 <!-- ========== 1. Status Timeline ========== -->
                 <div class="mypage-section">
                     <div class="mypage-section-header">
@@ -284,270 +351,198 @@
                     </div>
                 </div>
 
-                <!-- ========== 2. Notification Center ========== -->
-                <div class="mypage-section">
-                    <div class="mypage-section-header">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-                        </svg>
-                        <h3>通知センター</h3>
-                    </div>
-                    <div class="mypage-section-body">
+                <!-- ========== STEP1: 志願者情報 ========== -->
+                <div class="mypage-step-header">
+                    <div class="mypage-step-title">STEP1　志願者情報</div>
+                </div>
+                <div class="mypage-blue-box">
+                    <table class="mypage-table">
+                        <tr>
+                            <th>氏名（漢字）</th>
+                            <td>
+                                <div style="display:flex;">
+                                    <span style="width:40px;">姓：</span>
+                                    <span style="flex:1;">キャプチャ</span>
+                                    <span style="width:40px;">名：</span>
+                                    <span style="flex:1;">画面</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>氏名（カナ）</th>
+                            <td>
+                                <div style="display:flex;">
+                                    <span style="width:40px;">セイ：</span>
+                                    <span style="flex:1;">ｷｬﾌﾟﾁｬ</span>
+                                    <span style="width:40px;">メイ：</span>
+                                    <span style="flex:1;">ｶﾞﾒﾝ</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>性別</th>
+                            <td>男性</td>
+                        </tr>
+                        <tr>
+                            <th>生年月日</th>
+                            <td>2009年　01月　01日　（平成21年）　17歳</td>
+                        </tr>
+                        <tr>
+                            <th>郵便番号</th>
+                            <td>444-3505</td>
+                        </tr>
+                        <tr>
+                            <th>都道府県</th>
+                            <td>愛知県</td>
+                        </tr>
+                        <tr>
+                            <th>市区町村 番地</th>
+                            <td>岡崎市本宿町上三本松6-2</td>
+                        </tr>
+                        <tr>
+                            <th>建物名・部屋番号</th>
+                            <td>人間環境大学</td>
+                        </tr>
+                        <tr>
+                            <th>電話番号</th>
+                            <td>0564-48-7811</td>
+                        </tr>
+                        <tr>
+                            <th>本人携帯電話</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>メールアドレス</th>
+                            <td>t-takeshita@uhe.ac.jp</td>
+                        </tr>
+                    </table>
+                </div>
 
-                        <div class="notification-list">
-                            <!-- Notification 1: Unread -->
-                            <div class="notification-card unread">
-                                <div class="notification-icon success">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <polyline points="20 6 9 17 4 12" />
-                                    </svg>
-                                </div>
-                                <div class="notification-body">
-                                    <h4>出願を受け付けました</h4>
-                                    <p>ご出願いただきありがとうございます。内容を確認中です。結果は2〜3営業日以内にお知らせいたします。</p>
-                                </div>
-                                <span class="notification-time">3/16 09:00</span>
-                            </div>
-
-                            <!-- Notification 2: Warning -->
-                            <div class="notification-card warning">
-                                <div class="notification-icon warning">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path
-                                            d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                                        <line x1="12" y1="9" x2="12" y2="13" />
-                                        <line x1="12" y1="17" x2="12.01" y2="17" />
-                                    </svg>
-                                </div>
-                                <div class="notification-body">
-                                    <h4>顔写真の再提出をお願いします</h4>
-                                    <p>アップロードされた写真が規定の条件を満たしておりません。背景が無地で正面から撮影した写真を再度アップロードしてください。</p>
-                                </div>
-                                <span class="notification-time">3/17 14:30</span>
-                            </div>
-
-                            <!-- Notification 3: Info -->
-                            <div class="notification-card">
-                                <div class="notification-icon info">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <line x1="12" y1="16" x2="12" y2="12" />
-                                        <line x1="12" y1="8" x2="12.01" y2="8" />
-                                    </svg>
-                                </div>
-                                <div class="notification-body">
-                                    <h4>検定料の入金を確認しました</h4>
-                                    <p>入学検定料35,000円の入金を確認いたしましたのでお知らせいたします。</p>
-                                </div>
-                                <span class="notification-time">3/15 15:20</span>
-                            </div>
-
-                            <!-- Notification 4: Error example -->
-                            <div class="notification-card error">
-                                <div class="notification-icon error">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <line x1="15" y1="9" x2="9" y2="15" />
-                                        <line x1="9" y1="9" x2="15" y2="15" />
-                                    </svg>
-                                </div>
-                                <div class="notification-body">
-                                    <h4>住所の記載に不備があります</h4>
-                                    <p>ご登録いただいた住所の番地が確認できませんでした。マイページから正しい住所を再入力してください。</p>
-                                </div>
-                                <span class="notification-time">3/16 11:45</span>
-                            </div>
+                <!-- ========== STEP2: 顔写真 ========== -->
+                <div class="mypage-step-header">
+                    <div class="mypage-step-title">STEP2　顔写真</div>
+                </div>
+                <div class="mypage-blue-box">
+                    <div class="mypage-photo-box">
+                        <div class="mypage-photo-info">
+                            顔写真データの変更を希望する方は入試・広報部（TEL：0564-48-7811）までご連絡ください。<br>
+                            既に出願した入試方式の写真データの差し替えはできません。
                         </div>
-
-                    </div>
-                </div>
-
-                <!-- ========== 3. Documents & Exam Ticket ========== -->
-                <div class="mypage-section">
-                    <div class="mypage-section-header">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                            <polyline points="7 10 12 15 17 10" />
-                            <line x1="12" y1="15" x2="12" y2="3" />
-                        </svg>
-                        <h3>書類ダウンロード・受験票</h3>
-                    </div>
-                    <div class="mypage-section-body">
-
-                        <div class="document-grid">
-                            <!-- Doc 1: 志願票 -->
-                            <div class="document-card">
-                                <div class="document-card-icon blue">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                        <polyline points="14 2 14 8 20 8" />
-                                        <line x1="16" y1="13" x2="8" y2="13" />
-                                        <line x1="16" y1="17" x2="8" y2="17" />
-                                    </svg>
-                                </div>
-                                <div class="document-card-info">
-                                    <h4>志願票</h4>
-                                    <p>PDF形式 — 出願情報が記載されています</p>
-                                </div>
-                                <button class="btn-download">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="7 10 12 15 17 10" />
-                                        <line x1="12" y1="15" x2="12" y2="3" />
-                                    </svg>
-                                    ダウンロード
-                                </button>
-                            </div>
-
-                            <!-- Doc 2: 受験票 -->
-                            <div class="document-card">
-                                <div class="document-card-icon green">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                                        <line x1="16" y1="2" x2="16" y2="6" />
-                                        <line x1="8" y1="2" x2="8" y2="6" />
-                                        <line x1="3" y1="10" x2="21" y2="10" />
-                                    </svg>
-                                </div>
-                                <div class="document-card-info">
-                                    <h4>受験票</h4>
-                                    <p>受験番号発行後にダウンロード可能</p>
-                                </div>
-                                <button class="btn-download disabled" disabled>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <polyline points="12 6 12 12 16 14" />
-                                    </svg>
-                                    準備中
-                                </button>
-                            </div>
-
-                            <!-- Doc 3: 入試要項 -->
-                            <div class="document-card">
-                                <div class="document-card-icon purple">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                                    </svg>
-                                </div>
-                                <div class="document-card-info">
-                                    <h4>入学試験要項</h4>
-                                    <p>PDF形式 — 試験の概要・日程等</p>
-                                </div>
-                                <button class="btn-download">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="7 10 12 15 17 10" />
-                                        <line x1="12" y1="15" x2="12" y2="3" />
-                                    </svg>
-                                    ダウンロード
-                                </button>
-                            </div>
-
-                            <!-- Doc 4: 検定料領収書 -->
-                            <div class="document-card">
-                                <div class="document-card-icon orange">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <line x1="12" y1="1" x2="12" y2="23" />
-                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                                    </svg>
-                                </div>
-                                <div class="document-card-info">
-                                    <h4>検定料領収書</h4>
-                                    <p>PDF形式 — 35,000円分</p>
-                                </div>
-                                <button class="btn-download">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="7 10 12 15 17 10" />
-                                        <line x1="12" y1="15" x2="12" y2="3" />
-                                    </svg>
-                                    ダウンロード
-                                </button>
-                            </div>
+                        <div class="mypage-photo-container" id="confirmPhotoThumb">
+                            <img src="assets/applicant-sample.png" alt="顔写真" id="confirmPhotoFallback">
                         </div>
-
+                        <button type="button" class="btn btn-outline" style="background: #fff;">写真登録・変更</button>
                     </div>
                 </div>
 
-                <!-- ========== 4. Exam Results ========== -->
-                <div class="mypage-section">
-                    <div class="mypage-section-header">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
-                            <path d="M22 10v6" />
-                            <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
-                        </svg>
-                        <h3>合否結果</h3>
-                    </div>
-                    <div class="mypage-section-body">
+                <!-- ========== STEP3: 出願確認 ========== -->
+                <div class="mypage-step-header">
+                    <div class="mypage-step-title">STEP3　出願確認</div>
+                </div>
+                <div class="mypage-blue-box" style="padding: 1rem;">
+                    <table class="mypage-table horizontal">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;"></th>
+                                <th style="width: 15%;">志願票印刷</th>
+                                <th style="width: 20%;">入試区分・学部等</th>
+                                <th style="width: 25%;">併願入試区分・学部等</th>
+                                <th style="width: 15%;">試験日</th>
+                                <th style="width: 10%;">受験票印刷</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: left; font-size: 0.75rem; line-height: 1.4;">
+                                    【出願番号】<br>7195189906<br><br>
+                                    【支払状況】<br>クレジット払い<br>入金済<br><br>
+                                    【出願登録日】<br>2026/02/06<br><br>
+                                    【書類到着状況】<br>未着
+                                </td>
+                                <td>
+                                    <button type="button" class="btn-link-blue" style="margin-bottom: 0.5rem; display: block; width: 100%;">志願票・宛名ラベル</button>
+                                    <button type="button" class="btn-link-blue" style="display: block; width: 100%;">出願書類ダウンロード</button>
+                                </td>
+                                <td style="font-size: 0.8rem; line-height: 1.4;">
+                                    一般選抜　一般入試<br>II期<br>心理学部<br>心理学科<br>本学（岡崎）
+                                </td>
+                                <td style="font-size: 0.8rem; line-height: 1.4;">
+                                    一般選抜　一般入試<br>II期<br>心理学部<br>犯罪心理学科<br><br>
+                                    一般選抜　一般入試<br>II期<br>総合心理学部<br>総合心理学科<br>総合犯罪心理学科
+                                </td>
+                                <td>2026/02/23</td>
+                                <td>
+                                    <button type="button" class="btn-gray-print">受験票</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                        <div class="exam-result-box">
-                            <div class="exam-result-badge pending">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                結果待ち
-                            </div>
-                            <div class="exam-result-info">
-                                <p>合否結果は<strong>2026年3月25日（水）10:00</strong>に発表予定です。</p>
-                                <p>合格発表日に、このページで結果をご確認いただけます。</p>
-                                <p style="margin-top: 0.75rem;">入試区分：<strong>総合型選抜 AOA入試（前期型）III期</strong></p>
-                                <p>志望学科：<strong>心理学部 心理学科</strong></p>
-                            </div>
+                <!-- ========== STEP4: 2出願目以降の出願登録 ========== -->
+                <div class="mypage-step-header">
+                    <div class="mypage-step-title">STEP4　2出願目以降の出願登録</div>
+                </div>
+                <div class="mypage-blue-box">
+                    <div style="text-align: center;">
+                        <div class="mypage-photo-info" style="text-align: left; margin-bottom: 2rem;">
+                            前回の登録内容を表示して簡単に追加出願することができます。<br>
+                            学部入試で初回に入学検定料38,000円を納入した方は無料で出願登録が可能です（大学院入試を除く）。
                         </div>
-
+                        <a href="#" class="mypage-white-btn">新たな出願登録はこちらから</a>
                     </div>
                 </div>
 
-                <!-- Bottom action row -->
-                <div class="btn-group-responsive" style="padding-top: 0.5rem; padding-bottom: 2rem;">
-                    <a href="dashboard.html"><button type="button" class="btn btn-outline btn-lg"
-                            style="padding-left: 2rem; padding-right: 2rem;">トップページへ戻る</button></a>
-                    <a href="login.html"><button type="button" class="btn btn-primary btn-lg"
-                            style="padding-left: 2rem; padding-right: 2rem;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                                <polyline points="16 17 21 12 16 7" />
-                                <line x1="21" y1="12" x2="9" y2="12" />
-                            </svg>
-                            ログアウト
-                        </button></a>
+                <!-- ========== STEP5: 入試結果照会 ========== -->
+                <div class="mypage-step-header">
+                    <div class="mypage-step-title">STEP5　入試結果照会</div>
                 </div>
+                <div class="mypage-blue-box">
+                    <div class="mypage-photo-info" style="margin-bottom: 1.5rem;">
+                        合格発表日にインターネットでの入試結果照会が可能です。<br>
+                        すでに人間環境大学に入学手続をしており、その後特別奨学生への合格や、他学部他学科に合格し入学を希望する等の場合には別途手続が必要です。別途手続が必要な場合には郵送にてお知らせします（大学院入試を除く）。
+                    </div>
+                    <table class="mypage-table horizontal">
+                        <thead>
+                            <tr>
+                                <th>出願番号</th>
+                                <th>学部・学科</th>
+                                <th>入試区分</th>
+                                <th>入試結果照会利用開始</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>7195189906</td>
+                                <td style="text-align: left;">心理学部<br>心理学科</td>
+                                <td>一般選抜　一般入試(II期)</td>
+                                <td>3月2日 13:00～</td>
+                            </tr>
+                            <tr>
+                                <td>7195189906</td>
+                                <td style="text-align: left;">心理学部<br>犯罪心理学科</td>
+                                <td>一般選抜　一般入試(II期)</td>
+                                <td>3月2日 13:00～</td>
+                            </tr>
+                            <tr>
+                                <td>7195189906</td>
+                                <td style="text-align: left;">総合心理学部<br>総合心理学科</td>
+                                <td>一般選抜　一般入試(II期)</td>
+                                <td>3月2日 13:00～</td>
+                            </tr>
+                            <tr>
+                                <td>7195189906</td>
+                                <td style="text-align: left;">総合心理学部<br>総合犯罪心理学科</td>
+                                <td>一般選抜　一般入試(II期)</td>
+                                <td>3月2日 13:00～</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <a href="#" class="mypage-white-btn" style="padding: 0.5rem 3rem;">入試結果へ</a>
+                    </div>
+                </div>
+
 
             </div>
         </main>

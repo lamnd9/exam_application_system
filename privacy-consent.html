@@ -47,43 +47,42 @@
 
                 <!-- Main card -->
                 <div class="card card-padded">
-                    <h1 class="text-xl font-bold text-center mb-8">個人情報の取り扱いについて</h1>
+                    <h1 class="text-xl font-bold mb-6" style="border-left: 6px solid #1a365d; padding: 0.5rem 1rem; background: linear-gradient(to right, #f1f3f5, transparent); font-size: 1.1rem;">個人情報等の取り扱いに関して</h1>
+
+                    <p class="text-sm mb-8">
+                        本学の個人情報の取り扱いについて確認・同意のうえ、「個人情報の取り扱いに同意する」にチェックを入れてから「次へ」ボタンをクリックしてください。
+                    </p>
 
                     <!-- Policy content -->
-                    <div
-                        style="background-color: hsl(210 20% 96% / 0.5); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem;">
-                        <div class="space-y-6">
-                            <div>
-                                <h2 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;">個人情報保護方針</h2>
-                                <p class="text-sm text-muted">
-                                    人間環境大学（以下「本学」という）は、個人情報の保護に関する法律、その他の関連法令等を遵守し、以下のとおり個人情報保護方針を定め、これを実行いたします。
-                                </p>
-                            </div>
+                    <div class="space-y-8 mb-10">
+                        <section>
+                            <h2 style="display:inline-block; background-color: #fcecd7; color: #8a4b08; padding: 0.4rem 1.75rem; border-radius: 999px; font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem;">1. 個人情報の利用目的について</h2>
+                            <p class="text-sm leading-relaxed" style="padding-left: 0.5rem;">
+                                本学が取得した個人情報等は、本学にて厳重に管理し、入学試験関係業務、入学手続関係業務、および統計資料の作成業務（個人を特定できない方法・形式による）にのみ使用し、それ以外の目的には使用しません。
+                            </p>
+                        </section>
 
-                            <div>
-                                <h2 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;">1. 個人情報の収集について</h2>
-                                <p class="text-sm text-muted">
-                                    本学は、入学試験の出願・実施、合否通知、入学手続き等の業務を遂行するために必要な範囲において、個人情報を収集いたします。
+                        <section>
+                            <h2 style="display:inline-block; background-color: #fcecd7; color: #8a4b08; padding: 0.4rem 1.75rem; border-radius: 999px; font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem;">2. 個人情報の第三者提供について</h2>
+                            <div style="padding-left: 0.5rem;">
+                                <p class="text-sm leading-relaxed mb-2">
+                                    本学が取得した個人情報等は、以下のいずれかに該当する場合を除き、第三者へ提供、取り扱いを委託することはありません。
                                 </p>
-                            </div>
-
-                            <div>
-                                <h2 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;">2. 個人情報の利用目的</h2>
-                                <p class="text-sm text-muted mb-2">
-                                    収集した個人情報は、以下の目的で利用いたします：
-                                </p>
-                                <ul style="list-style: disc; margin-left: 1.5rem;" class="text-sm text-muted space-y-1">
-                                    <li>入学試験の出願受付および実施</li>
-                                    <li>受験票の発行</li>
+                                <ul class="text-sm space-y-1" style="list-style: none; padding: 0;">
+                                    <li>①利用者の事前の承諾を得た場合</li>
+                                    <li>②業務委託会社に対して、利用者に明示した利用目的の達成のために必要な範囲で個人情報等の取り扱いを委託する場合</li>
+                                    <li>③法令の定めにより提供を求められた場合</li>
                                 </ul>
                             </div>
-                        </div>
+                        </section>
                     </div>
 
-                    <!-- Checkbox -->
-                    <div class="checkbox-item mb-8">
-                        <input type="checkbox" id="agree-checkbox">
-                        <label for="agree-checkbox">個人情報の取り扱いについて同意します</label>
+                    <!-- Consent area centered with background -->
+                    <div style="background-color: #e2e8f0; padding: 0.75rem 1.5rem; border-radius: 4px; display: flex; justify-content: center; align-items: center; width: fit-content; margin: 0 auto 3rem;">
+                        <div class="checkbox-item" style="margin-bottom: 0;">
+                            <input type="checkbox" id="agree-checkbox">
+                            <label for="agree-checkbox" style="font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">個人情報の取り扱いに同意する</label>
+                        </div>
                     </div>
 
                     <!-- Buttons -->
@@ -93,7 +92,7 @@
                         </a>
                         <a href="exam-selection.html?exams=1">
                             <button type="button" class="btn btn-primary btn-full btn-lg" id="agree-next-btn" disabled>
-                                同意して次へ進む
+                                次へ
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
                                     stroke-linejoin="round">
@@ -105,7 +104,7 @@
                     </div>
 
                     <!-- Test link for no-exam state -->
-                    <div style="text-align:right; margin-top:0.75rem;">
+                    <div style="text-align:right; margin-top:1.5rem;">
                         <a href="exam-selection.html?exams=0" style="font-size:0.75rem; color:var(--muted-foreground); text-decoration:underline;">
                             [テスト] 試験なし画面を確認する
                         </a>

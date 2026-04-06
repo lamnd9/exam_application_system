@@ -44,6 +44,7 @@ function setupRadioToggle(radioName, buttonId) {
 let currentSubStep = 0;
 const totalSubSteps = 4;
 const GUARDIAN_SAME_HOUSEHOLD_KEY = 'guardianSameHousehold';
+let substepLabels = ['志願者情報入力', '保護者情報', '志望校アンケート', '出身高等学校情報'];
 
 function switchSubStep(index) {
     if (index < 0 || index >= totalSubSteps) return;
@@ -73,9 +74,8 @@ function switchSubStep(index) {
 
     // Update step label
     const stepLabel = document.getElementById('step-label');
-    const labels = ['志願者情報入力', '保護者情報', '志望校アンケート', '出身高等学校情報'];
-    if (stepLabel && labels[currentSubStep]) {
-        stepLabel.textContent = labels[currentSubStep];
+    if (stepLabel && substepLabels[currentSubStep]) {
+        stepLabel.textContent = substepLabels[currentSubStep];
     }
 
     window.scrollTo(0, 0);
@@ -94,7 +94,7 @@ function writeGuardianSameHouseholdState(checked) {
 }
 
 function getGuardianSameHouseholdCheckbox() {
-    return document.getElementById('guardian-same-household');
+    return document.getElementById('guardian-same-household') || document.getElementById('guardian-same-household-en');
 }
 
 function getGuardianFields() {
@@ -237,6 +237,11 @@ function renderGuardianSameHouseholdConfirm() {
         skipMessageRow.hidden = !isSameHousehold;
     }
 
+    const skipMessageRowEn = document.getElementById('guardian-skip-message-row-en');
+    if (skipMessageRowEn) {
+        skipMessageRowEn.hidden = !isSameHousehold;
+    }
+
     document.querySelectorAll('.guardian-detail-row').forEach(function (row) {
         row.hidden = isSameHousehold;
     });
@@ -252,6 +257,10 @@ function nextSubStep() {
 
 function prevSubStep() {
     switchSubStep(currentSubStep - 1);
+}
+
+function submitRegistration() {
+    window.location.href = 'register-confirm.html';
 }
 
 // --- Uploaded photo persistence ---
@@ -689,6 +698,240 @@ function setupClearRegistrationLinks() {
     });
 }
 
+// --- Gender restriction based on URL param ---
+function setupGenderRestriction() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isOnlyFemale = urlParams.get('is_only_female') === 'true';
+    if (!isOnlyFemale) return;
+
+    const maleRadio = document.getElementById('g-male') || document.getElementById('g-male-en');
+    const femaleRadio = document.getElementById('g-female') || document.getElementById('g-female-en');
+    if (!maleRadio || !femaleRadio) return;
+
+    // Force select female
+    femaleRadio.checked = true;
+
+    // Disable and hide male option
+    maleRadio.disabled = true;
+    const maleContainer = maleRadio.closest('.radio-item');
+    if (maleContainer) {
+        maleContainer.style.display = 'none';
+    }
+}
+
+// --- Foreigner logic ---
+function setupForeignerRestriction() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isForeigner = urlParams.get('is_foreigner') === 'true';
+    if (!isForeigner) return;
+
+    // Applicant Info sections
+    const sectionApplicantJp = document.getElementById('section-applicant-jp');
+    const sectionApplicantEn = document.getElementById('section-applicant-en');
+    
+    if (sectionApplicantJp) sectionApplicantJp.style.display = 'none';
+    if (sectionApplicantEn) sectionApplicantEn.style.display = 'block';
+
+    // Residence section
+    const sectionResidence = document.getElementById('section-residence');
+    if (sectionResidence) sectionResidence.style.display = 'block';
+
+    // Address sections
+    const sectionContactJp = document.getElementById('section-contact-jp');
+    const sectionCurrentAddressEn = document.getElementById('section-current-address-en');
+    const sectionHomeAddress = document.getElementById('section-home-address');
+
+    if (sectionContactJp) sectionContactJp.style.display = 'none';
+    if (sectionCurrentAddressEn) sectionCurrentAddressEn.style.display = 'block';
+    if (sectionHomeAddress) sectionHomeAddress.style.display = 'block';
+
+    // Guardian Info logic
+    const sectionGuardian = document.getElementById('section-guardian');
+    const sectionGuardianEn = document.getElementById('section-guardian-en');
+    if (sectionGuardian) sectionGuardian.style.display = 'none';
+    if (sectionGuardianEn) sectionGuardianEn.style.display = 'block';
+
+    // Step 3 logic (High School vs EJU/JLPT)
+    const sectionHighschool = document.getElementById('section-highschool');
+    const sectionEjuJlpt = document.getElementById('section-eju-jlpt');
+    if (sectionHighschool) sectionHighschool.style.display = 'none';
+    if (sectionEjuJlpt) sectionEjuJlpt.style.display = 'block';
+
+    // Update global step label for Step 3
+    substepLabels[2] = '日本留学試験・日本語能力試験';
+
+    // Update Tab text for Step 3
+    const tab3 = document.getElementById('tab-step3');
+    if (tab3) tab3.textContent = '日本留学試験・日本語能力試験';
+}
+
+function setupJpueRestriction() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isJpue = urlParams.get('is_jpue') === 'true';
+    if (!isJpue) return;
+
+    // is_jpue is a subset of foreigner, but with some sections hidden
+    const sectionApplicantJp = document.getElementById('section-applicant-jp');
+    const sectionApplicantEn = document.getElementById('section-applicant-en');
+    const sectionResidence = document.getElementById('section-residence');
+    const sectionContactJp = document.getElementById('section-contact-jp');
+    const sectionCurrentAddressEn = document.getElementById('section-current-address-en');
+    const sectionHomeAddress = document.getElementById('section-home-address');
+    const sectionGuardian = document.getElementById('section-guardian');
+    const sectionGuardianEn = document.getElementById('section-guardian-en');
+    const sectionHighschool = document.getElementById('section-highschool');
+    const sectionEjuJlpt = document.getElementById('section-eju-jlpt');
+    const sectionJpue = document.getElementById('section-jpue');
+
+    if (sectionApplicantJp) sectionApplicantJp.style.display = 'none';
+    if (sectionApplicantEn) sectionApplicantEn.style.display = 'block';
+    if (sectionResidence) sectionResidence.style.display = 'block';
+    
+    // EXPLICITLY HIDE for JPUE
+    if (sectionContactJp) sectionContactJp.style.display = 'none';
+    if (sectionHomeAddress) sectionHomeAddress.style.display = 'none';
+
+    if (sectionCurrentAddressEn) sectionCurrentAddressEn.style.display = 'block';
+    
+    if (sectionGuardian) sectionGuardian.style.display = 'none';
+    if (sectionGuardianEn) sectionGuardianEn.style.display = 'block';
+
+    // Step 3 Content
+    if (sectionHighschool) sectionHighschool.style.display = 'none';
+    if (sectionEjuJlpt) sectionEjuJlpt.style.display = 'none';
+    if (sectionJpue) sectionJpue.style.display = 'block';
+
+    // Update labels
+    substepLabels[2] = '日本大学連合学力試験(JPUE)';
+    const tab3 = document.getElementById('tab-step3');
+    if (tab3) tab3.textContent = '日本大学連合学力試験(JPUE)';
+}
+
+function setupGraduateSchoolRestriction() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isGrad = urlParams.get('is_graduate_school') === 'true';
+    if (!isGrad) return;
+
+    // 1. Labels
+    substepLabels[1] = '最終学歴';
+    const tab1 = document.getElementById('tab-step1');
+    if (tab1) tab1.textContent = '最終学歴';
+
+    // 2. Hide Guardian (both JP and EN)
+    const sectionGuardian = document.getElementById('section-guardian');
+    const sectionGuardianEn = document.getElementById('section-guardian-en');
+    if (sectionGuardian) sectionGuardian.style.display = 'none';
+    if (sectionGuardianEn) sectionGuardianEn.style.display = 'none';
+
+    // 3. Show Grad Final Edu & Alumni
+    const sectionFinalEduGrad = document.getElementById('section-final-edu-grad');
+    const sectionUheAlumni = document.getElementById('section-uhe-alumni');
+    const sectionFinalEduAdult = document.getElementById('section-final-edu');
+
+    if (sectionFinalEduAdult) sectionFinalEduAdult.style.display = 'none';
+    if (sectionFinalEduGrad) sectionFinalEduGrad.style.display = 'block';
+    if (sectionUheAlumni) sectionUheAlumni.style.display = 'block';
+
+    // 4. Hide High School & Exam related (Step 3)
+    const sectionHighschool = document.getElementById('section-highschool');
+    const sectionEjuJlpt = document.getElementById('section-eju-jlpt');
+    const sectionJpue = document.getElementById('section-jpue');
+    
+    if (sectionHighschool) sectionHighschool.style.display = 'none';
+    if (sectionEjuJlpt) sectionEjuJlpt.style.display = 'none';
+    if (sectionJpue) sectionJpue.style.display = 'none';
+
+    // Hide Step 3 tab as it's not applicable for Graduate School
+    const tab3 = document.getElementById('tab-step3');
+    if (tab3) tab3.style.display = 'none';
+}
+
+function setupNursingGraduateRestriction() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isNursingGrad = urlParams.get('is_nursing_grad') === 'true';
+    if (!isNursingGrad) return;
+
+    // 1. Labels
+    substepLabels[1] = '出願資格・勤務先等';
+    const tab1 = document.getElementById('tab-step1');
+    if (tab1) tab1.textContent = '出願資格・勤務先等';
+
+    // 2. Hide Guardian & High School
+    const sectionGuardian = document.getElementById('section-guardian');
+    const sectionGuardianEn = document.getElementById('section-guardian-en');
+    const sectionHighschool = document.getElementById('section-highschool');
+    
+    if (sectionGuardian) sectionGuardian.style.display = 'none';
+    if (sectionGuardianEn) sectionGuardianEn.style.display = 'none';
+    if (sectionHighschool) sectionHighschool.style.display = 'none';
+
+    // 3. Show Nursing Grad Sections
+    const sectionNursingElig = document.getElementById('section-nursing-eligibility');
+    const sectionWorkplace = document.getElementById('section-workplace');
+    const sectionSupervisor = document.getElementById('section-supervisor');
+    const sectionEligScreening = document.getElementById('section-eligibility-screening');
+    const sectionUheAlumni = document.getElementById('section-uhe-alumni');
+
+    if (sectionNursingElig) sectionNursingElig.style.display = 'block';
+    if (sectionWorkplace) sectionWorkplace.style.display = 'block';
+    if (sectionSupervisor) sectionSupervisor.style.display = 'block';
+    if (sectionEligScreening) sectionEligScreening.style.display = 'block';
+    if (sectionUheAlumni) sectionUheAlumni.style.display = 'block';
+
+    // 4. Hide Step 3 tab
+    const tab3 = document.getElementById('tab-step3');
+    if (tab3) tab3.style.display = 'none';
+    
+    // Hide standard exams
+    const sectionEjuJlpt = document.getElementById('section-eju-jlpt');
+    const sectionJpue = document.getElementById('section-jpue');
+    if (sectionEjuJlpt) sectionEjuJlpt.style.display = 'none';
+    if (sectionJpue) sectionJpue.style.display = 'none';
+}
+
+// --- Department Transfer logic ---
+function setupDepartmentTransferRestriction() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isDeptTransfer = urlParams.get('is_department_transfer') === 'true';
+    if (!isDeptTransfer) return;
+
+    const studentIdRow = document.getElementById('row-student-id');
+    if (studentIdRow) {
+        studentIdRow.style.display = 'table-row';
+    }
+}
+
+// --- Adult logic ---
+function setupAdultRestriction() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isAdult = urlParams.get('is_adult') === 'true';
+    if (!isAdult) return;
+
+    // Change label globally
+    substepLabels[1] = '最終学歴';
+
+    // Update Tab
+    const tab1 = document.getElementById('tab-step1');
+    if (tab1) tab1.textContent = '最終学歴';
+
+    // Toggle Sections
+    const sectionGuardian = document.getElementById('section-guardian');
+    const sectionFinalEdu = document.getElementById('section-final-edu');
+    
+    if (sectionGuardian) {
+        sectionGuardian.style.display = 'none';
+        sectionGuardian.classList.add('hidden'); // Optional if used in CSS
+    }
+    if (sectionFinalEdu) {
+        // If Grad school is active, Grad Final Edu has priority over Adult version
+        const isGrad = urlParams.get('is_graduate_school') === 'true';
+        if (!isGrad) {
+            sectionFinalEdu.style.display = 'block';
+            sectionFinalEdu.classList.remove('hidden');
+        }
+    }
+}
+
 // --- Initialize on page load ---
 document.addEventListener('DOMContentLoaded', function () {
     // If landing on an exit page and registration was active, clear all data
@@ -712,6 +955,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Exam Selection radios
     setupRadioToggle('exam-category', 'exam-next-btn');
     setupGuardianStepControls();
+    setupGenderRestriction();
+    setupDepartmentTransferRestriction();
+    setupAdultRestriction();
+    setupForeignerRestriction();
+    setupJpueRestriction();
+    setupGraduateSchoolRestriction();
+    setupNursingGraduateRestriction();
 
     // Register page tabs
     const tabs = document.querySelectorAll('.substep-tab');
