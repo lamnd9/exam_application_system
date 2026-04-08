@@ -8,49 +8,12 @@
     <title>マスターデータ管理 - Admin</title>
     <link rel="stylesheet" href="assets/css/admin.css">
     <style>
-        .master-tabs-container {
-            border-bottom: 2px solid #2b7a9b;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-
-        .master-tab {
-            padding: 10px 24px;
-            background: #f4f8fb;
-            border: 1px solid #d1d9e0;
-            border-bottom: none;
-            border-radius: 6px 6px 0 0;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            color: #4a6c82;
-            transition: all 0.2s;
-            font-family: inherit;
-            position: relative;
-            top: 2px; /* Pull down to cover border */
-        }
-
-        .master-tab.active {
-            background: #2b7a9b;
-            color: #fff;
-            border-color: #2b7a9b;
-            top: 2px;
-            padding-bottom: 12px;
-            margin-bottom: -2px;
-        }
-
-        .master-tab:hover:not(.active) {
-            background: #e9eff4;
-        }
-
         .master-content-area {
             background: #fff;
             padding: 24px;
             border: 1px solid #ccd5dc;
-            border-top: none;
-            border-radius: 0 4px 4px 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
             min-height: 400px;
         }
 
@@ -64,8 +27,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .status-badge {
@@ -104,8 +74,11 @@
             cursor: pointer;
             font-weight: 500;
         }
-        .btn-delete-sm:hover { background: #990000; }
-        
+
+        .btn-delete-sm:hover {
+            background: #990000;
+        }
+
         .btn-edit-sm {
             background: linear-gradient(180deg, #5a8fb5, #4a7da0);
             border: 1px solid #3d6d8c;
@@ -116,18 +89,24 @@
             color: #fff;
             font-weight: 500;
         }
-        .btn-edit-sm:hover { background: linear-gradient(180deg, #4a7da0, #3d6d8c); }
+
+        .btn-edit-sm:hover {
+            background: linear-gradient(180deg, #4a7da0, #3d6d8c);
+        }
 
         .form-modal-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
-        
+
         .form-modal-overlay.active {
             display: flex;
             animation: fadeIn 0.2s;
@@ -137,7 +116,7 @@
             background: #fff;
             border-radius: 6px;
             width: 450px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             overflow: hidden;
         }
 
@@ -160,7 +139,10 @@
             cursor: pointer;
             opacity: 0.8;
         }
-        .btn-close-modal:hover { opacity: 1; }
+
+        .btn-close-modal:hover {
+            opacity: 1;
+        }
 
         .form-modal-body {
             padding: 24px 20px;
@@ -174,7 +156,6 @@
             justify-content: flex-end;
             gap: 12px;
         }
-
     </style>
 </head>
 
@@ -194,18 +175,18 @@
 
             <!-- Master Data Group with Submenu -->
             <div class="sidebar-group">
-                <button class="sidebar-group-header " id="menu-master-data">
-                    <span>マスタ管理</span>
+                <div class="sidebar-group-header " id="menu-master-data">
+                    <a href="admin-master-import.html" class="group-title-link">マスタ管理</a>
                     <span class="chevron">∧</span>
-                </button>
+                </div>
                 <div class="sidebar-group-items ">
-                    <a href="admin-master.html?type=faculty" class="sidebar-item"><span>> 学部マスター</span></a>
-                    <a href="admin-master.html?type=department" class="sidebar-item"><span>> 学科マスター</span></a>
-                    <a href="admin-master.html?type=exam-type" class="sidebar-item"><span>> 試験種別マスター</span></a>
-                    <a href="admin-master.html?type=exam-category" class="sidebar-item"><span>> 試験区分マスター</span></a>
-                    <a href="admin-master.html?type=exam-subject" class="sidebar-item"><span>> 試験科目マスター</span></a>
-                    <a href="admin-master.html?type=exam-venue" class="sidebar-item"><span>> 試験場マスター</span></a>
-                    <a href="admin-master.html?type=exam-master" class="sidebar-item"><span>> 入試マスター</span></a>
+                    <a href="admin-master-faculty.html" class="sidebar-item "><span>> 学部マスター</span></a>
+                    <a href="admin-master-department.html" class="sidebar-item "><span>> 学科マスター</span></a>
+                    <a href="admin-master-exam-type.html" class="sidebar-item "><span>> 試験種別マスター</span></a>
+                    <a href="admin-master-exam-category.html" class="sidebar-item "><span>> 試験区分マスター</span></a>
+                    <a href="admin-master-exam-subject.html" class="sidebar-item "><span>> 試験科目マスター</span></a>
+                    <a href="admin-master-exam-venue.html" class="sidebar-item "><span>> 試験場マスター</span></a>
+                    <a href="admin-master-entrance-exam.html" class="sidebar-item "><span>> 入試マスター</span></a>
                 </div>
             </div>
         </div>
@@ -235,25 +216,18 @@
 
         <!-- Content Area -->
         <div>
-            <!-- Tabs -->
-            <div class="master-tabs-container">
-                <button class="master-tab active" data-target="tab-doc">出力書類</button>
-                <button class="master-tab" data-target="tab-exam-type">試験種別</button>
-                <button class="master-tab" data-target="tab-exam-cat">試験区分</button>
-                <button class="master-tab" data-target="tab-dept">学部・学科</button>
-                <button class="master-tab" data-target="tab-pass-cat">合格区分</button>
-            </div>
 
             <div class="master-content-area">
-                
+
                 <!-- Action Bar -->
                 <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                     <div style="font-size: 14px; font-weight: 600; color: #333;" id="current-tab-title">出力書類一覧</div>
-                    <button type="button" class="btn-admin btn-admin-primary" id="btn-add-new" style="padding: 6px 16px; font-size: 12px; border-radius: 4px;">＋ 新規追加</button>
+                    <button type="button" class="btn-admin btn-admin-primary" id="btn-add-new"
+                        style="padding: 6px 16px; font-size: 12px; border-radius: 4px;">＋ 新規追加</button>
                 </div>
 
                 <!-- Tab Panes -->
-                <div id="tab-doc" class="master-tab-pane active">
+                <div id="tab-doc" class="master-tab-pane">
                     <table class="result-table" style="text-align: center;">
                         <thead>
                             <tr>
@@ -323,7 +297,8 @@
                                 <td>10</td>
                                 <td><span class="status-badge status-active">有効</span></td>
                                 <td>
-                                    <div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div>
+                                    <div class="action-btns"><button class="btn-edit-sm">編集</button><button
+                                            class="btn-delete-sm">削除</button></div>
                                 </td>
                             </tr>
                             <tr>
@@ -332,7 +307,8 @@
                                 <td>20</td>
                                 <td><span class="status-badge status-active">有効</span></td>
                                 <td>
-                                    <div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div>
+                                    <div class="action-btns"><button class="btn-edit-sm">編集</button><button
+                                            class="btn-delete-sm">削除</button></div>
                                 </td>
                             </tr>
                         </tbody>
@@ -341,17 +317,172 @@
 
                 <!-- Leaving out full dummy data for the rest to save space, JS will handle it generically -->
                 <div id="tab-exam-cat" class="master-tab-pane">
-                    <div style="padding: 40px; text-align: center; color: #666; background: #fafbfc; border: 1px dashed #ccc;">
+                    <div
+                        style="padding: 40px; text-align: center; color: #666; background: #fafbfc; border: 1px dashed #ccc;">
                         データがありません。
                     </div>
                 </div>
-                <div id="tab-dept" class="master-tab-pane">
-                    <div style="padding: 40px; text-align: center; color: #666; background: #fafbfc; border: 1px dashed #ccc;">
-                        データがありません。
-                    </div>
+                <!-- Faculty Master (Updated) -->
+                <div id="tab-dept" class="master-tab-pane active">
+                    <table class="result-table" style="text-align: center;">
+                        <thead style="background-color: #fce4d6;">
+                            <tr>
+                                <th style="width: 80px;">入試年度</th>
+                                <th style="width: 100px;">学部コード</th>
+                                <th style="text-align: left; padding-left: 16px;">学部名称</th>
+                                <th style="text-align: left; padding-left: 16px;">学部略称</th>
+                                <th style="width: 80px;">表示順</th>
+                                <th style="width: 120px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: bold;">2026</td>
+                                <td>01</td>
+                                <td style="text-align: left; padding-left: 16px;">心理学部</td>
+                                <td style="text-align: left; padding-left: 16px;">心理学部</td>
+                                <td>10</td>
+                                <td>
+                                    <div class="action-btns"><button class="btn-edit-sm">編集</button><button
+                                            class="btn-delete-sm">削除</button></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style=" font-weight: bold;">2026</td>
+                                <td>02</td>
+                                <td style="text-align: left; padding-left: 16px;">環境科学部</td>
+                                <td style="text-align: left; padding-left: 16px;">環境科学部</td>
+                                <td>20</td>
+                                <td>
+                                    <div class="action-btns"><button class="btn-edit-sm">編集</button><button
+                                            class="btn-delete-sm">削除</button></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style=" font-weight: bold;">2026</td>
+                                <td>03</td>
+                                <td style="text-align: left; padding-left: 16px;">看護学部</td>
+                                <td style="text-align: left; padding-left: 16px;">看護学部</td>
+                                <td>30</td>
+                                <td>
+                                    <div class="action-btns"><button class="btn-edit-sm">編集</button><button
+                                            class="btn-delete-sm">削除</button></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style=" font-weight: bold;">2026</td>
+                                <td>04</td>
+                                <td style="text-align: left; padding-left: 16px;">松山看護学部</td>
+                                <td style="text-align: left; padding-left: 16px;">松山看護学部</td>
+                                <td>40</td>
+                                <td>
+                                    <div class="action-btns"><button class="btn-edit-sm">編集</button><button
+                                            class="btn-delete-sm">削除</button></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style=" font-weight: bold;">2026</td>
+                                <td>05</td>
+                                <td style="text-align: left; padding-left: 16px;">総合心理学部</td>
+                                <td style="text-align: left; padding-left: 16px;">総合心理学部</td>
+                                <td>50</td>
+                                <td>
+                                    <div class="action-btns"><button class="btn-edit-sm">編集</button><button
+                                            class="btn-delete-sm">削除</button></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style=" font-weight: bold;">2026</td>
+                                <td>14</td>
+                                <td style="text-align: left; padding-left: 16px;">総合心理学研究科</td>
+                                <td style="text-align: left; padding-left: 16px;">総合心理学研究科</td>
+                                <td style=" font-weight: bold;">90</td>
+                                <td>
+                                    <div class="action-btns"><button class="btn-edit-sm">編集</button><button
+                                            class="btn-delete-sm">削除</button></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="tab-dept-detail" class="master-tab-pane">
+                    <table class="result-table" style="text-align: center;">
+                        <thead style="background-color: #fce4d6;">
+                            <tr>
+                                <th style="width: 80px;">入試年度</th>
+                                <th style="width: 120px;">学部名</th>
+                                <th style="width: 80px;">学科コード</th>
+                                <th style="text-align: left; padding-left: 16px;">学科名称</th>
+                                <th style="text-align: left; padding-left: 16px;">学科略称</th>
+                                <th style="width: 80px;">修業年限</th>
+                                <th style="width: 100px;">連携学科コード</th>
+                                <th style="width: 60px;">表示順</th>
+                                <th style="width: 120px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: #e60000; font-weight: bold;">2026</td>
+                                <td>心理学部</td>
+                                <td>01</td>
+                                <td style="text-align: left; padding-left: 16px;">心理学科</td>
+                                <td style="text-align: left; padding-left: 16px;">心理学科</td>
+                                <td>4</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td><div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div></td>
+                            </tr>
+                            <tr>
+                                <td style="color: #e60000; font-weight: bold;">2026</td>
+                                <td>心理学部</td>
+                                <td>02</td>
+                                <td style="text-align: left; padding-left: 16px;">犯罪心理学科</td>
+                                <td style="text-align: left; padding-left: 16px;">犯罪心理学科</td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td><div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div></td>
+                            </tr>
+                            <tr>
+                                <td style="color: #e60000; font-weight: bold;">2026</td>
+                                <td>環境科学部</td>
+                                <td>01</td>
+                                <td style="text-align: left; padding-left: 16px;">フィールド生態学科</td>
+                                <td style="text-align: left; padding-left: 16px;">フィールド生態学科</td>
+                                <td>4</td>
+                                <td>3</td>
+                                <td>1</td>
+                                <td><div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div></td>
+                            </tr>
+                            <tr>
+                                <td style="color: #e60000; font-weight: bold;">2026</td>
+                                <td>環境科学部</td>
+                                <td>02</td>
+                                <td style="text-align: left; padding-left: 16px;">環境データサイエンス学科</td>
+                                <td style="text-align: left; padding-left: 16px;">環境データサイエンス学科</td>
+                                <td>4</td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td><div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div></td>
+                            </tr>
+                            <tr>
+                                <td style="color: #e60000; font-weight: bold;">2026</td>
+                                <td>看護学部</td>
+                                <td>01</td>
+                                <td style="text-align: left; padding-left: 16px;">看護学科</td>
+                                <td style="text-align: left; padding-left: 16px;">看護学科</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>1</td>
+                                <td><div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div id="tab-pass-cat" class="master-tab-pane">
-                    <div style="padding: 40px; text-align: center; color: #666; background: #fafbfc; border: 1px dashed #ccc;">
+                    <div
+                        style="padding: 40px; text-align: center; color: #666; background: #fafbfc; border: 1px dashed #ccc;">
                         データがありません。
                     </div>
                 </div>
@@ -369,14 +500,59 @@
                 <button class="btn-close-modal" id="btn-close-modal">&times;</button>
             </div>
             <div class="form-modal-body">
-                <div class="form-group" style="margin-bottom: 16px;">
-                    <label>名称 <span style="color:#e60000; font-size:11px;">【必須】</span></label>
-                    <input type="text" class="admin-input" id="input-name" placeholder="名称を入力">
+                <!-- Group: Common Top -->
+                <div class="form-row-2col">
+                    <div class="form-group">
+                        <label>入試年度 <span style="color:#e60000; font-size:11px;">【必須】</span></label>
+                        <input type="text" class="admin-input" id="input-year" value="2026">
+                    </div>
+                    <!-- Faculty Only -->
+                    <div class="form-group master-field-faculty">
+                        <label>学部コード <span style="color:#e60000; font-size:11px;">【必須】</span></label>
+                        <input type="text" class="admin-input" id="input-code-faculty" placeholder="01">
+                    </div>
+                    <!-- Dept Only -->
+                    <div class="form-group master-field-dept">
+                        <label>学部名/コード <span style="color:#e60000; font-size:11px;">【必須】</span></label>
+                        <input type="text" class="admin-input" id="input-faculty-name" placeholder="心理学部 / 01">
+                    </div>
                 </div>
+
+                <div class="form-row-2col">
+                    <!-- Dept Only -->
+                    <div class="form-group master-field-dept">
+                        <label>学科コード <span style="color:#e60000; font-size:11px;">【必須】</span></label>
+                        <input type="text" class="admin-input" id="input-code-dept" placeholder="01">
+                    </div>
+                    <!-- Common Name Field -->
+                    <div class="form-group">
+                        <label id="label-name">名称 <span style="color:#e60000; font-size:11px;">【必須】</span></label>
+                        <input type="text" class="admin-input" id="input-name" placeholder="名称を入力">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label id="label-abbr">略称</label>
+                    <input type="text" class="admin-input" id="input-abbr" placeholder="略称を入力">
+                </div>
+
+                <!-- Dept Only Extra -->
+                <div class="form-row-2col master-field-dept">
+                    <div class="form-group">
+                        <label>修業年限</label>
+                        <input type="number" class="admin-input" id="input-years" value="4">
+                    </div>
+                    <div class="form-group">
+                        <label>連携学科コード</label>
+                        <input type="text" class="admin-input" id="input-link-code" placeholder="">
+                    </div>
+                </div>
+
+                <!-- Group: Common Bottom -->
                 <div class="form-row-2col" style="margin-bottom: 0;">
                     <div class="form-group">
                         <label>表示順</label>
-                        <input type="number" class="admin-input" id="input-order" value="10" step="10">
+                        <input type="number" class="admin-input" id="input-order" value="1" step="1">
                     </div>
                     <div class="form-group">
                         <label>状態</label>
@@ -388,8 +564,10 @@
                 </div>
             </div>
             <div class="form-modal-footer">
-                <button type="button" class="btn-admin btn-admin-secondary" id="btn-cancel" style="padding: 6px 16px;">キャンセル</button>
-                <button type="button" class="btn-admin btn-admin-primary" id="btn-save" style="padding: 6px 24px;">保存</button>
+                <button type="button" class="btn-admin btn-admin-secondary" id="btn-cancel"
+                    style="padding: 6px 16px;">キャンセル</button>
+                <button type="button" class="btn-admin btn-admin-primary" id="btn-save"
+                    style="padding: 6px 24px;">保存</button>
             </div>
         </div>
     </div>

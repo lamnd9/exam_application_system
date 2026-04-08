@@ -89,6 +89,12 @@ body.admin-body {
     background-color: #79adc8;
 }
 
+.sidebar-group-header .group-title-link {
+    color: inherit;
+    text-decoration: none;
+    flex: 1;
+}
+
 .sidebar-group-header .chevron {
     font-size: 12px;
     transition: transform 0.2s;

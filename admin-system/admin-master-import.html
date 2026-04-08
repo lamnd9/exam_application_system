@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Excelファイルによるデータ取込 - intelligent VISION management suite">
+    <title>Excelファイルによるデータ取込 - Admin</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <style>
+        .import-container {
+            background: #fff;
+            border: 1px solid #ccd5dc;
+            border-radius: 4px;
+            padding: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-select-file {
+            background-color: #2b7a9b;
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-select-file:hover {
+            background-color: #1e5f7a;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .modal-content {
+            background: #fff;
+            width: 500px;
+            border-radius: 4px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .modal-title {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .dropzone {
+            border: 2px dashed #ccc;
+            background: #f8f9fa;
+            border-radius: 4px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 24px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .dropzone:hover { border-color: #2b7a9b; background: #f0f4f7; }
+
+        .dropzone-text { font-size: 12px; margin-bottom: 15px; }
+        .dropzone-attach { font-size: 13px; font-weight: 600; color: #333; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-modal {
+            padding: 8px 40px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-cancel { background: #5a8fb5; color: #fff; }
+        .btn-confirm { background: #2b7a9b; color: #fff; }
+
+        /* Progress List */
+        .progress-container {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 40px;
+            display: none;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .progress-item:last-child { border-bottom: none; }
+
+        .progress-label { color: #333; font-weight: 500; }
+        .progress-status { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; }
+        .status-waiting { background: #ccc; }
+        .status-loading { background: #3b82f6; animation: pulse 1s infinite; }
+        .status-done { background: #22c55e; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .check-icon { color: #22c55e; display: none; }
+        .progress-item.done .check-icon { display: block; }
+        .progress-item.done .status-dot { display: none; }
+        .progress-item.done .status-text { color: #22c55e; font-weight: 700; }
+        
+    </style>
+</head>
+<body class="admin-body">
+
+            <!-- ===== Sidebar ===== -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+        <div class="sidebar-title">受験申込システム</div>
+
+        <!-- Menu items -->
+        <div class="sidebar-menu">
+            <a href="admin.html" class="sidebar-item " id="menu-applicant-data">志願者データ管理</a>
+            <a href="admin-assign.html" class="sidebar-item " id="menu-exam-number">受験番号採番</a>
+            <a href="admin-docs.html" class="sidebar-item " id="menu-procedure-docs">手続書類データ取込</a>
+            <a href="admin-payment.html" class="sidebar-item " id="menu-payment-data">入金実績データ出力</a>
+            <a href="admin-results.html" class="sidebar-item " id="menu-result-import">合否発表データ取込</a>
+
+            <!-- Master Data Group with Submenu -->
+            <div class="sidebar-group">
+                <div class="sidebar-group-header " id="menu-master-data">
+                    <a href="admin-master-import.html" class="group-title-link">マスタ管理</a>
+                    <span class="chevron">∧</span>
+                </div>
+                <div class="sidebar-group-items ">
+                    <a href="admin-master-faculty.html" class="sidebar-item "><span>> 学部マスター</span></a>
+                    <a href="admin-master-department.html" class="sidebar-item "><span>> 学科マスター</span></a>
+                    <a href="admin-master-exam-type.html" class="sidebar-item "><span>> 試験種別マスター</span></a>
+                    <a href="admin-master-exam-category.html" class="sidebar-item "><span>> 試験区分マスター</span></a>
+                    <a href="admin-master-exam-subject.html" class="sidebar-item "><span>> 試験科目マスター</span></a>
+                    <a href="admin-master-exam-venue.html" class="sidebar-item "><span>> 試験場マスター</span></a>
+                    <a href="admin-master-entrance-exam.html" class="sidebar-item "><span>> 入試マスター</span></a>
+                </div>
+            </div>
+        </div>
+        <!-- Branding -->
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">
+                intelligent VISION<br>
+                <span>management suite</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== Main Content ===== -->
+    <main class="admin-main">
+        <div class="search-panel" style="margin-bottom: 0; border-radius: 4px 4px 0 0;">
+            <div class="search-panel-header">
+                <span>Excelファイルによるデータ取込</span>
+                <span class="year-badge">入試年度：2026</span>
+            </div>
+        </div>
+
+        <div class="import-container">
+            <button class="btn-select-file" id="btn-show-modal">ファイルを選択</button>
+
+            <!-- Progress Section -->
+            <div class="progress-container" id="progress-container">
+                <h3 style="font-size: 16px; margin-bottom: 20px; border-bottom: 2px solid #2b7a9b; padding-bottom: 10px; width: 100%;">インポート進捗状況</h3>
+                
+                <div class="progress-item" id="step-1">
+                    <span class="progress-label">> 学部マスター</span>
+                    <div class="progress-status">
+                        <div class="status-dot status-waiting"></div>
+                        <span class="status-text">待機中</span>
+                        <span class="check-icon">✓</span>
+                    </div>
+                </div>
+                <div class="progress-item" id="step-2">
+                    <span class="progress-label">> 学科マスター</span>
+                    <div class="progress-status">
+                        <div class="status-dot status-waiting"></div>
+                        <span class="status-text">待機中</span>
+                        <span class="check-icon">✓</span>
+                    </div>
+                </div>
+                <div class="progress-item" id="step-3">
+                    <span class="progress-label">> 試験種別マスター</span>
+                    <div class="progress-status">
+                        <div class="status-dot status-waiting"></div>
+                        <span class="status-text">待機中</span>
+                        <span class="check-icon">✓</span>
+                    </div>
+                </div>
+                <div class="progress-item" id="step-4">
+                    <span class="progress-label">> 試験区分マスター</span>
+                    <div class="progress-status">
+                        <div class="status-dot status-waiting"></div>
+                        <span class="status-text">待機中</span>
+                        <span class="check-icon">✓</span>
+                    </div>
+                </div>
+                <div class="progress-item" id="step-5">
+                    <span class="progress-label">> 試験科目マスター</span>
+                    <div class="progress-status">
+                        <div class="status-dot status-waiting"></div>
+                        <span class="status-text">待機中</span>
+                        <span class="check-icon">✓</span>
+                    </div>
+                </div>
+                <div class="progress-item" id="step-6">
+                    <span class="progress-label">> 試験場マスター</span>
+                    <div class="progress-status">
+                        <div class="status-dot status-waiting"></div>
+                        <span class="status-text">待機中</span>
+                        <span class="check-icon">✓</span>
+                    </div>
+                </div>
+                <div class="progress-item" id="step-7">
+                    <span class="progress-label">> 入試マスター</span>
+                    <div class="progress-status">
+                        <div class="status-dot status-waiting"></div>
+                        <span class="status-text">待機中</span>
+                        <span class="check-icon">✓</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-content">
+            <h2 class="modal-title">ファイルを添付してください</h2>
+            
+            <div class="dropzone" id="dropzone">
+                <div class="dropzone-text" id="file-name-display">ファイルが選択されていません</div>
+                <div class="dropzone-attach">
+                    <span>📎</span> ファイルを添付
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-modal btn-cancel" id="btn-modal-cancel">キャンセル</button>
+                <button class="btn-modal btn-confirm" id="btn-modal-confirm">確定</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnShowModal = document.getElementById('btn-show-modal');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const btnCancel = document.getElementById('btn-modal-cancel');
+            const btnConfirm = document.getElementById('btn-modal-confirm');
+            const dropzone = document.getElementById('dropzone');
+            const fileNameDisplay = document.getElementById('file-name-display');
+            const progressContainer = document.getElementById('progress-container');
+
+            let selectedFile = null;
+
+            btnShowModal.addEventListener('click', () => {
+                modalOverlay.classList.add('active');
+            });
+
+            btnCancel.addEventListener('click', () => {
+                modalOverlay.classList.remove('active');
+            });
+
+            dropzone.addEventListener('click', () => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.xlsx, .xls';
+                input.onchange = (e) => {
+                    if (e.target.files.length > 0) {
+                        selectedFile = e.target.files[0];
+                        fileNameDisplay.textContent = selectedFile.name;
+                        fileNameDisplay.style.color = '#2b7a9b';
+                        fileNameDisplay.style.fontWeight = 'bold';
+                    }
+                };
+                input.click();
+            });
+
+            btnConfirm.addEventListener('click', () => {
+                if (!selectedFile) {
+                    alert('ファイルを選択してください。');
+                    return;
+                }
+                modalOverlay.classList.remove('active');
+                startImport();
+            });
+
+            function startImport() {
+                btnShowModal.style.display = 'none';
+                progressContainer.style.display = 'block';
+
+                const steps = [1, 2, 3, 4, 5, 6, 7];
+                let currentStep = 0;
+
+                function processNextStep() {
+                    if (currentStep >= steps.length) {
+                        setTimeout(() => {
+                            alert('全てのマスターデータのインポートが完了しました。');
+                        }, 500);
+                        return;
+                    }
+
+                    const stepId = steps[currentStep];
+                    const el = document.getElementById('step-' + stepId);
+                    const dot = el.querySelector('.status-dot');
+                    const text = el.querySelector('.status-text');
+
+                    // Set loading
+                    dot.className = 'status-dot status-loading';
+                    text.textContent = 'インポート中...';
+
+                    // Simulate processing
+                    setTimeout(() => {
+                        el.classList.add('done');
+                        text.textContent = '完了';
+                        currentStep++;
+                        processNextStep();
+                    }, 1000 + Math.random() * 1000);
+                }
+
+                processNextStep();
+            }
+        });
+    </script>
+</body>
+</html>

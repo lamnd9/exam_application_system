@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="試験科目マスター管理 - intelligent VISION management suite">
+    <title>試験科目マスター管理 - Admin</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <style>
+        .master-content-area { background: #fff; padding: 24px; border: 1px solid #ccd5dc; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04); min-height: 400px; }
+        .status-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .status-active { background: #e6f4ea; color: #1b8a3e; border: 1px solid #bce4c8; }
+        .status-inactive { background: #f8f9fa; color: #6c757d; border: 1px solid #dee2e6; }
+        .action-btns { display: flex; justify-content: center; gap: 6px; }
+        .btn-delete-sm { background: #cc0000; color: #fff; border: 1px solid #990000; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer; font-weight: 500; }
+        .btn-edit-sm { background: linear-gradient(180deg, #5a8fb5, #4a7da0); border: 1px solid #3d6d8c; padding: 4px 10px; border-radius: 3px; font-size: 11px; cursor: pointer; color: #fff; font-weight: 500; }
+        .form-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .form-modal-overlay.active { display: flex; animation: fadeIn 0.2s; }
+        .form-modal { background: #fff; border-radius: 6px; width: 500px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); overflow: hidden; }
+        .form-modal-header { background: linear-gradient(135deg, #2b7a9b, #1e6a87); color: #fff; padding: 12px 20px; font-size: 14px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .btn-close-modal { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; opacity: 0.8; }
+        .form-modal-body { padding: 24px 20px; }
+        .form-modal-footer { padding: 16px 20px; background: #f8fafc; border-top: 1px solid #ebf0f4; display: flex; justify-content: flex-end; gap: 12px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+
+<body class="admin-body">
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+        <div class="sidebar-title">受験申込システム</div>
+        <div class="sidebar-menu">
+            <a href="admin.html" class="sidebar-item">志願者データ管理</a>
+            <a href="admin-assign.html" class="sidebar-item">受験番号採番</a>
+            <a href="admin-docs.html" class="sidebar-item">手続書類データ取込</a>
+            <a href="admin-payment.html" class="sidebar-item">入金実績データ出力</a>
+            <a href="admin-results.html" class="sidebar-item">合否発表データ取込</a>
+
+            <!-- Master Data Group -->
+            <div class="sidebar-group">
+                <div class="sidebar-group-header" id="menu-master-data">
+                    <a href="admin-master-import.html" class="group-title-link">マスタ管理</a>
+                    <span class="chevron">∧</span>
+                </div>
+                <div class="sidebar-group-items">
+                    <a href="admin-master-faculty.html" class="sidebar-item"><span>> 学部マスター</span></a>
+                    <a href="admin-master-department.html" class="sidebar-item"><span>> 学科マスター</span></a>
+                    <a href="admin-master-exam-type.html" class="sidebar-item"><span>> 試験種別マスター</span></a>
+                    <a href="admin-master-exam-category.html" class="sidebar-item"><span>> 試験区分マスター</span></a>
+                    <a href="admin-master-exam-subject.html" class="sidebar-item active"><span>> 試験科目マスター</span></a>
+                    <a href="admin-master-exam-venue.html" class="sidebar-item"><span>> 試験場マスター</span></a>
+                    <a href="admin-master-entrance-exam.html" class="sidebar-item"><span>> 入試マスター</span></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-name">intelligent VISION<br><span>management suite</span></div>
+        </div>
+    </aside>
+
+    <main class="admin-main">
+        <div style="font-size: 12px; margin-bottom: 12px;">
+            <a href="admin.html" style="color: var(--admin-link-blue); text-decoration: none;">ホーム</a>
+            <span class="sep" style="margin: 0 6px; color: #999;">＞</span>
+            <a href="admin-master-import.html" style="color: var(--admin-link-blue); text-decoration: none;">マスタ管理</a>
+            <span class="sep" style="margin: 0 6px; color: #999;">＞</span>
+            <span>試験科目マスター</span>
+        </div>
+
+        <h1 class="admin-page-title" style="font-size: 18px; color: #0b5b88; margin-bottom: 24px; font-weight: bold; border-bottom: 3px double #dce4e8; padding-bottom: 8px;">
+            試験科目マスター管理
+        </h1>
+
+        <div class="master-content-area">
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <div style="font-size: 14px; font-weight: 600; color: #333;">試験科目マスター一覧</div>
+                <button type="button" class="btn-admin btn-admin-primary" id="btn-add-new" style="padding: 6px 16px; font-size: 12px; border-radius: 4px;">＋ 新規追加</button>
+            </div>
+
+            <table class="result-table" style="text-align: center;">
+                <thead style="background-color: #fce4d6;">
+                    <tr>
+                        <th style="width: 80px;">入試年度</th>
+                        <th style="width: 100px;">試験科目コード</th>
+                        <th style="text-align: left; padding-left: 16px;">試験科目名</th>
+                        <th style="text-align: left; padding-left: 16px;">試験科目略称</th>
+                        <th style="width: 100px;">連携科目コード</th>
+                        <th style="width: 120px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color: #e60000; font-weight: bold;">2026</td>
+                        <td>001</td>
+                        <td style="text-align: left; padding-left: 16px;">テーマ作文</td>
+                        <td style="text-align: left; padding-left: 16px;">テーマ作文</td>
+                        <td>09</td>
+                        <td><div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div></td>
+                    </tr>
+                    <tr>
+                        <td style="color: #e60000; font-weight: bold;">2026</td>
+                        <td>002</td>
+                        <td style="text-align: left; padding-left: 16px;">面接</td>
+                        <td style="text-align: left; padding-left: 16px;">面接</td>
+                        <td>07</td>
+                        <td><div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div></td>
+                    </tr>
+                    <tr style="background-color: #f2f2f2;">
+                        <td style="color: #e60000; font-weight: bold;">2026</td>
+                        <td>003</td>
+                        <td style="text-align: left; padding-left: 16px;">実技審査（形）</td>
+                        <td style="text-align: left; padding-left: 16px;">実技審査（形）</td>
+                        <td></td>
+                        <td><div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div></td>
+                    </tr>
+                    <tr>
+                        <td style="color: #e60000; font-weight: bold;">2026</td>
+                        <td>006</td>
+                        <td style="text-align: left; padding-left: 16px;">小論文</td>
+                        <td style="text-align: left; padding-left: 16px;">小論文</td>
+                        <td>08</td>
+                        <td><div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div></td>
+                    </tr>
+                    <tr>
+                        <td style="color: #e60000; font-weight: bold;">2026</td>
+                        <td>011</td>
+                        <td style="text-align: left; padding-left: 16px;">国語</td>
+                        <td style="text-align: left; padding-left: 16px;">国語</td>
+                        <td>02</td>
+                        <td><div class="action-btns"><button class="btn-edit-sm">編集</button><button class="btn-delete-sm">削除</button></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="form-modal-overlay" id="modal-overlay">
+        <div class="form-modal">
+            <div class="form-modal-header">
+                <span id="modal-title">試験科目マスター追加</span>
+                <button class="btn-close-modal" id="btn-close-modal">&times;</button>
+            </div>
+            <div class="form-modal-body">
+                <div class="form-row-2col">
+                    <div class="form-group">
+                        <label>入試年度 <span style="color:#e60000; font-size:11px;">【必須】</span></label>
+                        <input type="text" class="admin-input" id="input-year" value="2026">
+                    </div>
+                    <div class="form-group">
+                        <label>試験科目コード <span style="color:#e60000; font-size:11px;">【必須】</span></label>
+                        <input type="text" class="admin-input" id="input-code" placeholder="001">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label>試験科目名 <span style="color:#e60000; font-size:11px;">【必須】</span></label>
+                    <input type="text" class="admin-input" id="input-name" placeholder="名称を入力">
+                </div>
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label>試験科目略称</label>
+                    <input type="text" class="admin-input" id="input-abbr" placeholder="略称を入力">
+                </div>
+                <div class="form-row-2col" style="margin-bottom: 0;">
+                    <div class="form-group">
+                        <label>連携科目コード</label>
+                        <input type="text" class="admin-input" id="input-link-code" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label>状態</label>
+                        <select class="admin-select" id="input-status">
+                            <option value="active">有効</option>
+                            <option value="inactive">無効</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-modal-footer">
+                <button type="button" class="btn-admin btn-admin-secondary" id="btn-cancel" style="padding: 6px 16px;">キャンセル</button>
+                <button type="button" class="btn-admin btn-admin-primary" id="btn-save" style="padding: 6px 24px;">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalTitle = document.getElementById('modal-title');
+            const inputYear = document.getElementById('input-year');
+            const inputCode = document.getElementById('input-code');
+            const inputName = document.getElementById('input-name');
+            const inputAbbr = document.getElementById('input-abbr');
+            const inputLinkCode = document.getElementById('input-link-code');
+
+            function openModal(isEdit = false, row = null) {
+                modalTitle.textContent = isEdit ? '試験科目マスター編集' : '試験科目マスター追加';
+                if (!isEdit) {
+                    inputYear.value = '2026'; inputCode.value = '';
+                    inputName.value = ''; inputAbbr.value = ''; inputLinkCode.value = '';
+                } else {
+                    inputYear.value = row.cells[0].textContent.trim();
+                    inputCode.value = row.cells[1].textContent.trim();
+                    inputName.value = row.cells[2].textContent.trim();
+                    inputAbbr.value = row.cells[3].textContent.trim();
+                    inputLinkCode.value = row.cells[4].textContent.trim();
+                }
+                modalOverlay.classList.add('active');
+            }
+
+            document.getElementById('btn-add-new').addEventListener('click', () => openModal(false));
+            document.getElementById('btn-close-modal').addEventListener('click', () => modalOverlay.classList.remove('active'));
+            document.getElementById('btn-cancel').addEventListener('click', () => modalOverlay.classList.remove('active'));
+            document.getElementById('btn-save').addEventListener('click', () => { alert('保存しました'); modalOverlay.classList.remove('active'); });
+            
+            document.querySelectorAll('.btn-edit-sm').forEach(b => b.addEventListener('click', function() { openModal(true, this.closest('tr')); }));
+            document.querySelectorAll('.btn-delete-sm').forEach(b => b.addEventListener('click', function() { if(confirm('削除しますか？')) this.closest('tr').remove(); }));
+        });
+    </script>
+</body>
+</html>
