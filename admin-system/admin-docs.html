@@ -159,7 +159,8 @@
                 <div class="grid-4col">
                     <div class="form-group">
                         <label>試験種別</label>
-                        <select class="admin-select admin-select-multi" multiple size="6">
+                        <select class="admin-select">
+                            <option value="">-- 選択してください --</option>
                             <option>総合型選抜 AO入試（専願型）</option>
                             <option>総合型選抜 AO入試（併願型）</option>
                             <option>総合型選抜 ふるさと愛媛特別選抜試験（専願型）</option>
@@ -170,7 +171,8 @@
 
                     <div class="form-group">
                         <label>試験区分</label>
-                        <select class="admin-select admin-select-multi" multiple size="6">
+                        <select class="admin-select">
+                            <option value="">-- 選択してください --</option>
                             <option>なし</option>
                             <option>Ⅰ 期</option>
                             <option>Ⅰ 期A方式（3教科型）</option>
@@ -182,7 +184,8 @@
 
                     <div class="form-group">
                         <label>学部・学科</label>
-                        <select class="admin-select admin-select-multi" multiple size="6">
+                        <select class="admin-select">
+                            <option value="">-- 選択してください --</option>
                             <option>心理学部_心理学科</option>
                             <option>心理学部_犯罪心理学科</option>
                             <option>環境科学部_フィールド生態学科</option>
@@ -194,7 +197,8 @@
 
                     <div class="form-group">
                         <label>合格区分</label>
-                        <select class="admin-select admin-select-multi" multiple size="6">
+                        <select class="admin-select">
+                            <option value="">-- 選択してください --</option>
                             <option>合格</option>
                             <option>総合型選抜免除合格</option>
                             <option>スカラシップ入試合格</option>
@@ -205,22 +209,18 @@
                     </div>
                 </div>
 
-                <div class="search-actions" style="margin-top: 20px; border-top:none; padding-bottom: 0;">
-                    <button type="button" class="btn-admin"
-                        style="background: linear-gradient(to bottom, #777, #333); color:#fff;">検索</button>
+                <!-- Merged Link Section -->
+                <div class="form-row" style="margin-top: 24px; border-top: 1px solid #eee; padding-top: 20px; display: flex; align-items: flex-end; gap: 12px;">
+                    <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                        <label>書類データリンク <span style="color:#e60000;font-size:11px;">【必須】</span></label>
+                        <input type="text" class="admin-input" id="doc-link" placeholder="例: https://ataraxiadx.sharepoint.com/file/d/...">
+                    </div>
+                    <button type="button" class="btn-import" id="btn-import" style="margin-bottom: 3px;">取込</button>
                 </div>
 
             </div>
         </div>
 
-        <!-- Import Form -->
-        <div class="docs-import-bar">
-            <label style="font-weight: 600; font-size: 13px; color: #333;">書類データリンク <span
-                    style="color:#e60000;font-size:11px;">【必須】</span>：</label>
-            <input type="text" class="admin-input" id="doc-link"
-                placeholder="例: https://ataraxiadx.sharepoint.com/file/d/..." style="flex: 1;">
-            <button type="button" class="btn-import" id="btn-import">取込</button>
-        </div>
 
         <!-- Result Table -->
         <div style="background: #fff; overflow-x: auto;">

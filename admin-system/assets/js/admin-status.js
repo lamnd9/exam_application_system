@@ -48,9 +48,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const deficiencyBtn = document.getElementById('btn-deficiency');
-    if (deficiencyBtn) {
+    const modal = document.getElementById('deficiency-modal');
+    const closeBtn = document.getElementById('modal-close');
+    const cancelBtn = document.getElementById('modal-cancel');
+    const submitBtn = document.getElementById('modal-submit');
+
+    if (deficiencyBtn && modal) {
         deficiencyBtn.addEventListener('click', function () {
-            alert('不備登録画面へ移動します。（デモ）');
+            modal.classList.add('active');
+        });
+    }
+
+    const closeModal = () => {
+        if (modal) modal.classList.remove('active');
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+    
+    if (submitBtn) {
+        submitBtn.addEventListener('click', function() {
+            alert('不備を登録しました。（デモ）');
+            closeModal();
         });
     }
 

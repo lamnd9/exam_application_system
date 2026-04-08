@@ -56,8 +56,6 @@
             <div class="status-panel-right">
                 <div class="status-btn-row">
                     <a href="admin.html" class="sp-btn sp-btn-back">戻る</a>
-                    <button type="button" class="sp-btn sp-btn-cancel" id="btn-payment-cancel">入金取消</button>
-                    <button type="button" class="sp-btn sp-btn-photo" id="btn-photo-reregister">顔写真再登録開始</button>
                     <button type="button" class="sp-btn sp-btn-fix" id="btn-fix-start">手続修正開始</button>
                 </div>
                 <div class="status-notes">
@@ -176,7 +174,6 @@
         <div class="exam-actions-row">
             <button type="button" class="ea-btn ea-btn-label" id="btn-label">志願票・宛名ラベル等</button>
             <div class="ea-btn-group-right">
-                <button type="button" class="ea-btn ea-btn-add" id="btn-exam-add">試験追加</button>
                 <button type="button" class="ea-btn ea-btn-deficiency" id="btn-deficiency">不備登録</button>
                 <button type="button" class="ea-btn ea-btn-cancel-app" id="btn-app-cancel">出願取消</button>
                 <button type="button" class="ea-btn ea-btn-pass" id="btn-pass">詳遇</button>
@@ -253,8 +250,6 @@
             <div class="status-panel-right">
                 <div class="status-btn-row">
                     <a href="admin.html" class="sp-btn sp-btn-back">戻る</a>
-                    <button type="button" class="sp-btn sp-btn-cancel">入金取消</button>
-                    <button type="button" class="sp-btn sp-btn-photo">顔写真再登録開始</button>
                     <button type="button" class="sp-btn sp-btn-fix">手続修正開始</button>
                 </div>
                 <div class="status-notes">
@@ -265,6 +260,52 @@
         </div>
 
     </main>
+
+    <!-- ===== Deficiency Modal ===== -->
+    <div class="ea-modal-overlay" id="deficiency-modal">
+        <div class="ea-modal">
+            <div class="ea-modal-header">
+                <span class="ea-modal-title">不備登録</span>
+                <button type="button" class="ea-modal-close-btn" id="modal-close">&times; 閉じる</button>
+            </div>
+            <div class="ea-modal-body">
+                <div class="ea-modal-message">不備状態、不備内容を入力して登録してください。</div>
+
+                <table class="ea-modal-table">
+                    <tr>
+                        <th>不備状態</th>
+                        <td>
+                            不備なし ⇒
+                            <select class="ea-modal-select">
+                                <option value="1">不備あり</option>
+                                <option value="0">不備なし</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>不備内容</th>
+                        <td>
+                            <textarea class="ea-modal-textarea" rows="3"></textarea>
+                            <span class="ea-modal-date-label">不備登録日 : 2026/04/06</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>不備解消</th>
+                        <td>
+                            <textarea class="ea-modal-textarea" rows="3"
+                                style="background:#f4f4f4; border-color:#ccc;"></textarea>
+                            <span class="ea-modal-date-label">不備解消日 : </span>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="ea-modal-footer">
+                    <button type="button" class="ea-modal-btn-cancel" id="modal-cancel">キャンセル</button>
+                    <button type="button" class="ea-modal-btn-submit" id="modal-submit">登録</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="assets/js/admin-status.js"></script>
 </body>
