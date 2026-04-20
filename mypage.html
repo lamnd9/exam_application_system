@@ -212,18 +212,24 @@
 
         /* Application Details Card */
         .app-detail-card {
-            background-color: var(--u-muted-bg);
+            background-color: #ffffff;
             border: 1px solid #efefef;
             border-radius: 12px;
-            padding: 2.5rem;
+            padding: 0;
             transition: box-shadow 0.3s;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
         }
 
         .card-top-info {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 1.25rem;
-            margin-bottom: 2.5rem;
+            background-color: var(--u-muted-bg);
+            padding: 1.25rem 2.5rem;
+            border-bottom: 1px solid #f0f1f2;
+            margin-bottom: 0;
         }
 
         .grad-icon-wrap {
@@ -262,6 +268,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
+            padding: 2.5rem 2.5rem 0 2.5rem;
         }
 
         .confirm-links {
@@ -316,7 +323,7 @@
             gap: 1rem;
             margin-top: 2rem;
             border-top: 1px solid #eee;
-            padding-top: 2rem;
+            padding: 2rem 2.5rem 2.5rem;
         }
 
         .pdf-item {
@@ -532,7 +539,7 @@
                 <!-- 5. Application Detail Cards (3 States) -->
                 
                 <!-- STATE 1: 受験前 -->
-                <div class="app-detail-card" style="margin-bottom: 2rem;">
+                <div class="app-detail-card">
                     <div class="card-top-info">
                         <div class="grad-icon-wrap">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -640,7 +647,7 @@
                 </div>
 
                 <!-- STATE 2: 結果待ち -->
-                <div class="app-detail-card" style="margin-bottom: 2rem;">
+                <div class="app-detail-card">
                     <div class="card-top-info">
                         <div class="grad-icon-wrap">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -682,7 +689,6 @@
                         </div>
                     </div>
 
-                    <!-- PDF Download Grid (Same content) -->
                     <div class="pdf-download-grid">
                         <div class="pdf-item">
                             <div class="pdf-item-left">
@@ -694,49 +700,61 @@
                                     <p>PDF形式 — 出願情報が記載されています</p>
                                 </div>
                             </div>
-                            <button class="btn-download-pdf">ダウンロード</button>
+                            <button class="btn-download-pdf">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                ダウンロード
+                            </button>
                         </div>
                         <div class="pdf-item">
                             <div class="pdf-item-left">
                                 <div class="pdf-icon-box icon-green">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                                 </div>
                                 <div class="pdf-content">
                                     <h5>受験票</h5>
-                                    <p>受験票登録後にダウンロード可能</p>
+                                    <p>受験票登録後に download 可能</p>
                                 </div>
                             </div>
-                            <div class="status-prep">準備中</div>
+                            <div class="status-prep">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                準備中
+                            </div>
                         </div>
                         <div class="pdf-item">
                             <div class="pdf-item-left">
                                 <div class="pdf-icon-box icon-purple">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                                 </div>
                                 <div class="pdf-content">
                                     <h5>入学試験要項</h5>
                                     <p>PDF形式 — 試験の概要・日程等</p>
                                 </div>
                             </div>
-                            <button class="btn-download-pdf">ダウンロード</button>
+                            <button class="btn-download-pdf">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                ダウンロード
+                            </button>
                         </div>
                         <div class="pdf-item">
                             <div class="pdf-item-left">
                                 <div class="pdf-icon-box icon-orange">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                                 </div>
                                 <div class="pdf-content">
                                     <h5>検定料領収書</h5>
                                     <p>PDF形式 — 35,000円分</p>
                                 </div>
                             </div>
-                            <button class="btn-download-pdf">ダウンロード</button>
+                            <button class="btn-download-pdf">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                ダウンロード
+                            </button>
                         </div>
                     </div>
                 </div>
 
                 <!-- STATE 3: 合格 -->
-                <div class="app-detail-card" style="margin-bottom: 2rem;">
+                <div class="app-detail-card">
                     <div class="card-top-info">
                         <div class="grad-icon-wrap">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -776,56 +794,66 @@
                             <div class="status-label-top">合格</div>
                         </div>
                     </div>
-
-                    <!-- PDF Download Grid (Same content) -->
                     <div class="pdf-download-grid">
                         <div class="pdf-item">
                             <div class="pdf-item-left">
                                 <div class="pdf-icon-box icon-blue">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                 </div>
                                 <div class="pdf-content">
                                     <h5>志願票</h5>
                                     <p>PDF形式 — 出願情報が記載されています</p>
                                 </div>
                             </div>
-                            <button class="btn-download-pdf">ダウンロード</button>
+                            <button class="btn-download-pdf">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                ダウンロード
+                            </button>
                         </div>
                         <div class="pdf-item">
                             <div class="pdf-item-left">
                                 <div class="pdf-icon-box icon-green">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                                 </div>
                                 <div class="pdf-content">
                                     <h5>受験票</h5>
-                                    <p>受験票登録後にダウンロード可能</p>
+                                    <p>受験票登録後に download 可能</p>
                                 </div>
                             </div>
-                            <div class="status-prep">準備中</div>
+                            <div class="status-prep">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                準備中
+                            </div>
                         </div>
                         <div class="pdf-item">
                             <div class="pdf-item-left">
                                 <div class="pdf-icon-box icon-purple">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                                 </div>
                                 <div class="pdf-content">
                                     <h5>入学試験要項</h5>
                                     <p>PDF形式 — 試験の概要・日程等</p>
                                 </div>
                             </div>
-                            <button class="btn-download-pdf">ダウンロード</button>
+                            <button class="btn-download-pdf">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                ダウンロード
+                            </button>
                         </div>
                         <div class="pdf-item">
                             <div class="pdf-item-left">
                                 <div class="pdf-icon-box icon-orange">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                                 </div>
                                 <div class="pdf-content">
                                     <h5>検定料領収書</h5>
                                     <p>PDF形式 — 35,000円分</p>
                                 </div>
                             </div>
-                            <button class="btn-download-pdf">ダウンロード</button>
+                            <button class="btn-download-pdf">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                ダウンロード
+                            </button>
                         </div>
                     </div>
                 </div>
